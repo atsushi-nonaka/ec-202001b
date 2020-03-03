@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -45,7 +45,7 @@
 			<!-- /.container-fluid -->
 		</nav>
 
-		<form action="cart_list.html">
+		<form action="cart_list.html" th:action="@{/AddItemToCartController/addCart}">
 		<div class="row">
 			<div class="col-xs-offset-2 col-xs-8">
 
@@ -73,12 +73,12 @@
 								<div class="col-sm-12">
 									<label class="radio-inline">
 										<input type="radio"
-											name="responsibleCompany" checked="checked">
+											name="size" value="1" checked="checked">
 										<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;1,380円(税抜)
 									</label>
 									<label class="radio-inline">
 										<input type="radio"
-											name="responsibleCompany">
+											name="size" value="2">
 										<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;2,380円(税抜)
 									</label>
 								</div>
@@ -99,30 +99,29 @@
 								</div>
 								<div class="col-sm-12">
 									<label class="checkbox-inline">
-										<input type="checkbox" value="">オニオン
+										<input type="checkbox" name="toppingIdList" value="1">オニオン
 									</label>
 									<label class="checkbox-inline">
-										<input type="checkbox" value="">チーズ
+										<input type="checkbox" name="toppingIdList" value="2">ツナマヨ
 									</label>
 									<label class="checkbox-inline">
-										<input type="checkbox" value="">ピーマン
-									</label>
-									<label class="checkbox-inline">
-										<input type="checkbox" value="">ロースハム
+										<input type="checkbox" name="toppingIdList" value="3">イタリアントマト
 									</label><br>
 									<label class="checkbox-inline">
-										<input type="checkbox" value="">ほうれん草
+										<input type="checkbox" name="toppingIdList" value="4">イカ
 									</label>
 									<label class="checkbox-inline">
-										<input type="checkbox" value="">ぺパロに
+										<input type="checkbox" name="toppingIdList" value="5">プルコギ
 									</label>
 									<label class="checkbox-inline">
-										<input type="checkbox" value="">グリルナス
+										<input type="checkbox" name="toppingIdList" value="6">アンチョビ
 									</label>
 									<label class="checkbox-inline">
-										<input type="checkbox" value="">あらびきソーセージ
+										<input type="checkbox" name="toppingIdList" value="7">エビ
 									</label>
-								</div>
+									<label class="checkbox-inline">
+										<input type="checkbox" name="toppingIdList" value="8">コーン
+									</label>								</div>
 							</div>
 						</div>
 					</div>
@@ -135,7 +134,7 @@
 									<label for="">数量:</label>
 									<label class="control-label"
 										style="color: red" for="inputError">数量を選択してください</label> <select
-										name="area" class="form-control">
+										name="quantity" class="form-control">
 										<option value="1">1</option>
 										<option value="2">2</option>
 										<option value="3">3</option>
@@ -169,6 +168,8 @@
 								<input class="form-control btn btn-warning btn-block"
 									type="submit" value="カートに入れる">
 							</p>
+							<input type="hidden" value="111" name="id">
+							<input type="hidden" value="120" name="itemId">
 
 						</div>
 					</div>

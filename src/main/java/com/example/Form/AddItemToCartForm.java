@@ -8,14 +8,12 @@ public class AddItemToCartForm {
 	private Integer itemId;
 	private Integer quantity;
 	private Character size;
-	private List<OrderTopping> orderToppingList;
-	
+	private List<Integer> toppingIdList;
 	@Override
 	public String toString() {
-		return "AddItemToCartForm [itemId=" + itemId + ", quantity=" + quantity + ", size=" + size
-				+ ", orderToppingList=" + orderToppingList + "]";
+		return "AddItemToCartForm [itemId=" + itemId + ", quantity=" + quantity + ", size=" + size + ", toppingIdList="
+				+ toppingIdList + "]";
 	}
-	
 	public Integer getItemId() {
 		return itemId;
 	}
@@ -34,16 +32,14 @@ public class AddItemToCartForm {
 	public void setSize(Character size) {
 		this.size = size;
 	}
-	public List<OrderTopping> getOrderToppingList() {
-		return orderToppingList;
+	public List<Integer> getToppingIdList() {
+		return toppingIdList;
 	}
-	public void setOrderToppingList(List<OrderTopping> orderToppingList) {
-		this.orderToppingList = orderToppingList;
+	public void setToppingIdList(List<Integer> toppingIdList) {
+		this.toppingIdList = toppingIdList;
 	}
-	
-	
-	
 	
 	
 
+	
 }

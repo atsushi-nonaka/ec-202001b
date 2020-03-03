@@ -30,21 +30,23 @@ public class AddItemToCartService {
 		Order order = new Order();
 
 		if (orderRepository.findByUserIdAndStatus(id) == null) {
+			order.setUserId(id);
 			order = orderRepository.insert(order);
-			order.setId(id);
+			
 		} else {
+			order.setUserId(id);
 			order = orderRepository.findByUserIdAndStatus(id);
-			order.setId(id);
 		}
 
 		OrderItem orderItem = new OrderItem();
 		BeanUtils.copyProperties(form, orderItem);
 		orderItem.setOrderId(order.getId());
-		orderItemRepository.insert(orderItem);
+		orderItem = orderItemRepository.insert(orderItem);
 
-		for (OrderTopping orderTopping : form.getOrderToppingList()) {
-			orderTopping = new OrderTopping();
-			System.out.println(orderTopping);
+		for (Integer toppingId : form.getToppingIdList()) {
+			OrderTopping orderTopping = new OrderTopping();
+			orderTopping.setToppingId(toppingId);
+			orderTopping.setOrderItemId(orderItem.getId());
 			orderToppingRepository.insert(orderTopping);
 		}
 
