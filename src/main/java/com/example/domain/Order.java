@@ -1,9 +1,10 @@
 package com.example.domain;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
-import com.sun.jmx.snmp.Timestamp;
+
 
 /**
  * 注文情報を表すドメインクラス.
