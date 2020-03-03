@@ -9,6 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.domain.Order;
 import com.example.repository.OrderRepository;
 
+/**
+ * 注文確認画面を表示するサービスクラスです.
+ * @author yuri.okada
+ *
+ */
 @Service
 @Transactional
 public class OrderConfirmService {

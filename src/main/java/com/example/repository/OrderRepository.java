@@ -54,7 +54,7 @@ public class OrderRepository {
 				
 				//order.setUserは今回未使用のためなし。
 				orderItemList=new ArrayList<>();
-				order.setOrderList(orderItemList);
+				order.setOrderItemList(orderItemList);
 				orderList.add(order);
 			}
 			if(nowOrderItemId!=beforeOrderItemId) {
@@ -95,7 +95,7 @@ public class OrderRepository {
 				topping.setId(rs.getInt("t_id"));
 				topping.setName(rs.getString("t_name"));
 				topping.setPriceM(rs.getInt("t_price_m"));
-				topping.setPriceM(rs.getInt("t_price_l"));
+				topping.setPriceL(rs.getInt("t_price_l"));
 				orderTopping.setTopping(topping);
 				orderToppingList.add(orderTopping);
 			}
@@ -107,9 +107,9 @@ public class OrderRepository {
 		
 		/**
 		 * ユーザIDと状態から注文情報を取得します.
-		 * 注文情報に含まれている、注文商品リスト、注文トッピングリストも取得します.
+		 * 注文情報に含まれている、注文商品リスト、注文トッピングリストも取得します。
+		 * statusはSQL文の中で0を指定しています。
 		 * @param userId ユーザID
-		 * @param status 状態
 		 * @return　注文リスト
 		 */
 		public List<Order> findByUserIdAndStatus(Integer userId){
@@ -122,11 +122,11 @@ public class OrderRepository {
 					",i.image_path AS i_image_path,i.deleted AS i_deleted"+
 					",ot.id AS ot_id,ot.topping_id AS ot_topping_id,ot.order_item_id AS ot_order_item_id"+
 					",t.id AS t_id,t.name AS t_name,t.price_m AS t_price_m,t.price_l AS t_price_l"+					
-					"FROM orders o INNER JOIN order_items oi ON o.id=oi.order_id"+
-					"INNER JOIN items i ON oi.item_id=i.id"+
-					"INNER JOIN order_toppings ot ON oi.id=ot.order_item_id"+
-					"INNER JOIN toppings t ON ot.topping_id=t.id"+
-					"WHERE o.user_id=:userId AND o.status=:status ORDER BY o_id";
+					" FROM orders o INNER JOIN order_items oi ON o.id=oi.order_id"+
+					" INNER JOIN items i ON oi.item_id=i.id"+
+					" INNER JOIN order_toppings ot ON oi.id=ot.order_item_id"+
+					" INNER JOIN toppings t ON ot.topping_id=t.id"+
+					" WHERE o.user_id=:userId AND o.status=:status ORDER BY o_id";
 			
 			SqlParameterSource param=new MapSqlParameterSource().addValue("userId", userId).addValue("status", 0);
 			
