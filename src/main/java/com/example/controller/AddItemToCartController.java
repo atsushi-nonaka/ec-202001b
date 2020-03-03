@@ -8,17 +8,24 @@ import com.example.Form.AddItemToCartForm;
 import com.example.service.AddItemToCartService;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/AddItemToCartController")
 public class AddItemToCartController {
 	
 	@Autowired
 	private AddItemToCartService service;
 	
-	public String addItemToCart(AddItemToCartForm form,Integer id) {
-		service.insertOrder(form,id);
-		return "redirect:/toCartList";
+	@RequestMapping("/toItemDetail")
+	public String toItemDetail() {
+		return "item_detail";
 	}
 	
+	@RequestMapping("/addCart")
+	public String addItemToCart(AddItemToCartForm form,Integer id) {
+		service.insertOrder(form,id);
+		return "redirect:/AddItemToCartController/toCartList";
+	}
+	
+	@RequestMapping("/toCartList")
 	public String toCartList() {
 		return "cart_list";
 	}
