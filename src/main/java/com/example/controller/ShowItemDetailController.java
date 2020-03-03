@@ -27,7 +27,7 @@ public class ShowItemDetailController {
 	 * @param model リクエストスコープ
 	 * @return
 	 */
-	@RequestMapping()
+	@RequestMapping("")
 	public String showDetail(int id, Model model) {
 		Item item = showItemDetailService.showDetail(id);
 		model.addAttribute("item", item);
