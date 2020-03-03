@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Item;
 import com.example.service.ShowItemListService;
@@ -16,6 +17,7 @@ import com.example.service.ShowItemListService;
  *
  */
 @Controller
+@RequestMapping("/show_item_list")
 public class ShowItemListController {
 	@Autowired
 	private ShowItemListService showItemListService;
@@ -24,11 +26,12 @@ public class ShowItemListController {
 	 * 全件検索または条件検索結果を表示します.
 	 * 
 	 * @param model リクエストスコープ
-	 * @param       name リクエストパラメーター
+	 * @param name  リクエストパラメーター
 	 * @return 商品一覧画面
 	 */
-	public String showItemList(Model model, String name) {
-		List<Item> itemList = showItemListService.showItemList(name);
+	@RequestMapping("")
+	public String showItemList(Model model, String code) {
+		List<Item> itemList = showItemListService.showItemList(code);
 		if (itemList.size() == 0) {
 			itemList = showItemListService.showItemList("");
 		}
