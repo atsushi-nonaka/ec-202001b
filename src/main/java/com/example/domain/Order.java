@@ -3,6 +3,8 @@ package com.example.domain;
 import java.sql.Date;
 import java.util.List;
 
+import com.sun.jmx.snmp.Timestamp;
+
 /**
  * 注文情報を表すドメインクラス.
  * 
@@ -31,9 +33,9 @@ public class Order {
 	/** 宛先TEL */
 	private String destinationTel;
 	/** 配達時間 */
-	private String deliveryTime;
+	private Timestamp deliveryTime;
 	/** 支払方法 */
-	private String paymentMethod;
+	private Integer paymentMethod;
 	/** ユーザー */
 	private User user;
 	/** 注文商品リスト */
@@ -119,19 +121,19 @@ public class Order {
 		this.destinationTel = destinationTel;
 	}
 
-	public String getDeliveryTime() {
+	public Timestamp getDeliveryTime() {
 		return deliveryTime;
 	}
 
-	public void setDeliveryTime(String deliveryTime) {
+	public void setDeliveryTime(Timestamp deliveryTime) {
 		this.deliveryTime = deliveryTime;
 	}
 
-	public String getPaymentMethod() {
+	public Integer getPaymentMethod() {
 		return paymentMethod;
 	}
 
-	public void setPaymentMethod(String paymentMethod) {
+	public void setPaymentMethod(Integer paymentMethod) {
 		this.paymentMethod = paymentMethod;
 	}
 
