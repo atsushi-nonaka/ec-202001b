@@ -1,24 +1,5 @@
 package com.example.repository;
 
-<<<<<<< HEAD
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.stereotype.Repository;
-
-/**
- * ordersテーブルを操作するレポジトリ.
- * 
- * @author nonaa
- *
- */
-@Repository
-public class OrderRepository {
-	
-	@Autowired
-	private NamedParameterJdbcTemplate template;
-	
-	
-=======
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,7 +62,6 @@ public class OrderRepository {
 	public Order insert(Order order) {
 		String sql = "insert into orders (user_id,status,total_price)values(:userId,:status,:totalPrice)";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", order.getUserId()).addValue("status", 0).addValue("totalPrice", 0);
-//		template.update(sql, param);
 		
 		Number key = insert.executeAndReturnKey(param);
 		order.setId(key.intValue());
@@ -89,5 +69,4 @@ public class OrderRepository {
 		return order;
 	}
 
->>>>>>> feature/AddCart
 }

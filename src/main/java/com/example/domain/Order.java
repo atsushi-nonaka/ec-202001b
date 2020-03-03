@@ -4,7 +4,6 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 
-import com.sun.jmx.snmp.Timestamp;
 
 /**
  * 注文情報を表すドメインクラス.
@@ -109,7 +108,6 @@ public class Order {
 	public void setDestinationTel(String destinationTel) {
 		this.destinationTel = destinationTel;
 	}
-<<<<<<< HEAD
 
 	public Timestamp getDeliveryTime() {
 		return deliveryTime;
@@ -123,17 +121,6 @@ public class Order {
 		return paymentMethod;
 	}
 
-=======
-	public Timestamp getDeliveryTime() {
-		return deliveryTime;
-	}
-	public void setDeliveryTime(Timestamp deliveryTime) {
-		this.deliveryTime = deliveryTime;
-	}
-	public Integer getPaymentMethod() {
-		return paymentMethod;
-	}
->>>>>>> feature/AddCart
 	public void setPaymentMethod(Integer paymentMethod) {
 		this.paymentMethod = paymentMethod;
 	}
