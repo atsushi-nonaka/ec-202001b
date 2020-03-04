@@ -6,10 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Order;
 import com.example.domain.OrderItem;
+import com.example.form.BuyOrderForm;
 import com.example.service.OrderConfirmService;
 
 @Controller
@@ -19,6 +21,10 @@ public class OrderConfirmController {
 	@Autowired
 	private OrderConfirmService service;
 	
+	@ModelAttribute
+	public BuyOrderForm setUpForm() {
+		return new BuyOrderForm();
+	}
 	
 	/**テスト用の表示メソッドです.
 	 * @return 詳細リスト
@@ -36,12 +42,15 @@ public class OrderConfirmController {
 	@RequestMapping("/toOrderConfirm")
 	public String toOrderConfirm(Integer userId,Model model) {
 		Order order=service.findByUserIdAndStatus(userId);
+		
 		if(userId==null) {
 			return "login";
 		}
 		
 		int tax=order.getTax();
-		int totalPrice=order.getTotalPrice();
+		int totalPrice=tax+order.getTotalPrice();
+		
+		
 		
 		model.addAttribute("tax",tax);
 		model.addAttribute("totalPrice",totalPrice);

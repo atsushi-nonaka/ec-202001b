@@ -23,8 +23,6 @@ public class OrderItem {
 	private Item item;
 	/** トッピングリスト */
 	private List<OrderTopping> orderToppingList;
-	/** 小計 */
-	private Integer subTotal;
 
 	public Integer getId() {
 		return id;
@@ -82,18 +80,12 @@ public class OrderItem {
 		this.orderToppingList = orderToppingList;
 	}
 
-//	public Integer getSubTotal() {
-//		return subTotal;
-//	}
-	public void setSubTotal(Integer subTotal) {
-		this.subTotal = subTotal;
-	}
+
 
 	@Override
 	public String toString() {
 		return "OrderItem [id=" + id + ", itemId=" + itemId + ", orderId=" + orderId + ", quantity=" + quantity
-				+ ", size=" + size + ", item=" + item + ", orderToppingList=" + orderToppingList + ", subTotal="
-				+ subTotal + "]";
+				+ ", size=" + size + ", item=" + item + ", orderToppingList=" + orderToppingList + "]";
 	}
 
 	/**
