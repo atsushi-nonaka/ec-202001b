@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.domain.Order;
-import com.example.form.OrderForm;
+import com.example.form.BuyOrderForm;
 import com.example.repository.OrderRepository;
 
 /**
@@ -22,7 +22,7 @@ import com.example.repository.OrderRepository;
  */
 @Service
 @Transactional
-public class OrderService {
+public class BuyOrderService {
 	
 	@Autowired
 	private OrderRepository orderRepository;
@@ -32,7 +32,7 @@ public class OrderService {
 	 * 
 	 * @param order 注文情報
 	 */
-	public void orderFinish(OrderForm form) {
+	public void orderFinish(BuyOrderForm form) {
 		Order order = new Order();
 		BeanUtils.copyProperties(form, order);
 		//String型の配達日付を取得
