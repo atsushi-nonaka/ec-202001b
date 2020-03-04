@@ -10,21 +10,21 @@ import javax.validation.constraints.NotBlank;
  */
 public class OrderForm {
 	/** 宛先氏名 */
-	@NotBlank(message="「お名前を入力して下さい」")
+	@NotBlank(message="お名前を入力して下さい")
 	private String destinationName;
 	/** 宛先Eメール */
-	@NotBlank(message="「メールアドレスを入力して下さい」")
+	@NotBlank(message="メールアドレスを入力して下さい")
 	private String destinationEmail;
 	/** 宛先郵便番号 */
 	private String destinationZipcode;
 	/** 宛先住所 */
-	@NotBlank(message="「住所を入力して下さい」")
+	@NotBlank(message="住所を入力して下さい")
 	private String destinationAddress;
 	/** 宛先TEL */
-	@NotBlank(message="「電話番号を入力して下さい」")
+	@NotBlank(message="電話番号を入力して下さい")
 	private String destinationTel;
 	/** 配達日 */
-	@NotBlank(message="「配達日時を入力して下さい」")
+	@NotBlank(message="配達日時を入力して下さい")
 	private String deliveryDate;
 	/** 配達時間 */
 	private String deliveryTime;

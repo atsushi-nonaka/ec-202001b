@@ -23,10 +23,6 @@ public class OrderController {
 	@Autowired
 	private OrderService orderService;
 	
-	@RequestMapping("")
-	public String index() {
-		return "order_confirm";
-	}
 	
 	@ModelAttribute
 	public OrderForm setUpForm() {
@@ -34,7 +30,17 @@ public class OrderController {
 	}
 	
 	/**
-	 * 注文情報を更新する
+	 * オーダー確認画面に遷移する.
+	 * 
+	 * @return オーダー確認画面
+	 */
+	@RequestMapping("")
+	public String index() {
+		return "order_confirm";
+	}
+	
+	/**
+	 * 注文情報を更新する.
 	 * 
 	 * @param form オーダーフォーム
 	 * @return 完了画面

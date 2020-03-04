@@ -165,7 +165,7 @@
 		</div>
 
 		<!-- table -->
-		<form action="order_finished.html" th:action="@{to_complete}">
+		<form action="order_finished.html" th:action="@{to_complete}" method="post">
 			<div class="row">
 				<div
 					class="table-responsive col-lg-offset-3 col-lg-6 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
@@ -201,7 +201,7 @@
 									</div>
 								</td>
 								<td>
-									<input type="text" name="destinationZipcode" th:field="*{destinationZipcode}">&nbsp;&nbsp;<button>住所検索</button>
+									<input id="inputZipcode" type="text" name="destinationZipcode" th:field="*{destinationZipcode}">&nbsp;&nbsp;<button id="searchAddress" type="button">住所検索</button>
 								</td>
 							</tr>
 							<tr>
@@ -212,7 +212,7 @@
 								</td>
 								<td>
 									<div th:errors="*{destinationAddress}" style="color: red;"></div>
-									<input type="text" name="destinationAddress" th:field="*{destinationAddress}">
+									<input id="inputAddress" type="text" name="destinationAddress" th:field="*{destinationAddress}">
 								</td>
 							</tr>
 							<tr>
@@ -236,11 +236,9 @@
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-12">
-												<label
-													class="control-label" style="color: red" for="inputPeriod">配達日時を入力してください</label>
+												<div th:errors="*{deliveryDate}" style="color: red;"></div>												
 											</div>
 											<div class="col-sm-5">
-												<div th:errors="*{deliveryDate}" style="color: red;"></div>
 												<input type="date" name="deliveryDate" id="deliveryDate"
 													class="form-control input-sm" th:field="*{deliveryDate}">
 											</div>
@@ -265,7 +263,7 @@
 												</label><br>
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany" value="13">
+														name="deliveryTime" value="13">
 													13時
 												</label>
 												<label class="radio-inline">
@@ -362,6 +360,7 @@
 	<!-- end container -->
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script src="../static/js/bootstrap.min.js"></script>
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<script th:src="@{/js/script.js}"></script>
 </body>
 </html>
