@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.Form.AddItemToCartForm;
+import com.example.form.AddItemToCartForm;
 import com.example.domain.Order;
 import com.example.domain.OrderItem;
 import com.example.domain.OrderTopping;
@@ -65,7 +65,7 @@ public class AddItemToCartService {
 		BeanUtils.copyProperties(form, orderItem);
 		orderItem.setOrderId(order.getId());
 		orderItem = orderItemRepository.insert(orderItem);
-		orderItem.setItem(itemRepository.findByItemId(orderItem.getItemId()));
+		orderItem.setItem(itemRepository.load(orderItem.getItemId()));
 
 		if (form.getToppingIdList() != null) {
 			List<OrderTopping> orderToppingList = new ArrayList<>();

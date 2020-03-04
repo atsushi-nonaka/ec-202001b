@@ -1,4 +1,4 @@
-package com.example.Form;
+package com.example.form;
 
 import java.util.List;
 
