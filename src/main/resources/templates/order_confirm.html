@@ -93,9 +93,9 @@
 							</td>
 							<td>
 								<ul th:each="orderTopping:${orderItem.orderToppingList}">
-									<li th:text="${orderTopping.topping.name}">ピーマン
-									<span th:if="${orderItem.size='M'}" th:text="${orderTopping.topping.priceM}">200円
-									<span th:if="${orderItem.size='L'}" th:text="${orderTopping.topping.priceL}">300円</span></span>
+									<li th:if="${orderItem.size='M'}" th:text="${orderTopping.topping.name+orderTopping.topping.priceM}+円">ピーマン
+									</li>
+									<li th:if="${orderItem.size='L'}" th:text="${orderTopping.topping.name+orderTopping.topping.priceL}+円">ピーマン
 									</li>
 								</ul>
 							</td>
@@ -115,8 +115,8 @@
 		<div class="row">
 			<div class="col-xs-offset-2 col-xs-8">
 				<div class="form-group text-center">
-					<span id="total-price">消費税：8,000円</span><br>
-					<span id="total-price">ご注文金額合計：38,000円 (税込)</span>
+					消費税：<span id="total-price" th:text="${#numbers.formatInteger(tax,3,'COMMA')}">8,000</span>円<br>
+					ご注文金額合計：<span id="total-price" th:text="${#numbers.formatInteger(totalPrice,3,'COMMA')}">38,000</span>円 (税込)
 				</div>
 			</div>
 		</div>
