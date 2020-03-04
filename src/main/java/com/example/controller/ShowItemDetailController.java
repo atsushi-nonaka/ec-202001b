@@ -28,9 +28,10 @@ public class ShowItemDetailController {
 	 * @return
 	 */
 	@RequestMapping("")
-	public String showDetail(int id, Model model) {
-		Item item = showItemDetailService.showDetail(id);
+	public String showDetail(Model model,String id) {
+		System.out.println(id);
+		Item item = showItemDetailService.showDetail(Integer.parseInt(id));
 		model.addAttribute("item", item);
-		return "item_detail.html";
+		return "item_detail";
 	}
 }

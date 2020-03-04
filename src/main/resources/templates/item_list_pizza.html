@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -81,11 +81,11 @@
 						<tr th:each="item:${itemList}">
 
 							<th>
-							 <a href="item_detail.html">
+							 <a href="item_detail.html" th:href="@{'/show_item_detail?id=' + ${item.id}}">
 								<img th:src="${'/img_pizza/' + item.imagePath}"
 										class="img-responsive img-rounded" width="200" height="600">
 								</a><br> 
-								<a href="item_detail.html"><span  th:text="${item.name}"></span></a><br>
+								<a href="item_detail.html" th:href="@{'/show_item_detail?id=' + ${item.id}}"><span  th:text="${item.name}"></span></a><br>
 								<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;<span th:text="${item.priceM}"></span>円(税抜)<br>
 								<span class="price">&nbsp;L&nbsp;</span>&nbsp;&nbsp;<span th:text="${item.priceL}"></span>円(税抜)<br>
 							</th>
