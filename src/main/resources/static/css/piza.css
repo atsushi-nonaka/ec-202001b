@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 @CHARSET "UTF-8";
 
 /* サイズをオレンジ〇で囲む */
@@ -20,6 +21,8 @@ span#total-price {
 }
 
 =======
+=======
+>>>>>>> feature/order
 @CHARSET "UTF-8";
 
 /* サイズをオレンジ〇で囲む */
@@ -40,4 +43,7 @@ span#total-price {
 	font-size: 35px;
 }
 
+<<<<<<< HEAD
 >>>>>>> feature/orderconfirm
+=======
+>>>>>>> feature/order

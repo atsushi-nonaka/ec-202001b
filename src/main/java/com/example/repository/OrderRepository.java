@@ -5,23 +5,39 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+<<<<<<< HEAD
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+=======
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+>>>>>>> feature/order
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
+<<<<<<< HEAD
 import com.example.domain.Item;
 import com.example.domain.Order;
 import com.example.domain.OrderItem;
 import com.example.domain.OrderTopping;
 import com.example.domain.Topping;
 
+=======
+import com.example.domain.Order;
+
+/**
+ * ordersテーブルを操作するレポジトリ.
+ * 
+ * @author nonaka
+ *
+ */
+>>>>>>> feature/order
 @Repository
 public class OrderRepository {
 	
 	@Autowired
 	private NamedParameterJdbcTemplate template;
+<<<<<<< HEAD
 		
 	/**
 	 * Order,OrderItem,Item,OrderTopping,Toppingの5つのテーブルを結合したものからorderリストを作成する.
@@ -139,3 +155,20 @@ public class OrderRepository {
 		
 		
 	}
+=======
+	
+	/**
+	 * 注文情報の更新を行う.
+	 * 
+	 * @param order 注文情報
+	 */
+	public void update(Order order) {
+		String sql = "UPDATE orders SET status = :status, destination_name = :destinationName, destination_email = :destinationEmail, "
+					+ "destination_zipcode = :destinationZipcode, destination_address = :destinationAddress, "
+					+ "destination_tel = :destinationTel, delivery_time = :deliveryTime, payment_method = :paymentMethod";
+		
+		SqlParameterSource param = new BeanPropertySqlParameterSource(order);
+		template.update(sql, param);
+	}
+}
+>>>>>>> feature/order
