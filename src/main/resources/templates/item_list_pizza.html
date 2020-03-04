@@ -77,116 +77,17 @@
 					<tbody>
 						<tr th:each="item:${itemList}">
 							<th>
-							 <a href="item_detail.html">
+							 <a href="item_detail.html" th:href="@{'/show_item_detail?id=' + ${item.id}}">
 								<img th:src="${'/img_pizza/' + item.imagePath}"
 										class="img-responsive img-rounded" width="200" height="600">
 								</a><br> 
-								<a href="item_detail.html"><span  th:text="${item.name}"></span></a><br>
+								<a href="item_detail.html" th:href="@{'/show_item_detail?id=' + ${item.id}}"><span  th:text="${item.name}"></span></a><br>
 								<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;<span th:text="${item.priceM}"></span>円(税抜)<br>
 								<span class="price">&nbsp;L&nbsp;</span>&nbsp;&nbsp;<span th:text="${item.priceL}"></span>円(税抜)<br>
 							</th>
-							<!-- <th>
-<<<<<<< HEAD
-=======
-=======
->>>>>>> origin/develop
-						<tr>
-
-							<th>
-								<a href="item_detail.html">
-									<img src="../static/img_pizza/1.jpg"
-										class="img-responsive img-rounded" width="200" height="600">
-								</a><br>
-								<a href="item_detail.html">じゃがバターベーコン</a><br>
-								<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;1,380円(税抜)<br>
-								<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;2,380円(税抜)<br>
-							</th>
-							<th>
-<<<<<<< HEAD
->>>>>>> feature/AddCart
-=======
->>>>>>> origin/develop
-								<a href="item_detail.html">
-									<img src="../static/img_pizza/2.jpg"
-										class="img-responsive img-rounded" width="200" height="600">
-								</a><br>
-								<a href="item_detail.html">じゃがバターベーコン</a><br>
-								<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;1,380円(税抜)<br>
-								<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;2,380円(税抜)<br>
-							</th>
-							<th>
-								<a href="item_detail.html">
-									<img src="../static/img_pizza/3.jpg"
-										class="img-responsive img-rounded" width="200" height="600">
-								</a><br>
-								<a href="item_detail.html">じゃがバターベーコン</a><br>
-								<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;1,380円(税抜)<br>
-								<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;2,380円(税抜)<br>
-							</th>
-						</tr>
-						<tr>
-
-							<th>
-								<a href="item_detail.html">
-									<img src="../static/img_pizza/4.jpg"
-										class="img-responsive img-rounded" width="200" height="600">
-								</a><br>
-								<a href="item_detail.html">じゃがバターベーコン</a><br>
-								<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;1,380円(税抜)<br>
-								<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;2,380円(税抜)<br>
-							</th>
-							<th>
-								<a href="item_detail.html">
-									<img src="../static/img_pizza/5.jpg"
-										class="img-responsive img-rounded" width="200" height="600">
-								</a><br>
-								<a href="item_detail.html">じゃがバターベーコン</a><br>
-								<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;1,380円(税抜)<br>
-								<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;2,380円(税抜)<br>
-							</th>
-							<th>
-								<a href="item_detail.html">
-									<img src="../static/img_pizza/6.jpg"
-										class="img-responsive img-rounded" width="200" height="600">
-								</a><br>
-								<a href="item_detail.html">じゃがバターベーコン</a><br>
-								<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;1,380円(税抜)<br>
-								<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;2,380円(税抜)<br>
-							</th>
-						</tr>
-						<tr>
-
-							<th>
-								<a href="item_detail.html">
-									<img src="../static/img_pizza/7.jpg"
-										class="img-responsive img-rounded" width="200" height="600">
-								</a><br>
-								<a href="item_detail.html">じゃがバターベーコン</a><br>
-								<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;1,380円(税抜)<br>
-								<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;2,380円(税抜)<br>
-							</th>
-							<th>
-								<a href="item_detail.html">
-									<img src="../static/img_pizza/8.jpg"
-										class="img-responsive img-rounded" width="200" height="600">
-								</a><br>
-								<a href="item_detail.html">じゃがバターベーコン</a><br>
-								<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;1,380円(税抜)<br>
-								<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;2,380円(税抜)<br>
-							</th>
-							<th>
-								<a href="item_detail.html">
-									<img src="../static/img_pizza/9.jpg"
-										class="img-responsive img-rounded" width="200" height="600">
-								</a><br>
-								<a href="item_detail.html">じゃがバターベーコン</a><br>
-								<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;1,380円(税抜)<br>
-								<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;2,380円(税抜)<br>
-							</th>
-<<<<<<< HEAD
-						</tr> -->
 
 						</tr>
+						
 					</tbody>
 				</table>
 

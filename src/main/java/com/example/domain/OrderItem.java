@@ -23,6 +23,8 @@ public class OrderItem {
 	private Item item;
 	/** トッピングリスト */
 	private List<OrderTopping> orderToppingList;
+	/** 小計 */
+	private Integer subTotal;
 
 	public Integer getId() {
 		return id;
@@ -80,10 +82,18 @@ public class OrderItem {
 		this.orderToppingList = orderToppingList;
 	}
 
+//	public Integer getSubTotal() {
+//		return subTotal;
+//	}
+	public void setSubTotal(Integer subTotal) {
+		this.subTotal = subTotal;
+	}
+
 	@Override
 	public String toString() {
 		return "OrderItem [id=" + id + ", itemId=" + itemId + ", orderId=" + orderId + ", quantity=" + quantity
-				+ ", size=" + size + "]";
+				+ ", size=" + size + ", item=" + item + ", orderToppingList=" + orderToppingList + ", subTotal="
+				+ subTotal + "]";
 	}
 
 	/**
@@ -98,25 +108,24 @@ public class OrderItem {
 		List<OrderTopping> toppingList = getOrderToppingList();
 
 		if (getSize() == 'M') {
-			itemPrice = getItem().getPriceM();
+			itemPrice = item.getPriceM();
 		} else if (getSize() == 'L') {
-			itemPrice = getItem().getPriceL();
+			itemPrice = item.getPriceL();
 		}
 
-		if (toppingList != null) {
-			// サイズ毎の価格を取得
-			for (OrderTopping orderTopping : toppingList) {
-				if (getSize() == 'M') {
-					toppingPrice = orderTopping.getTopping().getPriceM();
-				} else if (getSize() == 'L') {
-					toppingPrice = orderTopping.getTopping().getPriceL();
-				}
+		// サイズ毎の価格を取得
+		for (OrderTopping orderTopping : toppingList) {
+			if (getSize() == 'M') {
+				toppingPrice = orderTopping.getTopping().getPriceM();
+			} else if (getSize() == 'L') {
+				toppingPrice = orderTopping.getTopping().getPriceL();
+
+				subTotal = (itemPrice + toppingPrice * toppingList.size()) * getQuantity();
+			} else {
+				//toppingの選択が一つもなかった時の処理
+				subTotal = (itemPrice + toppingPrice * getQuantity());
 			}
-			subTotal = (itemPrice + toppingPrice * toppingList.size()) * getQuantity();
-		}else {
-			subTotal = (itemPrice + toppingPrice * getQuantity());
 		}
-
 //		System.out.println("商品の値段"+itemPrice);
 //		System.out.println("商品の数"+getQuantity());
 //		System.out.println("トッピングの値段"+toppingPrice);
@@ -124,5 +133,4 @@ public class OrderItem {
 //		System.out.println("小計の値段"+subTotal);
 		return subTotal;
 	}
-
 }

@@ -89,7 +89,7 @@ public class AddItemToCartService {
 		}
 		int newTotalPrice = fomerTotalPrice + subTotal;
 		order.setTotalPrice(newTotalPrice);
-		orderRepository.update(order);
+		orderRepository.update2(order);
 
 	}
 

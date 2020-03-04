@@ -36,6 +36,7 @@ public class ShowItemListController {
 			itemList = showItemListService.showItemList("");
 		}
 		model.addAttribute("itemList", itemList);
+		System.out.println(itemList);
 		return "item_list_pizza";
 	}
 }

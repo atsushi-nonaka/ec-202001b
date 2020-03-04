@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import com.example.domain.Order;
-
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -25,9 +25,9 @@ import com.example.domain.OrderTopping;
 import com.example.domain.Topping;
 
 /**
- * Ordersテーブルを操作するためのリポジトリ.
+ * ordersテーブルを操作するレポジトリ.
  * 
- * @author yamaseki
+ * @author nonaka
  *
  */
 
@@ -53,7 +53,7 @@ public class OrderRepository {
 	};
 
 	/**
-	 * Order,OrderItem,Item,OrderTopping,Toppingの5つのテーブルを結合したものからorderリストを作成する.
+	 * Order,OrderItem,Item,OrderTopping,Toppingの5つのテーブルを結合する.
 	 * orderオブジェクト内にはorderItemリストを格納する。 orderItemオブジェクト内にはorderToppingListを格納する。
 	 */
 	private static final ResultSetExtractor<List<Order>> ORDER_RESULT_SET_EXTRACTOR = (rs) -> {
@@ -149,7 +149,6 @@ public class OrderRepository {
 		insert = withTableName.usingGeneratedKeyColumns("id");
 	}
 
-	
 	/**
 	 * 引数のuserIdの注文情報がデータベースに存在するかをチェックするためのメソッド.
 	 * 
@@ -169,37 +168,6 @@ public class OrderRepository {
 	}
 
 	/**
-	 * ユーザIDと状態から注文情報を取得します. 注文情報に含まれている、注文商品リスト、注文トッピングリストも取得します。
-	 * statusはSQL文の中で0を指定しています。
-	 * 
-	 * @param userId ユーザID
-	 * @return 注文リスト
-	 */
-	public List<Order> findByUserIdAndStatus(Integer id) {
-		String sql = "SELECT o.id AS o_id,o.user_id AS o_user_id,o.status AS o_status,o.total_price AS o_total_price"
-				+ ",o.order_date AS o_order_date,o.destination_name AS o_destination_name,o.destination_email AS o_destination_email"
-				+ ",o.destination_zipcode AS o_destination_zipcode,o.destination_tel AS o_destination_tel"
-				+ ",o.delivery_time AS o_delivery_time,o.payment_method AS o_payment_method"
-				+ ",oi.id AS oi_id,oi.item_id AS oi_item_id,oi.order_id AS oi_order_id,oi.quantity AS oi_quantity,oi.size AS oi_size"
-				+ ",i.id AS i_id,i.name AS i_name,i.description AS i_description,i.price_m AS i_price_m,i.price_l AS i_price_l"
-				+ ",i.image_path AS i_image_path,i.deleted AS i_deleted"
-				+ ",ot.id AS ot_id,ot.topping_id AS ot_topping_id,ot.order_item_id AS ot_order_item_id"
-				+ ",t.id AS t_id,t.name AS t_name,t.price_m AS t_price_m,t.price_l AS t_price_l"
-				+ " FROM orders o INNER JOIN order_items oi ON o.id=oi.order_id"
-				+ " INNER JOIN items i ON oi.item_id=i.id" + " INNER JOIN order_toppings ot ON oi.id=ot.order_item_id"
-				+ " INNER JOIN toppings t ON ot.topping_id=t.id"
-				+ " WHERE o.user_id=:userId AND o.status=:status ORDER BY o_id";
-
-		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", id).addValue("status", 0);
-
-		List<Order> orderList = template.query(sql, param, ORDER_RESULT_SET_EXTRACTOR);
-
-		return orderList;
-
-	};
-
-	
-	/**
 	 * Orderテーブルにデータを挿入します.
 	 * 
 	 * @param order 注文情報
@@ -215,17 +183,63 @@ public class OrderRepository {
 		return order;
 	}
 
-	
 	/**
 	 * 注文情報を更新するためのメソッドです.
 	 * 
 	 * @param order 更新したい注文情報
 	 */
-	public void update(Order order) {
+	public void update2(Order order) {
 		String sql = "update orders set status = :status,total_price = :totalPrice where user_id = :id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id", order.getUserId()).addValue("status", 0)
 				.addValue("totalPrice", order.getTotalPrice());
 		template.update(sql, param);
 	}
 
+	/**
+	 * ユーザIDと状態から注文情報を取得します. 注文情報に含まれている、注文商品リスト、注文トッピングリストも取得します。
+	 * statusはSQL文の中で0を指定しています。
+	 * 
+	 * @param userId ユーザID
+	 * @return 注文リスト
+	 */
+	public Order findByUserIdAndStatus(Integer userId) {
+		String sql = "SELECT o.id AS o_id,o.user_id AS o_user_id,o.status AS o_status,o.total_price AS o_total_price"
+				+ ",o.order_date AS o_order_date,o.destination_name AS o_destination_name,o.destination_email AS o_destination_email"
+				+ ",o.destination_zipcode AS o_destination_zipcode,o.destination_tel AS o_destination_tel"
+				+ ",o.delivery_time AS o_delivery_time,o.payment_method AS o_payment_method"
+				+ ",oi.id AS oi_id,oi.item_id AS oi_item_id,oi.order_id AS oi_order_id,oi.quantity AS oi_quantity,oi.size AS oi_size"
+				+ ",i.id AS i_id,i.name AS i_name,i.description AS i_description,i.price_m AS i_price_m,i.price_l AS i_price_l"
+				+ ",i.image_path AS i_image_path,i.deleted AS i_deleted"
+				+ ",ot.id AS ot_id,ot.topping_id AS ot_topping_id,ot.order_item_id AS ot_order_item_id"
+				+ ",t.id AS t_id,t.name AS t_name,t.price_m AS t_price_m,t.price_l AS t_price_l"
+				+ " FROM orders o INNER JOIN order_items oi ON o.id=oi.order_id"
+				+ " INNER JOIN items i ON oi.item_id=i.id" + " INNER JOIN order_toppings ot ON oi.id=ot.order_item_id"
+				+ " INNER JOIN toppings t ON ot.topping_id=t.id"
+				+ " WHERE o.user_id=:userId AND o.status=:status ORDER BY o_id";
+
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("status", 0);
+
+		List<Order> orderList = template.query(sql, param, ORDER_RESULT_SET_EXTRACTOR);
+
+		if (orderList.size() == 0) {
+			return null;
+		}
+
+		return orderList.get(0);
+
+	}
+
+	/**
+	 * 注文情報の更新を行う.
+	 * 
+	 * @param order 注文情報
+	 */
+	public void update(Order order) {
+		String sql = "UPDATE orders SET status = :status, destination_name = :destinationName, destination_email = :destinationEmail, "
+				+ "destination_zipcode = :destinationZipcode, destination_address = :destinationAddress, "
+				+ "destination_tel = :destinationTel, delivery_time = :deliveryTime, payment_method = :paymentMethod";
+
+		SqlParameterSource param = new BeanPropertySqlParameterSource(order);
+		template.update(sql, param);
+	}
 }

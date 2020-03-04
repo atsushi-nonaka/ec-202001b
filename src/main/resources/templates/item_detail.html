@@ -5,8 +5,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ピザ屋のネット注文</title>
-<link href="../static/css/bootstrap.css" rel="stylesheet">
-<link href="../static/css/piza.css" rel="stylesheet">
+<link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}">
+<link href="../static/css/piza.css" rel="stylesheet" th:href="@{/css/piza.css}">
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
 <body>
 	<div class="container">
@@ -22,7 +26,7 @@
 							class="icon-bar"></span>
 					</button>
 					<a class="navbar-brand" href="item_list.html"> <!-- 企業ロゴ -->
-						<img alt="main log" src="../static/img_pizza/header_logo.png" height="35">
+						<img alt="main log" src="../static/img_pizza/header_logo.png" th:src="@{/img_pizza/header_logo.png}" height="35">
 					</a>
 				</div>
 
@@ -47,14 +51,14 @@
 				<h3 class="text-center">商品詳細</h3>
 				<div class="row">
 					<div class="col-xs-5">
-						<img src="../static/img_pizza/1.jpg" class="img-responsive img-rounded">
+						<img th:src="${'/img_pizza/' + item.imagePath}" src="../static/img_pizza/1.jpg" class="img-responsive img-rounded">
 					</div>
 
 					<div class="col-xs-5">
 						<div class="bs-component">
-							<h4>じゃがバターベーコン</h4> <br>
+							<h4 th:text="${item.name}">じゃがバターベーコン</h4> <br>
 							<br>
-							<p>マイルドな味付けのカレーに大きくカットしたポテトをのせた、バターとチーズの風味が食欲をそそるお子様でも楽しめる商品です。</p>
+							<p th:text="${item.description}">マイルドな味付けのカレーに大きくカットしたポテトをのせた、バターとチーズの風味が食欲をそそるお子様でも楽しめる商品です。</p>
 						</div>
 					</div>
 				</div><br>
@@ -69,12 +73,12 @@
 									<label class="radio-inline">
 										<input type="radio"
 											name="size" value="M" checked="checked">
-										<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;1,380円(税抜)
+										<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;<span th:text="${item.priceM}"></span>円(税抜)
 									</label>
 									<label class="radio-inline">
 										<input type="radio"
 											name="size" value="L">
-										<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;2,380円(税抜)
+										<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;<span th:text="${item.priceL}"></span>円(税抜)
 									</label>
 								</div>
 							</div>

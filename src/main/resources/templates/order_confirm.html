@@ -1,5 +1,5 @@
 	<!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -75,38 +75,35 @@
 								</div>
 							</th>
 						</tr>
-						<span th:each="order:${orderList}">
 						<tr th:each="orderItem:${order.orderItemList}">
 							<td>
 								<div class="center">
-									<img src="../static/img_pizza/1.jpg" th:src="@{'/img_pizza/' + ${orderItem.item.imagePath}}" 
-										class="img-responsive img-rounded" width="100" height="300"><br>
+									<img src="../static/img_pizza/1.jpg" th:src="@{'/img_pizza/' + ${orderItem.item.imagePath}}" class="img-responsive img-rounded" width="100" height="300"><br>
 								<span th:text="${orderItem.item.name}">じゃがバターベーコン</span>	
 								</div>
 							</td>
 							<td>
 								<span class="price" th:text=" ${orderItem.size}">&nbsp;Ｌ</span>&nbsp;&nbsp;
-								<span th:if="${orderItem.size='M'}" th:text="${#numbers.formatInteger(orderItem.item.priceM,2,'COMMA')}+円">1,490円</span>
-								<span th:if="${orderItem.size='L'}" th:text="${#numbers.formatInteger(orderItem.item.priceL,2,'COMMA')}+円">2,570円</span>&nbsp;&nbsp;
+								<span th:if="${orderItem.size}=='M'" th:text="${#numbers.formatInteger(orderItem.item.priceM,2,'COMMA')}+円">1,490円</span>
+								<span th:if="${orderItem.size}=='L'" th:text="${#numbers.formatInteger(orderItem.item.priceL,2,'COMMA')}+円">2,570円</span>
+								&nbsp;&nbsp;
 								<span th:text="${orderItem.quantity}+個">1個</span>							
 								&nbsp;&nbsp;
 							</td>
 							<td>
 								<ul th:each="orderTopping:${orderItem.orderToppingList}">
-									<li th:if="${orderItem.size='M'}" th:text="${orderTopping.topping.name+orderTopping.topping.priceM}+円">ピーマン
+									<li th:if="${orderItem.size}=='M'" th:text="${orderTopping.topping.name+orderTopping.topping.priceM}+円">ピーマン
 									</li>
-									<li th:if="${orderItem.size='L'}" th:text="${orderTopping.topping.name+orderTopping.topping.priceL}+円">ピーマン
+									<li th:if="${orderItem.size}=='L'" th:text="${orderTopping.topping.name+orderTopping.topping.priceL}+円">ピーマン
 									</li>
 								</ul>
 							</td>
 							<td>
-								<div th:each="subTotal:${subTotalList}">
-								<div class="text-center"  th:text="${#numbers.formatInteger(subTotal,2,'COMMA')}+円">
+								<div class="text-center"  th:text="${#numbers.formatInteger(orderItem.subTotal,2,'COMMA')}+円">
 									3,280円
-								</div></div>
+								</div>
 							</td>
 						</tr>
-						</span>
 					</tbody>
 				</table>
 			</div>
@@ -115,19 +112,21 @@
 		<div class="row">
 			<div class="col-xs-offset-2 col-xs-8">
 				<div class="form-group text-center">
+				<span id="total-price">
 					消費税：<span id="total-price" th:text="${#numbers.formatInteger(tax,3,'COMMA')}">8,000</span>円<br>
 					ご注文金額合計：<span id="total-price" th:text="${#numbers.formatInteger(totalPrice,3,'COMMA')}">38,000</span>円 (税込)
+				</span>
 				</div>
 			</div>
 		</div>
 
 		<!-- table -->
-		<form action="order_finished.html">
+		<form action="order_finished.html" th:action="@{toComplete}" method="post">
 			<div class="row">
 				<div
 					class="table-responsive col-lg-offset-3 col-lg-6 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
 					<h3 class="text-center">お届け先情報</h3>
-					<table class="table table-striped">
+					<table class="table table-striped" th:object="${buyOrderForm}">
 						<tbody>
 							<tr>
 								<td>
@@ -136,7 +135,8 @@
 									</div>
 								</td>
 								<td>
-									<input type="text">
+									<div th:errors="*{destinationName}" style="color: red;"></div>
+									<input type="text" name="destinationName" th:field="*{destinationName}">
 								</td>
 							</tr>
 							<tr>
@@ -146,7 +146,8 @@
 									</div>
 								</td>
 								<td>
-									<input type="text">
+									<div th:errors="*{destinationEmail}" style="color: red;"></div>
+									<input type="text" name="destinationEmail" th:field="*{destinationEmail}">
 								</td>
 							</tr>
 							<tr>
@@ -156,7 +157,7 @@
 									</div>
 								</td>
 								<td>
-									<input type="text">&nbsp;&nbsp;<button>住所検索</button>
+									<input id="inputZipcode" type="text" name="destinationZipcode" th:field="*{destinationZipcode}">&nbsp;&nbsp;<button id="searchAddress" type="button">住所検索</button>
 								</td>
 							</tr>
 							<tr>
@@ -166,7 +167,8 @@
 									</div>
 								</td>
 								<td>
-									<input type="text">
+									<div th:errors="*{destinationAddress}" style="color: red;"></div>
+									<input id="inputAddress" type="text" name="destinationAddress" th:field="*{destinationAddress}">
 								</td>
 							</tr>
 							<tr>
@@ -176,7 +178,8 @@
 									</div>
 								</td>
 								<td>
-									<input type="text">
+									<div th:errors="*{destinationTel}" style="color: red;"></div>
+									<input type="text" name="destinationTel" th:field="*{destinationTel}">
 								</td>
 							</tr>
 							<tr>
@@ -189,12 +192,11 @@
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-12">
-												<label
-													class="control-label" style="color: red" for="inputPeriod">配達日時を入力してください</label>
+												<div th:errors="*{deliveryDate}" style="color: red;"></div>												
 											</div>
 											<div class="col-sm-5">
-												<input type="date" name="name" id="name"
-													class="form-control input-sm" />
+												<input type="date" name="deliveryDate" id="deliveryDate"
+													class="form-control input-sm" th:field="*{deliveryDate}">
 											</div>
 
 										</div>
@@ -202,47 +204,47 @@
 											<div class="col-sm-12">
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany" checked="checked">
+														name="deliveryTime" checked="checked" value="10">
 													10時
 												</label>
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany">
+														name="deliveryTime" value="11">
 													11時
 												</label>
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany">
+														name="deliveryTime" value="12">
 													12時
 												</label><br>
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany">
+														name="deliveryTime" value="13">
 													13時
 												</label>
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany">
+														name="deliveryTime" value="14">
 													14時
 												</label>
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany">
+														name="deliveryTime" value="15">
 													15時
 												</label><br>
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany">
+														name="deliveryTime" value="16">
 													16時
 												</label>
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany">
+														name="deliveryTime" value="17">
 													17時
 												</label>
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany">
+														name="deliveryTime" value="18">
 													18時
 												</label><br>
 											</div>
@@ -273,7 +275,7 @@
 										<div class="col-sm-12">
 											<label class="radio-inline">
 												<input type="radio"
-													name="responsibleCompany" checked="checked">
+													name="paymentMethod" checked="checked" value="cash">
 												代金引換
 											</label>
 										</div>
@@ -291,7 +293,7 @@
 										<div class="col-sm-12">
 											<label class="radio-inline">
 												<input type="radio"
-													name="responsibleCompany" checked="checked">
+													name="paymentMethod" checked="checked" value="credit">
 												クレジットカード
 											</label><br><br>
 										</div>
@@ -305,6 +307,7 @@
 			<div class="row">
 				<div class="col-xs-offset-4 col-xs-4">
 					<div class="form-group">
+						<input type="hidden" name="userId" th:value="1">
 						<input class="form-control btn btn-warning btn-block" type="submit" value="この内容で注文する">
 					</div>
 				</div>
@@ -314,6 +317,7 @@
 	<!-- end container -->
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script src="../static/js/bootstrap.min.js"></script>
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<script th:src="@{/js/script.js}"></script>
 </body>
 </html>
