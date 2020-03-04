@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.domain.Order;
 
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,6 +30,7 @@ import com.example.domain.Topping;
  * @author yamaseki
  *
  */
+
 @Repository
 public class OrderRepository {
 
@@ -139,6 +141,7 @@ public class OrderRepository {
 	/**
 	 * insertで自動採番されるidを取ってくるためのメソッド.
 	 */
+
 	@PostConstruct
 	public void init() {
 		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert((JdbcTemplate) template.getJdbcOperations());

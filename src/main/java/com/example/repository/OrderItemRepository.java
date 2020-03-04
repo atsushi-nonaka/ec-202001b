@@ -27,9 +27,6 @@ public class OrderItemRepository {
 	/** insertで自動採番されるidを取ってくるためのオブジェクト */
 	private SimpleJdbcInsert insert;
 
-	/**
-	 * insertで自動採番されるidを取ってくるためのメソッド.
-	 */
 	@PostConstruct
 	public void init() {
 		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert((JdbcTemplate) template.getJdbcOperations());
