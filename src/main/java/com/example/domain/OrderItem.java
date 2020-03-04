@@ -86,4 +86,43 @@ public class OrderItem {
 				+ ", size=" + size + "]";
 	}
 
+	/**
+	 * 注文商品の小計を計算します.(税抜)
+	 * 
+	 * @return 注文商品小計
+	 */
+	public int getSubTotal() {
+		int itemPrice = 0;
+		int toppingPrice = 0;
+		int subTotal = 0;
+		List<OrderTopping> toppingList = getOrderToppingList();
+
+		if (getSize() == 'M') {
+			itemPrice = getItem().getPriceM();
+		} else if (getSize() == 'L') {
+			itemPrice = getItem().getPriceL();
+		}
+
+		if (toppingList != null) {
+			// サイズ毎の価格を取得
+			for (OrderTopping orderTopping : toppingList) {
+				if (getSize() == 'M') {
+					toppingPrice = orderTopping.getTopping().getPriceM();
+				} else if (getSize() == 'L') {
+					toppingPrice = orderTopping.getTopping().getPriceL();
+				}
+			}
+			subTotal = (itemPrice + toppingPrice * toppingList.size()) * getQuantity();
+		}else {
+			subTotal = (itemPrice + toppingPrice * getQuantity());
+		}
+
+//		System.out.println("商品の値段"+itemPrice);
+//		System.out.println("商品の数"+getQuantity());
+//		System.out.println("トッピングの値段"+toppingPrice);
+//		System.out.println("トッピングの数"+toppingList.size());
+//		System.out.println("小計の値段"+subTotal);
+		return subTotal;
+	}
+
 }

@@ -39,15 +39,8 @@ public class Order {
 	/** ユーザー */
 	private User user;
 	/** 注文商品リスト */
-	private List<OrderItem> orderList;
-	@Override
-	public String toString() {
-		return "Order [id=" + id + ", userId=" + userId + ", status=" + status + ", totalPrice=" + totalPrice
-				+ ", orderDate=" + orderDate + ", destinationName=" + destinationName + ", destinationEmail="
-				+ destinationEmail + ", destinationZipcode=" + destinationZipcode + ", destinationAddress="
-				+ destinationAddress + ", destinationTel=" + destinationTel + ", deliveryTime=" + deliveryTime
-				+ ", paymentMethod=" + paymentMethod + ", user=" + user + ", orderList=" + orderList + "]";
-	}
+	private List<OrderItem> orderItemList;
+
 	public Integer getId() {
 		return id;
 	}
@@ -130,13 +123,52 @@ public class Order {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public List<OrderItem> getOrderList() {
-		return orderList;
-	}
-	public void setOrderList(List<OrderItem> orderList) {
-		this.orderList = orderList;
-	}
-	
-	
 
+	public List<OrderItem> getOrderItemList() {
+		return orderItemList;
+	}
+
+	public void setOrderItemList(List<OrderItem> orderItemList) {
+		this.orderItemList = orderItemList;
+	}
+	
+	@Override
+	public String toString() {
+		return "Order [id=" + id + ", userId=" + userId + ", status=" + status + ", totalPrice=" + totalPrice
+				+ ", orderDate=" + orderDate + ", destinationName=" + destinationName + ", destinationEmail="
+				+ destinationEmail + ", destinationZipcode=" + destinationZipcode + ", destinationAddress="
+				+ destinationAddress + ", destinationTel=" + destinationTel + ", deliveryTime=" + deliveryTime
+				+ ", paymentMethod=" + paymentMethod + ", user=" + user + ", orderItemList=" + orderItemList + "]";
+	}
+
+	/**
+	 * 注文商品の消費税を計算します.
+	 * 
+	 * @return 消費税
+	 */
+	public int getTax() {
+		int totalPrice = 0;
+		List<OrderItem> orderItemList = getOrderItemList();
+		for (OrderItem orderItem : orderItemList) {
+			totalPrice += orderItem.getSubTotal();
+		}
+		int tax = (int) (totalPrice * 0.1);
+		return tax;
+	}
+
+	/**
+	 * 合計金額を計算します.(税抜)
+	 * 
+	 * @return 合計金額
+	 */
+	public int CalcTotalPrice() {
+		int totalPrice = 0;
+		List<OrderItem> orderItemList = getOrderItemList();
+		for (OrderItem orderItem : orderItemList) {
+			totalPrice += orderItem.getSubTotal();
+		}
+
+		return totalPrice;
+
+	}
 }
