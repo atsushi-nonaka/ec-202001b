@@ -180,7 +180,7 @@
 								</td>
 								<td>
 									<div th:errors="*{destinationName}" style="color: red;"></div>
-									<input type="text" name="destinationName">
+									<input type="text" name="destinationName" th:field="*{destinationName}">
 								</td>
 							</tr>
 							<tr>
@@ -191,7 +191,7 @@
 								</td>
 								<td>
 									<div th:errors="*{destinationEmail}" style="color: red;"></div>
-									<input type="text" name="destinationEmail">
+									<input type="text" name="destinationEmail" th:field="*{destinationEmail}">
 								</td>
 							</tr>
 							<tr>
@@ -201,7 +201,7 @@
 									</div>
 								</td>
 								<td>
-									<input type="text" name="destinationZipcode">&nbsp;&nbsp;<button>住所検索</button>
+									<input type="text" name="destinationZipcode" th:field="*{destinationZipcode}">&nbsp;&nbsp;<button>住所検索</button>
 								</td>
 							</tr>
 							<tr>
@@ -212,7 +212,7 @@
 								</td>
 								<td>
 									<div th:errors="*{destinationAddress}" style="color: red;"></div>
-									<input type="text" name="destinationAddress">
+									<input type="text" name="destinationAddress" th:field="*{destinationAddress}">
 								</td>
 							</tr>
 							<tr>
@@ -223,7 +223,7 @@
 								</td>
 								<td>
 									<div th:errors="*{destinationTel}" style="color: red;"></div>
-									<input type="text" name="destinationTel">
+									<input type="text" name="destinationTel" th:field="*{destinationTel}">
 								</td>
 							</tr>
 							<tr>
@@ -242,7 +242,7 @@
 											<div class="col-sm-5">
 												<div th:errors="*{deliveryDate}" style="color: red;"></div>
 												<input type="date" name="deliveryDate" id="deliveryDate"
-													class="form-control input-sm" />
+													class="form-control input-sm" th:field="*{deliveryDate}">
 											</div>
 
 										</div>
