@@ -40,6 +40,12 @@ public class RegisterUserController {
 		return "register_user";
 	}
 
+	/**
+	 * ユーザー登録します
+	 * @param userform ユーザー登録用form
+	 * @param result エラー表示
+	 * @return　エラー有：ユーザー登録画面へ遷移、エラー無：ログイン画面
+	 */
 	@RequestMapping("insertUser")
 	public String insertUser(@Validated UserForm userform, BindingResult result) {
 		
