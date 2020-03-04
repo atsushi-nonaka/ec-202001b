@@ -24,7 +24,7 @@ public class OrderRepository {
 	private NamedParameterJdbcTemplate template;
 		
 	/**
-	 * Order,OrderItem,Item,OrderTopping,Toppingの5つのテーブルを結合したものからorderリストを作成する.
+	 * Order,OrderItem,Item,OrderTopping,Toppingの5つのテーブルを結合する.
 	 *orderオブジェクト内にはorderItemリストを格納する。
 	 *orderItemオブジェクト内にはorderToppingListを格納する。 
 	 */
@@ -112,7 +112,7 @@ public class OrderRepository {
 		 * @param userId ユーザID
 		 * @return　注文リスト
 		 */
-		public List<Order> findByUserIdAndStatus(Integer userId){
+		public Order findByUserIdAndStatus(Integer userId){
 			String sql="SELECT o.id AS o_id,o.user_id AS o_user_id,o.status AS o_status,o.total_price AS o_total_price"+
 					",o.order_date AS o_order_date,o.destination_name AS o_destination_name,o.destination_email AS o_destination_email"+
 					",o.destination_zipcode AS o_destination_zipcode,o.destination_tel AS o_destination_tel"+
@@ -132,9 +132,12 @@ public class OrderRepository {
 			
 			List<Order> orderList=template.query(sql, param, ORDER_RESULT_SET_EXTRACTOR);
 			
-			return orderList;
+			if(orderList.size()==0) {
+				return null;
+			}
 			
-			
+			return orderList.get(0);
+
 		}
 		
 		

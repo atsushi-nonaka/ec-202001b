@@ -35,28 +35,18 @@ public class OrderConfirmController {
 	 */
 	@RequestMapping("/toOrderConfirm")
 	public String toOrderConfirm(Integer userId,Model model) {
-		List<Order> orderList=service.findByUserIdAndStatus(userId);
-		int subTotal=0;
-		int tax=0;
-		int totalPrice=0;
-		List<Integer> subTotalList=new ArrayList<>();
+		Order order=service.findByUserIdAndStatus(userId);
 		if(userId==null) {
 			return "login";
 		}
-		for(Order order:orderList) {
-			tax=order.getTax();
-			totalPrice=order.getTotalPrice();
-			for(OrderItem orderItem:order.getOrderItemList()) {
-				subTotal=orderItem.getSubTotal();
-				subTotalList.add(subTotal);
-			}
-		}
-		System.out.println("小計リストの表示"+subTotalList);
-		model.addAttribute("subTotalList",subTotalList);
+		
+		int tax=order.getTax();
+		int totalPrice=order.getTotalPrice();
+		
 		model.addAttribute("tax",tax);
 		model.addAttribute("totalPrice",totalPrice);
 		
-		model.addAttribute("orderList",orderList);
+		model.addAttribute("order",order);
 		
 		return "order_confirm";
 				
