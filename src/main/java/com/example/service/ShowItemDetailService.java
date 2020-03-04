@@ -24,8 +24,8 @@ public class ShowItemDetailService {
 	 * @param id リクエストパラメータ(商品id)
 	 * @return 商品情報を返します
 	 */
-	public Item showDetail(Integer id) {
-		Item item = itemRepository.load(id);
-		return item;
-	}
+//	public Item showDetail(Integer id) {
+//		Item item = itemRepository.load(id);
+//		return item;
+//	}
 }

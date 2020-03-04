@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Order;
-import com.example.form.BuyOrderForm;
+import com.example.Form.BuyOrderForm;
 import com.example.service.BuyOrderService;
 import com.example.service.OrderConfirmService;
 
