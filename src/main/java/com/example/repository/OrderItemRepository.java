@@ -14,27 +14,26 @@ import com.example.domain.OrderItem;
 
 @Repository
 public class OrderItemRepository {
-	
+
 	@Autowired
-	private  NamedParameterJdbcTemplate template;
-	
+	private NamedParameterJdbcTemplate template;
+
 	private SimpleJdbcInsert insert;
-	
+
 	@PostConstruct
 	public void init() {
-		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert((JdbcTemplate)template.getJdbcOperations());
+		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert((JdbcTemplate) template.getJdbcOperations());
 		SimpleJdbcInsert withTableName = simpleJdbcInsert.withTableName("order_items");
 		insert = withTableName.usingGeneratedKeyColumns("id");
 	}
-	
+
 	public OrderItem insert(OrderItem orderItem) {
-		System.out.println(orderItem);
 		String sql = "insert into order_items(item_id,order_id,quantity,size)values(:itemId,:orderId,:quantity,:size)";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(orderItem);
-		
+
 		Number key = insert.executeAndReturnKey(param);
 		orderItem.setId(key.intValue());
-		
+
 		return orderItem;
 	}
 
