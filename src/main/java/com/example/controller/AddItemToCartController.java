@@ -34,7 +34,7 @@ public class AddItemToCartController {
 	 * 商品をカートに追加します.
 	 * 
 	 * @param form   商品詳細ページからのパラメータを受け取るフォームクラス
-	 * @param userId aタグから飛んでくるユーザーID
+	 * @param userId ユーザーID
 	 * @return toCartメソッドにリダイレクトします
 	 */
 	@RequestMapping("/addCart")

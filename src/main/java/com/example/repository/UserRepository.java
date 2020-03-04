@@ -25,7 +25,7 @@ public class UserRepository {
 	private NamedParameterJdbcTemplate template;
 
 	/**
-	 *Userオブジェクト生成するローマッパー. 
+	 * Userオブジェクト生成するローマッパー.
 	 */
 	private static final RowMapper<User> User_ROW_MAPPER = (rs, i) -> {
 		User use = new User();
@@ -65,6 +65,23 @@ public class UserRepository {
 		} else {
 			return userList.get(0);
 		}
-
+	}
+	
+	
+	/**
+	 * メールアドレスとパスワードで登録済みのユーザーを検索します
+	 * 
+	 * @param email 登録済のメールアドレス
+	 * @return 登録していない場合はnullを返す
+	 */
+	public User findByEmailAndPassword(String email,String password) {
+		String sql = "SELECT id,name,email,zipcode,address,telephone,password FROM users WHERE email = :email and password = :password";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("email", email).addValue("password", password);
+		List<User> userList = template.query(sql, param, User_ROW_MAPPER);
+		if (userList.size() == 0) {
+			return null;
+		} else {
+			return userList.get(0);
+		}
 	}
 }
