@@ -1,4 +1,5 @@
 $(function(){
+	//郵便番号から住所を自動検索する関数
 	$("#searchAddress").on("click",function(){
 		$.ajax({
 			url: "http://zipcoda.net/api",

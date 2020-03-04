@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
  * @author nonaka
  *
  */
-public class OrderForm {
+public class BuyOrderForm {
 	/** 宛先氏名 */
 	@NotBlank(message="お名前を入力して下さい")
 	private String destinationName;

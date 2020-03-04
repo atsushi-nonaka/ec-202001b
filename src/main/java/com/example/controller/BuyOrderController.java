@@ -7,8 +7,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.form.OrderForm;
-import com.example.service.OrderService;
+import com.example.form.BuyOrderForm;
+import com.example.service.BuyOrderService;
 
 /**
  * 注文情報を操作するコントローラー.
@@ -18,15 +18,15 @@ import com.example.service.OrderService;
  */
 @Controller
 @RequestMapping("")
-public class OrderController {
+public class BuyOrderController {
 	
 	@Autowired
-	private OrderService orderService;
+	private BuyOrderService orderService;
 	
 	
 	@ModelAttribute
-	public OrderForm setUpForm() {
-		return new OrderForm();
+	public BuyOrderForm setUpForm() {
+		return new BuyOrderForm();
 	}
 	
 	/**
@@ -34,8 +34,8 @@ public class OrderController {
 	 * 
 	 * @return オーダー確認画面
 	 */
-	@RequestMapping("")
-	public String index() {
+	@RequestMapping("/toConfirm")
+	public String toConfirm() {
 		return "order_confirm";
 	}
 	
@@ -45,13 +45,13 @@ public class OrderController {
 	 * @param form オーダーフォーム
 	 * @return 完了画面
 	 */
-	@RequestMapping("to_complete")
-	public String orderFinish(@Validated OrderForm form,
+	@RequestMapping("/toComplete")
+	public String orderFinish(@Validated BuyOrderForm form,
 								   BindingResult result
 								   ) {
 		
 		if(result.hasErrors()) {
-			return index();
+			return toConfirm();
 		}
 		orderService.orderFinish(form);
 		return "order_finished";
