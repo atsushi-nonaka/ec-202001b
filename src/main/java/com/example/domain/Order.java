@@ -4,10 +4,6 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 
-<<<<<<< HEAD
-=======
-
->>>>>>> feature/order
 
 /**
  * 注文情報を表すドメインクラス.

@@ -5,25 +5,19 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-<<<<<<< HEAD
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-=======
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
->>>>>>> feature/order
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
-<<<<<<< HEAD
 import com.example.domain.Item;
 import com.example.domain.Order;
 import com.example.domain.OrderItem;
 import com.example.domain.OrderTopping;
 import com.example.domain.Topping;
 
-=======
-import com.example.domain.Order;
 
 /**
  * ordersテーブルを操作するレポジトリ.
@@ -31,13 +25,11 @@ import com.example.domain.Order;
  * @author nonaka
  *
  */
->>>>>>> feature/order
 @Repository
 public class OrderRepository {
 	
 	@Autowired
 	private NamedParameterJdbcTemplate template;
-<<<<<<< HEAD
 		
 	/**
 	 * Order,OrderItem,Item,OrderTopping,Toppingの5つのテーブルを結合したものからorderリストを作成する.
@@ -153,9 +145,6 @@ public class OrderRepository {
 			
 		}
 		
-		
-	}
-=======
 	
 	/**
 	 * 注文情報の更新を行う.
@@ -171,4 +160,3 @@ public class OrderRepository {
 		template.update(sql, param);
 	}
 }
->>>>>>> feature/order
