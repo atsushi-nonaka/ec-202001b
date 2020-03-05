@@ -48,7 +48,7 @@ public class OrderConfirmController {
 		if(userId==null) {
 			return "login";
 		}
-		
+
 		int tax=order.getTax();
 		int totalPrice=tax+order.getTotalPrice();
 				

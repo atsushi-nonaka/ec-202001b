@@ -50,7 +50,7 @@ public class AddItemToCartController {
 	 */
 	@RequestMapping("/toCartList")
 	public String toCartList() {
-		return "cart_list";
+		return "forward:/toOrderConfirm";
 	}
 
 }
