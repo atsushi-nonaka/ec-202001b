@@ -65,7 +65,7 @@ public class AddItemToCartService {
 		BeanUtils.copyProperties(form, orderItem);
 		orderItem.setOrderId(order.getId());
 		orderItem = orderItemRepository.insert(orderItem);
-		orderItem.setItem(itemRepository.findByItemId(orderItem.getItemId()));
+		orderItem.setItem(itemRepository.load(orderItem.getItemId()));
 
 		if (form.getToppingIdList() != null) {
 			List<OrderTopping> orderToppingList = new ArrayList<>();

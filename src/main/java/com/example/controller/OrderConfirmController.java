@@ -44,13 +44,14 @@ public class OrderConfirmController {
 	@RequestMapping("/toOrderConfirm")
 	public String toOrderConfirm(Integer userId,Model model) {
 		Order order=service.findByUserIdAndStatus(userId);
+		
 		if(userId==null) {
 			return "login";
 		}
-				
-		int tax= order.getTax();
-		int totalPrice=order.getTotalPrice();
 		
+		int tax=order.getTax();
+		int totalPrice=tax+order.getTotalPrice();
+				
 		model.addAttribute("tax",tax);
 		model.addAttribute("totalPrice",totalPrice);
 		

@@ -25,7 +25,7 @@ public class ShowItemDetailService {
 	 * @return 商品情報を返します
 	 */
 	public Item showDetail(Integer id) {
-		Item item = itemRepository.findByItemId(id);
+		Item item = itemRepository.load(id);
 		return item;
 	}
 }
