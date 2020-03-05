@@ -25,7 +25,7 @@
 							class="icon-bar"></span> <span class="icon-bar"></span> <span
 							class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="item_list.html"> <!-- 企業ロゴ -->
+					<a class="navbar-brand" href="item_list.html" th:href="@{/show_item_list}"> <!-- 企業ロゴ -->
 						<img alt="main log" src="../static/img_pizza/header_logo.png" th:src="@{/img_pizza/header_logo.png}" height="35">
 					</a>
 				</div>
@@ -74,12 +74,12 @@
 									<label class="radio-inline">
 										<input type="radio"
 											name="responsibleCompany" checked="checked">
-										<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;<span th:text="${item.priceM}"></span>円(税抜)
+										<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;<span th:text="${item.priceM} + '円(税抜)'"></span>
 									</label>
 									<label class="radio-inline">
 										<input type="radio"
 											name="responsibleCompany">
-										<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;<span th:text="${item.priceL}"></span>円(税抜)
+										<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;<span th:text="${item.priceL} +'円(税抜)'"></span>
 									</label>
 								</div>
 							</div>
@@ -98,29 +98,8 @@
 									</label>
 								</div>
 								<div class="col-sm-12">
-									<label class="checkbox-inline">
-										<input type="checkbox" value="">オニオン
-									</label>
-									<label class="checkbox-inline">
-										<input type="checkbox" value="">チーズ
-									</label>
-									<label class="checkbox-inline">
-										<input type="checkbox" value="">ピーマン
-									</label>
-									<label class="checkbox-inline">
-										<input type="checkbox" value="">ロースハム
-									</label><br>
-									<label class="checkbox-inline">
-										<input type="checkbox" value="">ほうれん草
-									</label>
-									<label class="checkbox-inline">
-										<input type="checkbox" value="">ぺパロに
-									</label>
-									<label class="checkbox-inline">
-										<input type="checkbox" value="">グリルナス
-									</label>
-									<label class="checkbox-inline">
-										<input type="checkbox" value="">あらびきソーセージ
+									<label class="checkbox-inline" th:each="topping:${item.toppingList}">
+										<input type="checkbox" value=""><span th:text="${topping.name}"></span>
 									</label>
 								</div>
 							</div>
