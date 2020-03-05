@@ -193,11 +193,12 @@ public class OrderRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id", order.getUserId()).addValue("status", 0)
 				.addValue("totalPrice", order.getTotalPrice());
 		template.update(sql, param);
-	}
-
+	}	
+	
 	/**
-	 * ユーザIDと状態から注文情報を取得します. 注文情報に含まれている、注文商品リスト、注文トッピングリストも取得します。
-	 * statusはSQL文の中で0を指定しています。
+	 * ユーザIDと状態から注文情報を取得します. 
+	 * 注文情報に含まれている、注文商品リスト、注文トッピングリストも取得します。
+	 * statusは0を指定しています。
 	 * 
 	 * @param userId ユーザID
 	 * @return 注文リスト
