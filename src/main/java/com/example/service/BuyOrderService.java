@@ -7,6 +7,9 @@ import java.time.LocalTime;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +29,12 @@ public class BuyOrderService {
 	
 	@Autowired
 	private OrderRepository orderRepository;
+	
+	@Value("${spring.mail.username}")
+	private String mailFrom;
+	
+	@Autowired
+	private MailSender mailSender;
 	
 	/**
 	 * 注文情報の更新を行う.
@@ -59,5 +68,18 @@ public class BuyOrderService {
 		}
 
 		orderRepository.update(order);
+		sendMail();
+	}
+	
+	/**
+	 * 注文確定後、メールを送信する.
+	 */
+	public void sendMail(){
+		SimpleMailMessage mailmsg = new SimpleMailMessage();    
+	    mailmsg.setFrom(mailFrom);
+	    mailmsg.setTo("test@test.co.jp");//メールの宛先
+	    mailmsg.setSubject("テストメール");//タイトルの設定
+	    mailmsg.setText("Spring Boot より本文送信"); //本文の設定
+	    mailSender.send(mailmsg);
 	}
 }

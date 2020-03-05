@@ -27,7 +27,7 @@ public class OrderConfirmService {
 	 * @param userId　ユーザID
 	 * @return　注文リスト
 	 */
-	public List<Order> findByUserIdAndStatus(Integer userId){
+	public Order findByUserIdAndStatus(Integer userId){
 		return repository.findByUserIdAndStatus(userId);
 	}
 	
