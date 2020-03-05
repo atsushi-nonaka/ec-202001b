@@ -19,7 +19,7 @@ import com.example.service.LoginService;
  *
  */
 @Controller
-@RequestMapping("/loginController")
+@RequestMapping("/rakuraku-pizza")
 public class LoginController {
 	
 	@ModelAttribute

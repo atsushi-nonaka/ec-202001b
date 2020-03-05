@@ -21,41 +21,41 @@ import com.example.service.BuyOrderService;
 @RequestMapping("")
 public class BuyOrderController {
 	
-	@Autowired
-	private BuyOrderService orderService;
-	
-	
-	@ModelAttribute
-	public BuyOrderForm setUpForm() {
-		return new BuyOrderForm();
-	}
-	
-	/**
-	 * オーダー確認画面に遷移する.
-	 * 
-	 * @return オーダー確認画面
-	 */
-	@RequestMapping("/toConfirm")
-	public String toConfirm() {
-		return "order_confirm";
-	}
-	
-	/**
-	 * 注文情報を更新する.
-	 * 
-	 * @param form オーダーフォーム
-	 * @return 完了画面
-	 */
-	@RequestMapping("/toComplete")
-	public String orderFinish(@Validated BuyOrderForm form,
-								   BindingResult result,
-								   Integer userId,Model model
-								   ) {
-		
-		if(result.hasErrors()) {
-			return "forward:/toOrderConfirm";
-		}
-		orderService.orderFinish(form);
-		return "order_finished";
-	}
+//	@Autowired
+//	private BuyOrderService orderService;
+//	
+//	
+//	@ModelAttribute
+//	public BuyOrderForm setUpForm() {
+//		return new BuyOrderForm();
+//	}
+//	
+//	/**
+//	 * オーダー確認画面に遷移する.
+//	 * 
+//	 * @return オーダー確認画面
+//	 */
+//	@RequestMapping("/toConfirm")
+//	public String toConfirm() {
+//		return "order_confirm";
+//	}
+//	
+//	/**
+//	 * 注文情報を更新する.
+//	 * 
+//	 * @param form オーダーフォーム
+//	 * @return 完了画面
+//	 */
+//	@RequestMapping("/toComplete")
+//	public String orderFinish(@Validated BuyOrderForm form,
+//								   BindingResult result,
+//								   Integer userId,Model model
+//								   ) {
+//		
+//		if(result.hasErrors()) {
+//			return "forward:/toOrderConfirm";
+//		}
+//		orderService.orderFinish(form);
+//		return "order_finished";
+//	}
 }
