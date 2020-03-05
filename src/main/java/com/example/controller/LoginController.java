@@ -57,7 +57,7 @@ public class LoginController {
 			result.rejectValue("email", null, "メールアドレスかパスワードが間違っています。");
 			return toLogin();
 		}
-		return "item_list_pizza";
+		return "forward:/show_item_list";
 	}
 
 
