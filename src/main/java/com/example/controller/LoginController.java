@@ -68,7 +68,6 @@ public class LoginController {
 		//仮でuserIdをsessionスコープに格納します.
 		Order order=new Order();
 		order.setUserId(user.getId());
-//		System.out.println("Orderの中身を表示"+order);
 		session.setAttribute("order",order);
 		return "forward:/show_item_list";
 	}
