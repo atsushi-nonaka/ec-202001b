@@ -80,8 +80,6 @@ public class OrderItem {
 		this.orderToppingList = orderToppingList;
 	}
 
-
-
 	@Override
 	public String toString() {
 		return "OrderItem [id=" + id + ", itemId=" + itemId + ", orderId=" + orderId + ", quantity=" + quantity
@@ -105,20 +103,22 @@ public class OrderItem {
 			itemPrice = item.getPriceL();
 		}
 
-		// サイズ毎の価格を取得
-		for (OrderTopping orderTopping : toppingList) {
-			if (getSize() == 'M') {
-				toppingPrice = orderTopping.getTopping().getPriceM();
-				
-				subTotal = (itemPrice + toppingPrice * toppingList.size()) * getQuantity();
-			} else if (getSize() == 'L') {
-				toppingPrice = orderTopping.getTopping().getPriceL();
+		if (toppingList!=null) {
+			// サイズ毎の価格を取得
+			for (OrderTopping orderTopping : toppingList) {
+				if (getSize() == 'M') {
+					toppingPrice = orderTopping.getTopping().getPriceM();
 
-				subTotal = (itemPrice + toppingPrice * toppingList.size()) * getQuantity();
-			} else {
-				//toppingの選択が一つもなかった時の処理
-				subTotal = itemPrice *getQuantity();
+					subTotal = (itemPrice + toppingPrice * toppingList.size()) * getQuantity();
+				} else if (getSize() == 'L') {
+					toppingPrice = orderTopping.getTopping().getPriceL();
+
+					subTotal = (itemPrice + toppingPrice * toppingList.size()) * getQuantity();
+				}
 			}
+		} else {
+			// toppingの選択が一つもなかった時の処理
+			subTotal = itemPrice * getQuantity();
 		}
 //		System.out.println("商品の値段"+itemPrice);
 //		System.out.println("商品の数"+getQuantity());
@@ -129,7 +129,7 @@ public class OrderItem {
 //		System.out.println((itemPrice+toppingPrice*toppingList.size())*getQuantity());
 //		
 //		System.out.println("小計の値段"+subTotal);
-		
+
 		return subTotal;
 	}
 }
