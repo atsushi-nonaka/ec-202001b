@@ -274,7 +274,7 @@
 									<div class="row">
 										<div class="col-sm-12">
 											<label class="radio-inline">
-												<input type="radio"
+												<input id="cash" type="radio"
 													name="paymentMethod" checked="checked" value="cash">
 												代金引換
 											</label>
@@ -292,7 +292,7 @@
 									<div class="row">
 										<div class="col-sm-12">
 											<label class="radio-inline">
-												<input type="radio"
+												<input id="creditCard" type="radio"
 													name="paymentMethod" checked="checked" value="credit">
 												クレジットカード
 											</label><br><br>
@@ -319,5 +319,16 @@
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script th:src="@{/js/bootstrap.min.js}"></script>
 	<script th:src="@{/js/script.js}"></script>
+	<form action="/pay" method="POST">
+	  <script
+	    src="https://checkout.stripe.com/checkout.js"
+	    class="stripe-button"
+	    data-key="pk_test_A4swupMMdflEqelvm7gJUFki00WL3sdXlE"
+	    data-name="Tシャツ"
+	    data-description="コットンTシャツ"
+	    data-amount="500"
+	    data-currency="jpy">
+	  </script>
+	</form>
 </body>
 </html>
