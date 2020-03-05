@@ -35,17 +35,18 @@ public class ShowCartController {
 	 * @return ショッピングカートリスト
 	 */
 	@RequestMapping("/showCart")
-	public String showCart(Integer userId, Model model) {
-		
-		Order order = service.showCart(userId);
-		
-		int tax = order.getTax();
-		
-		int totalPrice = tax + order.getTotalPrice();
-
-		model.addAttribute("tax", tax);
-		model.addAttribute("totalPrice", totalPrice);
-		model.addAttribute("order", order);
+	public String showCart() {
+//		Integer userId, Model model
+//		上記は引数
+//		Order order = service.showCart(userId);
+//		
+//		int tax = order.getTax();
+//		
+//		int totalPrice = tax + order.getTotalPrice();
+//
+//		model.addAttribute("tax", tax);
+//		model.addAttribute("totalPrice", totalPrice);
+//		model.addAttribute("order", order);
 
 		return "cart_list";
 	}
