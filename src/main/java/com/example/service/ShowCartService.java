@@ -5,19 +5,23 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.domain.Order;
-import com.example.repository.ShowCartRepository;
+import com.example.repository.OrderRepository;
 
+/**
+ * ショッピングカートを表示するサービスクラスです.
+ * @author yuri.okada
+ *
+ */
 @Service
 @Transactional
 public class ShowCartService {
 	
 	@Autowired
-	private ShowCartRepository repository;
+	private OrderRepository repository;
 	
-	public Order searchByUserIdAndStatus(Integer id) {
+	public Order showCart(Integer userId) {
 		
-		repository.findByUserIdAndStatus(id);
-		
-		return null;
+		return repository.findByUserIdAndStatus(userId);
+				
 	}
 }

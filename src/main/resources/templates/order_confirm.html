@@ -26,7 +26,7 @@
 							class="icon-bar"></span>
 					</button>
 					<a class="navbar-brand" href="item_list.html"> <!-- 企業ロゴ --> <img
-						alt="main log" src="../static/img_pizza/header_logo.png" height="35">
+						alt="main log" src="../static/img_pizza/header_logo.png" th:src="@{/img_pizza/header_logo.png}" height="35">
 					</a>
 				</div>
 
@@ -121,12 +121,11 @@
 		</div>
 
 		<!-- table -->
-		<form action="order_finished.html" th:action="@{toComplete}" method="post">
+		<form action="order_finished.html" th:action="@{toComplete}" method="post" th:object="${buyOrderForm}">
 			<div class="row">
-				<div
-					class="table-responsive col-lg-offset-3 col-lg-6 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
+				<div class="table-responsive col-lg-offset-3 col-lg-6 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
 					<h3 class="text-center">お届け先情報</h3>
-					<table class="table table-striped" th:object="${buyOrderForm}">
+					<table class="table table-striped">
 						<tbody>
 							<tr>
 								<td>
@@ -195,8 +194,7 @@
 												<div th:errors="*{deliveryDate}" style="color: red;"></div>												
 											</div>
 											<div class="col-sm-5">
-												<input type="date" name="deliveryDate" id="deliveryDate"
-													class="form-control input-sm" th:field="*{deliveryDate}">
+												<input type="date" name="deliveryDate" id="deliveryDate" th:field="*{deliveryDate}" class="form-control input-sm">
 											</div>
 
 										</div>
@@ -274,7 +272,7 @@
 									<div class="row">
 										<div class="col-sm-12">
 											<label class="radio-inline">
-												<input type="radio"
+												<input id="cash" type="radio"
 													name="paymentMethod" checked="checked" value="cash">
 												代金引換
 											</label>
@@ -292,7 +290,7 @@
 									<div class="row">
 										<div class="col-sm-12">
 											<label class="radio-inline">
-												<input type="radio"
+												<input id="creditCard" type="radio"
 													name="paymentMethod" checked="checked" value="credit">
 												クレジットカード
 											</label><br><br>
@@ -319,5 +317,16 @@
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script th:src="@{/js/bootstrap.min.js}"></script>
 	<script th:src="@{/js/script.js}"></script>
+	<form action="/pay" method="POST">
+	  <script
+	    src="https://checkout.stripe.com/checkout.js"
+	    class="stripe-button"
+	    data-key="pk_test_A4swupMMdflEqelvm7gJUFki00WL3sdXlE"
+	    data-name="Tシャツ"
+	    data-description="コットンTシャツ"
+	    data-amount="500"
+	    data-currency="jpy">
+	  </script>
+	</form>
 </body>
 </html>

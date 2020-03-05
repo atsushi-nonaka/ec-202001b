@@ -37,6 +37,8 @@ public class ItemRepository {
 		return item;
 	};
 
+	
+
 	/**
 	 * 商品名から商品情報を取得します.
 	 * 
@@ -52,14 +54,18 @@ public class ItemRepository {
 
 	/**
 	 * 商品IDから商品を検索するためのメソッドです.
+	 * (3.5 8:30 メソッド名をfindByItemId→loadに修正しました)
+	 *(確認できたらこのコメントは削除します)
 	 * 
 	 * @param itemId 商品ID
 	 * @return 商品情報を返します
 	 */
-	public Item findByItemId(Integer itemId) {
+	public Item load(Integer itemId) {
 		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items where id = :id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id", itemId);
 		Item item = template.queryForObject(sql, param, ITEM_ROW_MAPPER);
 		return item;
 	}
+
+
 }
