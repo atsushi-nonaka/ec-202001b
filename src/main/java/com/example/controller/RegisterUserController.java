@@ -62,7 +62,7 @@ public class RegisterUserController {
 		User user = new User();
 		BeanUtils.copyProperties(userform, user);
 		registerUserService.insert(user);
-		return "login";
+		return "item_list_pizza";
 	}
 	
 }
