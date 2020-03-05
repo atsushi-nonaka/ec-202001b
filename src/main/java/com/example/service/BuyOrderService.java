@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.domain.Order;
-import com.example.Form.BuyOrderForm;
+import com.example.form.BuyOrderForm;
 import com.example.repository.OrderRepository;
 
 /**

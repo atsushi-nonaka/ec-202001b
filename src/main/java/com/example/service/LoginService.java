@@ -18,5 +18,4 @@ public class LoginService {
 		User user = userRepository.findByEmailAndPassword(email,password);
 		return user;
 	}
-
 }

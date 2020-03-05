@@ -8,7 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.Form.UserForm;
+import com.example.form.UserForm;
 import com.example.domain.User;
 import com.example.service.RegisterUserService;
 
@@ -40,6 +40,12 @@ public class RegisterUserController {
 		return "register_user";
 	}
 
+	/**
+	 * ユーザー登録します
+	 * @param userform ユーザー登録用form
+	 * @param result エラー表示
+	 * @return　エラー有：ユーザー登録画面へ遷移、エラー無：ログイン画面
+	 */
 	@RequestMapping("insertUser")
 	public String insertUser(@Validated UserForm userform, BindingResult result) {
 		
