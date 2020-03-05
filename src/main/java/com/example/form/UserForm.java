@@ -1,5 +1,6 @@
 package com.example.form;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 /**
@@ -12,9 +13,11 @@ public class UserForm {
 	private String name;
 	/** Eメールアドレス */
     @NotBlank(message="メールアドレスを入力してください")
+    @Email(message="不正なメールアドレスです")
 	private String email;
 		/** 郵便番号 */
     @NotBlank(message="郵便番号を入力してください")
+    //@Pattern(regexp="^[0-9] {7}$", message="ハイフンを付けず、半角数字7桁の形式で入力してください (例:3335555)")
 	private String zipcode;
 	/** 住所 */
     @NotBlank(message="住所を入力してください")
