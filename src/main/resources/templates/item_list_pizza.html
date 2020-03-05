@@ -57,6 +57,7 @@
 						<form method="post" th:action="@{/show_item_list}" class="form-horizontal">
 							<div class="form-group">
 								<label for="code" class="control-label col-sm-2">商品名</label>
+								<span th:if="${message}" th:text="${message}" style="color :green"></span>
 								<div class="col-sm-9">
 									<input type="text" name="code" id="code"
 										class="form-control input-sm" />
@@ -78,8 +79,8 @@
 				class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
 				<table class="table table-striped">
 					<tbody>
-						<tr th:each="item:${itemList}">
-							<th>
+						<tr th:each="itemList:${itemListList}">
+							<th th:each="item :${itemList}">
 							 <a href="item_detail.html" th:href="@{'/show_item_detail?id=' + ${item.id}}">
 								<img th:src="${'/img_pizza/' + item.imagePath}"
 										class="img-responsive img-rounded" width="200" height="600">
