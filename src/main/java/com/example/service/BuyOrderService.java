@@ -77,7 +77,7 @@ public class BuyOrderService {
 	public void sendMail(){
 		SimpleMailMessage mailmsg = new SimpleMailMessage();    
 	    mailmsg.setFrom(mailFrom);
-	    mailmsg.setTo("hoshaatsu0222@gmail.com");
+	    mailmsg.setTo("test@test.co.jp");//メールの宛先
 	    mailmsg.setSubject("テストメール");//タイトルの設定
 	    mailmsg.setText("Spring Boot より本文送信"); //本文の設定
 	    mailSender.send(mailmsg);
