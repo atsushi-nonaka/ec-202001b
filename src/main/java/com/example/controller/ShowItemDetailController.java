@@ -32,7 +32,6 @@ public class ShowItemDetailController {
 	 */
 	@RequestMapping("")
 	public String showDetail(Model model, String id) {
-		System.out.println(id);
 		Item item = showItemDetailService.showDetail(Integer.parseInt(id));
 		item.setToppingList(getAllToppingsService.getAllToppings());
 		model.addAttribute("item", item);
