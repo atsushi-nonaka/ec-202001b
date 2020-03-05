@@ -25,7 +25,7 @@
 							class="icon-bar"></span> <span class="icon-bar"></span> <span
 							class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="item_list.html"> <!-- 企業ロゴ -->
+					<a class="navbar-brand" href="item_list.html" th:href="@{/show_item_list}"> <!-- 企業ロゴ -->
 						<img alt="main log" src="../static/img_pizza/header_logo.png" th:src="@{/img_pizza/header_logo.png}" height="35">
 					</a>
 				</div>
@@ -72,6 +72,7 @@
 								<div class="col-sm-12">
 									<label class="radio-inline">
 										<input type="radio"
+<<<<<<< HEAD
 											name="size" value="M" checked="checked">
 										<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;<span th:text="${item.priceM}"></span>円(税抜)
 									</label>
@@ -79,6 +80,15 @@
 										<input type="radio"
 											name="size" value="L">
 										<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;<span th:text="${item.priceL}"></span>円(税抜)
+=======
+											name="responsibleCompany" checked="checked">
+										<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;<span th:text="${item.priceM} + '円(税抜)'"></span>
+									</label>
+									<label class="radio-inline">
+										<input type="radio"
+											name="responsibleCompany">
+										<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;<span th:text="${item.priceL} +'円(税抜)'"></span>
+>>>>>>> feature/itemDetail
 									</label>
 								</div>
 							</div>
@@ -96,6 +106,7 @@
 										<span>&nbsp;Ｌ</span>&nbsp;&nbsp;300円(税抜)
 									</label>
 								</div>
+<<<<<<< HEAD
 									<label class="checkbox-inline">
 									<input type="checkbox" name="toppingIdList" value="1">オニオン
 									</label>
@@ -116,6 +127,11 @@
 									</label>
 									<label class="checkbox-inline">
 										<input type="checkbox" name="toppingIdList" value="7">エビ
+=======
+								<div class="col-sm-12">
+									<label class="checkbox-inline" th:each="topping:${item.toppingList}">
+										<input type="checkbox" value=""><span th:text="${topping.name}"></span>
+>>>>>>> feature/itemDetail
 									</label>
 									<label class="checkbox-inline">
 										<input type="checkbox" name="toppingIdList" value="8">コーン

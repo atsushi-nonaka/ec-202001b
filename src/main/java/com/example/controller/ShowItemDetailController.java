@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Item;
+import com.example.service.GetAllToppingsService;
 import com.example.service.ShowItemDetailService;
 
 /**
@@ -19,18 +20,21 @@ import com.example.service.ShowItemDetailService;
 public class ShowItemDetailController {
 	@Autowired
 	private ShowItemDetailService showItemDetailService;
+	@Autowired
+	private GetAllToppingsService getAllToppingsService;
 
 	/**
 	 * 商品の詳細情報を表示します.
 	 * 
-	 * @param       id リクエストパラメータ(商品id)
+	 * @param id    リクエストパラメータ(商品id)
 	 * @param model リクエストスコープ
 	 * @return
 	 */
 	@RequestMapping("")
-	public String showDetail(Model model,String id) {
+	public String showDetail(Model model, String id) {
 		System.out.println(id);
 		Item item = showItemDetailService.showDetail(Integer.parseInt(id));
+		item.setToppingList(getAllToppingsService.getAllToppings());
 		model.addAttribute("item", item);
 		return "item_detail";
 	}

@@ -37,6 +37,8 @@ public class ItemRepository {
 		return item;
 	};
 
+	
+
 	/**
 	 * 商品名から商品情報を取得します.
 	 * 
@@ -64,4 +66,6 @@ public class ItemRepository {
 		Item item = template.queryForObject(sql, param, ITEM_ROW_MAPPER);
 		return item;
 	}
+
+
 }
