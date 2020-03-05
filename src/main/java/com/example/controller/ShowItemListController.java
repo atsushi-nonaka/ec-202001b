@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,11 +35,28 @@ public class ShowItemListController {
 		List<Item> itemList = showItemListService.showItemList(code);
 		if (itemList.size() == 0) {
 			itemList = showItemListService.showItemList("");
+			model.addAttribute("message", "該当する商品がございません");
 		}
-		model.addAttribute("itemList", itemList);
-
-		System.out.println(itemList.size());
-
+		List<List<Item>> itemListList = putThreeItemsListInList(itemList);
+		model.addAttribute("itemListList", itemListList);
 		return "item_list_pizza";
+	}
+
+	/**
+	 * Itemオブジェクトを3つずつリストに入れそのリストオブジェクト群を大枠のリスト格納する.
+	 * @param itemList 検索して取得したItemオブジェクト群
+	 * @return　リストの中にアイテムオブジェクトを入れたリストを格納し返します
+	 */
+	private List<List<Item>> putThreeItemsListInList(List<Item> itemList) {
+		List<List<Item>> itemListList = new ArrayList<>();
+		List<Item> smallitemList = new ArrayList<>();
+		for (int i = 1; i <= itemList.size(); i++) {
+			smallitemList.add(itemList.get(i - 1));
+			if (smallitemList.size() % 3 == 0 || itemList.size() == i) {
+				itemListList.add(smallitemList);
+				smallitemList = new ArrayList<>();
+			}
+		}
+		return itemListList;
 	}
 }
