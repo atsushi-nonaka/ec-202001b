@@ -13,6 +13,12 @@ import com.example.form.BuyOrderForm;
 import com.example.service.BuyOrderService;
 import com.example.service.OrderConfirmService;
 
+/**
+ * 注文確認画面に関するコントローラーです.
+ * 注文確認画面の表示、注文の操作をこのコントローラにまとめています。
+ * @author yuri.okada
+ *
+ */
 @Controller
 @RequestMapping("")
 public class OrderConfirmController {
@@ -23,19 +29,13 @@ public class OrderConfirmController {
 	@Autowired
 	private BuyOrderService buyOrderService;
 	
+//	@Autowired
+//	private ShowCartService showCartService;
+
 	@ModelAttribute
 	public BuyOrderForm setUpForm() {
 		return new BuyOrderForm();
-	}
-	
-	/**テスト用の表示メソッドです.
-	 * @return 詳細リスト
-	 */
-	@RequestMapping("/shoppingCart")
-	public String showShoppingCart() {
-		return "cart_list";
-	}
-	
+	}	
 		
 	/**
 	 * 注文確認画面を表示します.
