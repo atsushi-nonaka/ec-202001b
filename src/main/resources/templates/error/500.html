@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ja"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<pre>
+以下のいずれかの理由でシステムの操作を中断しました。
+
+・不正な操作が行われた
+・長い時間操作を行わなかった
+・現在システムメンテナンス中
+
+しばらく経ってからもう一度操作してください。
+
+</pre>
+
+<a th:href="@{/}" class="navbar-link">ログイン画面</a>
+</body>
+</html>
