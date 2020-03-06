@@ -52,11 +52,14 @@ public class AddItemToCartService {
 	public void insertOrder(AddItemToCartForm form, Integer userId) {
 		Order order = new Order();
 
+		//データベース上にないuserIdだったらその値をセットしてデータベースにインサート
 		if (orderRepository.checkByUserIdAndStatus(userId) == null) {
 			order.setUserId(userId);
+			//insertでorder.setIdが自動採番される
 			order = orderRepository.insert(order);
 
 		} else {
+			//データベース上にあれば注文情報を取得
 			order.setUserId(userId);
 			order = orderRepository.checkByUserIdAndStatus(userId);
 		}
