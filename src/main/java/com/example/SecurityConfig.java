@@ -54,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests() // 認可に関する設定
-			.antMatchers("/rakuraku-pizza/toLogin","/show_item_list","/insert","/insert/insertUser").permitAll() //「/」などのパスは全てのユーザに許可
+			.antMatchers("/rakuraku-pizza/toLogin","/show_item_list","/insert","/insert/insertUser","/show_item_detail").permitAll() //「/」などのパスは全てのユーザに許可
 			//.antMatchers("/admin/**").hasRole("ADMIN") // /admin/から始まるパスはADMIN権限でログインしている場合のみアクセス可(権限設定時の「ROLE_」を除いた文字列を指定)
 			//.antMatchers("/user/**").hasRole("USER") // /user/から始まるパスはUSER権限でログインしている場合のみアクセス可(権限設定時の「ROLE_」を除いた文字列を指定)
 			.anyRequest().authenticated(); // それ以外のパスは認証が必要
