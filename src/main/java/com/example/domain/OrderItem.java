@@ -1,5 +1,6 @@
 package com.example.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -95,41 +96,35 @@ public class OrderItem {
 		int itemPrice = 0;
 		int toppingPrice = 0;
 		int subTotal = 0;
-		List<OrderTopping> toppingList = getOrderToppingList();
+		List<OrderTopping> orderToppingList = getOrderToppingList();
+
+		System.out.println("orderToppingListの中身" + orderToppingList);
 
 		if (getSize() == 'M') {
 			itemPrice = item.getPriceM();
 		} else if (getSize() == 'L') {
 			itemPrice = item.getPriceL();
 		}
-
-		if (toppingList!=null) {
-			// サイズ毎の価格を取得
-			for (OrderTopping orderTopping : toppingList) {
-				if (getSize() == 'M') {
-					toppingPrice = orderTopping.getTopping().getPriceM();
-
-					subTotal = (itemPrice + toppingPrice * toppingList.size()) * getQuantity();
-				} else if (getSize() == 'L') {
-					toppingPrice = orderTopping.getTopping().getPriceL();
-
-					subTotal = (itemPrice + toppingPrice * toppingList.size()) * getQuantity();
+		
+		if (orderToppingList.size() != 0) {
+				
+				// サイズ毎の価格を取得
+				for (OrderTopping orderTopping : orderToppingList) {
+					if (getSize() == 'M') {
+						toppingPrice = orderTopping.getTopping().getPriceM();
+						subTotal = (itemPrice + toppingPrice * orderToppingList.size()) * getQuantity();
+					} else if (getSize() == 'L') {
+						toppingPrice = orderTopping.getTopping().getPriceL();
+						subTotal = (itemPrice + toppingPrice * orderToppingList.size()) * getQuantity();
+					}
 				}
-			}
-		} else {
-			// toppingの選択が一つもなかった時の処理
-			subTotal = itemPrice * getQuantity();
-		}
-//		System.out.println("商品の値段"+itemPrice);
-//		System.out.println("商品の数"+getQuantity());
-//		System.out.println("サイズ"+getSize());
-//		System.out.println("トッピングの値段"+toppingPrice);
-//		System.out.println("トッピングの数"+toppingList.size());
-//		
-//		System.out.println((itemPrice+toppingPrice*toppingList.size())*getQuantity());
-//		
-//		System.out.println("小計の値段"+subTotal);
+			} else if (orderToppingList.size() == 0) {
+				
+				// toppingの選択が一つもなかった時の処理
+				subTotal = itemPrice * getQuantity();
 
-		return subTotal;
+				return subTotal;
+			}
+			return subTotal;
 	}
 }
