@@ -1,6 +1,7 @@
 package com.example.form;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 /**
  * オーダーフォーム.
