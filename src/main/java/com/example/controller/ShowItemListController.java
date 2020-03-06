@@ -60,4 +60,21 @@ public class ShowItemListController {
 		}
 		return itemListList;
 	}
+	
+	@RequestMapping("/cheap_items")
+	private String showCheapItem(Model model, String priceM) {
+		List<Item> itemList = showItemListService.showCheapItem(Integer.parseInt(priceM));
+		List<List<Item>> itemListList = putThreeItemsListInList(itemList);
+		model.addAttribute("itemListList", itemListList);
+		return "item_list_pizza";
+	}
+	@RequestMapping("/expensive_items")
+	private String showExpensiveItem(Model model, String priceM) {
+		List<Item> itemList = showItemListService.showExpensiveItem(Integer.parseInt(priceM));
+		List<List<Item>> itemListList = putThreeItemsListInList(itemList);
+		model.addAttribute("itemListList", itemListList);
+		return "item_list_pizza";
+	}
+
 }
+
