@@ -29,4 +29,27 @@ public class ShowItemListService {
 		List<Item> itemList = itemRepository.findByLikeName(name);
 		return itemList;
 	}
+
+	/**
+	 * 商品安い順に並び変えます
+	 * 
+	 * @param priceM Mサイズ商品
+	 * @return 商品一覧
+	 */
+	public List<Item> showCheapItem(Integer priceM) {
+		List<Item> itemList = itemRepository.findByPriceOrederBy(priceM);
+		return itemList;
+	}
+
+	/**
+	 * 商品高い順に並び変えます
+	 * 
+	 * @param priceM Mサイズ商品
+	 * @return 商品一覧
+	 */
+	public List<Item> showExpensiveItem(Integer priceM) {
+		List<Item> itemList = itemRepository.findByPriceOrederByDeac(priceM);
+		return itemList;
+	}
+
 }

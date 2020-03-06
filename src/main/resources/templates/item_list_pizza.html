@@ -66,6 +66,11 @@
 							<div class="text-center">
 								<button type="submit" value="検索" class="btn btn-primary">検索</button>
 								<button type="reset" value="クリア" class="btn btn-default">クリア</button>
+								<select>
+								<option>安い順</option>
+								<option>高い順</option>
+								</select>
+								
 							</div>
 						</form>
 					</div>
@@ -86,8 +91,8 @@
 										class="img-responsive img-rounded" width="200" height="600">
 								</a><br> 
 								<a href="item_detail.html" th:href="@{'/show_item_detail?id=' + ${item.id}}"><span  th:text="${item.name}"></span></a><br>
-								<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;<span th:text="${item.priceM}"></span>円(税抜)<br>
-								<span class="price">&nbsp;L&nbsp;</span>&nbsp;&nbsp;<span th:text="${item.priceL}"></span>円(税抜)<br>
+								<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;<span th:text="${#numbers.formatInteger(item.priceM,2,'COMMA')}"></span>円(税抜)<br>
+								<span class="price">&nbsp;L&nbsp;</span>&nbsp;&nbsp;<span th:text="${#numbers.formatInteger(item.priceL,2,'COMMA')}"></span>円(税抜)<br>
 							</th>
 
 						</tr>
