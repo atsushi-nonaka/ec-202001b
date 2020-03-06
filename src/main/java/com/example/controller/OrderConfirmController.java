@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Order;
+import com.example.domain.OrderItem;
 import com.example.form.BuyOrderForm;
 import com.example.service.BuyOrderService;
 import com.example.service.OrderConfirmService;
@@ -44,14 +45,14 @@ public class OrderConfirmController {
 	@RequestMapping("/toOrderConfirm")
 	public String toOrderConfirm(Integer userId,Model model) {
 		Order order=service.findByUserIdAndStatus(userId);
-		
+
 		if(userId==null) {
 			return "login";
 		}
 
 		int tax=order.getTax();
-		int totalPrice=tax+order.getTotalPrice();
-				
+		int totalPrice=tax+order.CalcTotalPrice();
+						
 		model.addAttribute("tax",tax);
 		model.addAttribute("totalPrice",totalPrice);
 		

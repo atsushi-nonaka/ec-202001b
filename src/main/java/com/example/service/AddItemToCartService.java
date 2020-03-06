@@ -83,15 +83,17 @@ public class AddItemToCartService {
 			orderItem.setOrderToppingList(orderToppingList);
 
 		}
-		int subTotal = orderItem.getSubTotal();
-
-		// orderドメインのtotalPriceにsubTotalを追加して再度update
-		int fomerTotalPrice = 0;
-		if (order.getTotalPrice() != null) {
-			fomerTotalPrice = order.getTotalPrice();
-		}
-		int newTotalPrice = fomerTotalPrice + subTotal;
-		order.setTotalPrice(newTotalPrice);
+//		int subTotal = orderItem.getSubTotal();
+//
+//		// orderドメインのtotalPriceにsubTotalを追加して再度update
+//		int fomerTotalPrice = 0;
+//		if (order.getTotalPrice() != null) {
+//			fomerTotalPrice = order.getTotalPrice();
+//		}
+//		int newTotalPrice = fomerTotalPrice + subTotal;
+//		order.setTotalPrice(newTotalPrice);
+		order.setTotalPrice(0);
+		
 		orderRepository.update2(order);
 
 	}
