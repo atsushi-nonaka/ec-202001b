@@ -18,7 +18,7 @@ import com.example.service.ShowCartService;
  *
  */
 @Controller
-@RequestMapping("/AddItemToCart")
+@RequestMapping("")
 public class AddItemToCartController {
 
 	@Autowired
@@ -37,7 +37,7 @@ public class AddItemToCartController {
 	@RequestMapping("/addCart")
 	public String addItemToCart(AddItemToCartForm form, Integer userId) {
 		service.insertOrder(form, userId);
-		return "redirect:/AddItemToCart/showCart";
+		return "redirect:/showCart";
 	}
 	
 	/**

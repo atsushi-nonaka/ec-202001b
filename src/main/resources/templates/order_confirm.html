@@ -41,8 +41,8 @@
 <!-- 					<a href="cart_list.html" th:href="@{'/showCart?userId='+${session.order.userId}}" class="navbar-link">
 						ショッピングカート</a> -->
 						<a href="order_history.html" class="navbar-link">注文履歴</a>&nbsp;&nbsp;
-						<a href="login.html" class="navbar-link">ログイン</a>&nbsp;&nbsp;
-						<a href="item_list.html" class="navbar-link">ログアウト</a>
+						<a href="login.html" class="navbar-link" th:href="@{/rakuraku-pizza/toLogin}">ログイン</a>&nbsp;&nbsp;
+						<a href="item_list.html" class="navbar-link" th:href="@{/logout}">ログアウト</a>
 					</p>
 				</div>
 				<!-- /.navbar-collapse -->

@@ -54,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests() // 認可に関する設定
-			.antMatchers("/rakuraku-pizza/toLogin","/","/insert","/insert/insertUser","/show_item_detail").permitAll() //「/」などのパスは全てのユーザに許可
+			.antMatchers("/rakuraku-pizza/toLogin","/","/insert","/insert/insertUser","/show_item_detail","/addCart","/showCart").permitAll() //「/」などのパスは全てのユーザに許可
 			//.antMatchers("/admin/**").hasRole("ADMIN") // /admin/から始まるパスはADMIN権限でログインしている場合のみアクセス可(権限設定時の「ROLE_」を除いた文字列を指定)
 			//.antMatchers("/user/**").hasRole("USER") // /user/から始まるパスはUSER権限でログインしている場合のみアクセス可(権限設定時の「ROLE_」を除いた文字列を指定)
 			.anyRequest().authenticated(); // それ以外のパスは認証が必要
@@ -70,8 +70,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.passwordParameter("password"); // 認証時に使用するパスワードのリクエストパラメータ名
 		
 		http.logout() // ログアウトに関する設定
-			.logoutRequestMatcher(new AntPathRequestMatcher("/rakuraku-pizza")) // ログアウトさせる際に遷移させるパス
-			.logoutSuccessUrl("/") // ログアウト後に遷移させるパス(ここではログイン画面を設定)
+			.logoutRequestMatcher(new AntPathRequestMatcher("/logout")) // ログアウトさせる際に遷移させるパス
+			.logoutSuccessUrl("/rakuraku-pizza/toLogin") // ログアウト後に遷移させるパス(ここではログイン画面を設定)
 			.deleteCookies("JSESSIONID") // ログアウト後、Cookieに保存されているセッションIDを削除
 			.invalidateHttpSession(true); // true:ログアウト後、セッションを無効にする false:セッションを無効にしない
 		
