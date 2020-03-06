@@ -43,9 +43,9 @@ public class LoginController {
 	 * 
 	 * @return ログイン画面
 	 */
-	@RequestMapping("")
+	@RequestMapping("/toLogin")
 	public String toLogin() {
-		return "login";
+		return "login.html";
 	}
 
 	/**
@@ -55,22 +55,22 @@ public class LoginController {
 	 * @param result エラーメッセージを表示するためのオブジェクト
 	 * @return ログインが成功すると商品一覧画面に遷移します
 	 */
-	@RequestMapping("/login")
-	public String login(@Validated LoginForm form,BindingResult result,Model model) {
-		if(result.hasErrors()) {
-			return toLogin();
-		}
-		User user = service.login(form.getEmail(), form.getPassword());
-		if(user==null) {
-			result.rejectValue("email", null, "メールアドレスかパスワードが間違っています。");
-			return toLogin();
-		}
-		//仮でuserIdをsessionスコープに格納します.
-		Order order=new Order();
-		order.setUserId(user.getId());
-		session.setAttribute("order",order);
-		return "forward:/show_item_list";
-	}
+//	@RequestMapping("/login")
+//	public String login(@Validated LoginForm form,BindingResult result,Model model) {
+//		if(result.hasErrors()) {
+//			return toLogin();
+//		}
+//		User user = service.login(form.getEmail(), form.getPassword());
+//		if(user==null) {
+//			result.rejectValue("email", null, "メールアドレスかパスワードが間違っています。");
+//			return toLogin();
+//		}
+//		//仮でuserIdをsessionスコープに格納します.
+//		Order order=new Order();
+//		order.setUserId(user.getId());
+//		session.setAttribute("order",order);
+//		return "forward:/show_item_list";
+//	}
 
 
 }

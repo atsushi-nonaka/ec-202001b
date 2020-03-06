@@ -46,7 +46,7 @@ public class RegisterUserController {
 	 * @param result エラー表示
 	 * @return　エラー有：ユーザー登録画面へ遷移、エラー無：ログイン画面
 	 */
-	@RequestMapping("insertUser")
+	@RequestMapping("/insertUser")
 	public String insertUser(@Validated UserForm userform, BindingResult result) {
 		
 		if(registerUserService.findByEmail(userform.getEmail())!=null) {
@@ -56,13 +56,15 @@ public class RegisterUserController {
 			result.rejectValue("password", null, "パスワードと確認用パスワードが一致していません。");
 		}
 		if(result.hasErrors()) {
+			System.out.println(result);
 			return index();
 		}
 		
 		User user = new User();
 		BeanUtils.copyProperties(userform, user);
+		System.out.println(user);
 		registerUserService.insert(user);
-		return "forward:/rakuraku-pizza";
+		return "forward:/rakuraku-pizza/toLogin";
 	}
 	
 }

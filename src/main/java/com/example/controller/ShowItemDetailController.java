@@ -1,11 +1,13 @@
 package com.example.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Item;
+import com.example.domain.LoginUser;
 import com.example.service.GetAllToppingsService;
 import com.example.service.ShowItemDetailService;
 
@@ -31,10 +33,11 @@ public class ShowItemDetailController {
 	 * @return
 	 */
 	@RequestMapping("")
-	public String showDetail(Model model, String id) {
+	public String showDetail(Model model, String id, @AuthenticationPrincipal LoginUser loginUser) {
 		Item item = showItemDetailService.showDetail(Integer.parseInt(id));
 		item.setToppingList(getAllToppingsService.getAllToppings());
 		model.addAttribute("item", item);
+		System.out.println(loginUser.getUser().getName() + "さんがログイン中");
 		return "item_detail";
 	}
 }

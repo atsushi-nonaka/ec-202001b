@@ -2,6 +2,7 @@ package com.example.form;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 /**
  * ユーザー登録時に使用するフォーム.
@@ -17,7 +18,7 @@ public class UserForm {
 	private String email;
 		/** 郵便番号 */
     @NotBlank(message="郵便番号を入力してください")
-    //@Pattern(regexp="^[0-9] {7}$", message="ハイフンを付けず、半角数字7桁の形式で入力してください (例:3335555)")
+//    @Pattern(regexp="/^\\d{3}$/", message="ハイフンを付けず、半角数字7桁の形式で入力してください (例:3335555)")
 	private String zipcode;
 	/** 住所 */
     @NotBlank(message="住所を入力してください")
