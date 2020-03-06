@@ -37,7 +37,6 @@ public class ShowItemDetailController {
 		Item item = showItemDetailService.showDetail(Integer.parseInt(id));
 		item.setToppingList(getAllToppingsService.getAllToppings());
 		model.addAttribute("item", item);
-		System.out.println(loginUser.getUser().getName() + "さんがログイン中");
 		return "item_detail";
 	}
 }
