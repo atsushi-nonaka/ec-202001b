@@ -84,10 +84,10 @@
 										<label class="radio-inline"> <input type="radio"
 											name="size" value="M" checked="checked"> <span
 											class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;<span
-											th:text="${item.priceM} + '円(税抜)'"></span>
+											th:text="${#numbers.formatInteger(item.priceM,2,'COMMA')} + '円(税抜)'"></span>
 										</label> <label class="radio-inline"> <input type="radio"
 											name="size" value="L"> <span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;<span
-											th:text="${item.priceL} +'円(税抜)'"></span>
+											th:text="${#numbers.formatInteger(item.priceL,2,'COMMA')} +'円(税抜)'"></span>
 										</label>
 									</div>
 								</div>
