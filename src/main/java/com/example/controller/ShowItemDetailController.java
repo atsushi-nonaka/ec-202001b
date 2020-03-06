@@ -33,11 +33,11 @@ public class ShowItemDetailController {
 	 * @return
 	 */
 	@RequestMapping("")
-	public String showDetail(Model model, String id, @AuthenticationPrincipal LoginUser loginUser) {
+	public String showDetail(Model model, String id, @AuthenticationPrincipal LoginUser  loginUser) {
 		Item item = showItemDetailService.showDetail(Integer.parseInt(id));
 		item.setToppingList(getAllToppingsService.getAllToppings());
 		model.addAttribute("item", item);
-		System.out.println(loginUser.getUser().getName() + "さんがログイン中");
+
 		return "item_detail";
 	}
 }

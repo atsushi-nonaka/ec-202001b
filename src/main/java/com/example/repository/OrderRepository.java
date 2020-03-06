@@ -213,10 +213,10 @@ public class OrderRepository {
 				+ ",i.image_path AS i_image_path,i.deleted AS i_deleted"
 				+ ",ot.id AS ot_id,ot.topping_id AS ot_topping_id,ot.order_item_id AS ot_order_item_id"
 				+ ",t.id AS t_id,t.name AS t_name,t.price_m AS t_price_m,t.price_l AS t_price_l"
-				+ " FROM orders o INNER JOIN order_items oi ON o.id=oi.order_id"
-				+ " INNER JOIN items i ON oi.item_id=i.id" + " INNER JOIN order_toppings ot ON oi.id=ot.order_item_id"
-				+ " INNER JOIN toppings t ON ot.topping_id=t.id"
-				+ " WHERE o.user_id=:userId AND o.status=:status ORDER BY o_id";
+				+ " FROM orders o LEFT OUTER JOIN order_items oi ON o.id=oi.order_id"
+				+ " LEFT OUTER JOIN items i ON oi.item_id=i.id" + " LEFT OUTER JOIN order_toppings ot ON oi.id=ot.order_item_id"
+				+ " LEFT OUTER JOIN toppings t ON ot.topping_id=t.id"
+				+ " WHERE o.user_id=:userId AND o.status=:status ORDER BY o_id, oi_id";
 
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("status", 0);
 

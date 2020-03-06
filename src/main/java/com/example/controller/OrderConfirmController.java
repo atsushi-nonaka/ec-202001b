@@ -59,6 +59,7 @@ public class OrderConfirmController {
 //		model.addAttribute("totalPrice",totalPrice);
 //		
 //		model.addAttribute("order",order);
+		model.addAttribute("user", user);
 		
 		return "order_confirm";
 				
@@ -74,11 +75,12 @@ public class OrderConfirmController {
 	public String orderFinish(@Validated BuyOrderForm form,
 								   BindingResult result,
 								   Model model,
-								   Integer userId,@AuthenticationPrincipal LoginUser loginUser
+								   @AuthenticationPrincipal LoginUser loginUser
 								   ) {
 		
 		if(result.hasErrors()) {
 			return toOrderConfirm(model,loginUser);
+					
 		}
 		
 		buyOrderService.orderFinish(form);
