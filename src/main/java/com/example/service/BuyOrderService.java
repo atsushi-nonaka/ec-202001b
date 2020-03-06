@@ -12,6 +12,7 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import com.example.domain.Order;
 import com.example.form.BuyOrderForm;
@@ -35,6 +36,13 @@ public class BuyOrderService {
 	
 	@Autowired
 	private MailSender mailSender;
+	
+//	@Autowired
+//	private RestTemplate restTemplate;
+//	
+//	/** クレジット決済のAPIURL */
+//	private final String URL = "http://153.126.174.131:8080/sample-credit-card-web-api/credit-card/payment";
+
 	
 	/**
 	 * 注文情報の更新を行う.
@@ -66,10 +74,10 @@ public class BuyOrderService {
 			order.setPaymentMethod(2);
 			order.setStatus(1);
 		}
-
 		orderRepository.update(order);
 		sendMail();
 	}
+	
 	
 	/**
 	 * 注文確定後、メールを送信する.
@@ -82,4 +90,6 @@ public class BuyOrderService {
 	    mailmsg.setText("Spring Boot より本文送信"); //本文の設定
 	    mailSender.send(mailmsg);
 	}
+	
+	
 }

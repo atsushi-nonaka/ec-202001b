@@ -49,13 +49,13 @@ public class OrderConfirmController {
 			return "login";
 		}
 
-		int tax=order.getTax();
-		int totalPrice=tax+order.getTotalPrice();
-				
-		model.addAttribute("tax",tax);
-		model.addAttribute("totalPrice",totalPrice);
-		
-		model.addAttribute("order",order);
+//		int tax=order.getTax();
+//		int totalPrice=tax+order.getTotalPrice();
+//				
+//		model.addAttribute("tax",tax);
+//		model.addAttribute("totalPrice",totalPrice);
+//		
+//		model.addAttribute("order",order);
 		
 		return "order_confirm";
 				
@@ -77,6 +77,7 @@ public class OrderConfirmController {
 		if(result.hasErrors()) {
 			return toOrderConfirm(userId, model);
 		}
+		
 		buyOrderService.orderFinish(form);
 		return "order_finished";
 	}

@@ -21,4 +21,15 @@ $(function(){
 		})
 	});
 	
+	//クレジット決済について
+	$(".inputCreditInformation").hide();
+	
+	$("#creditCard").on("change", function(){
+		$(".inputCreditInformation").show();
+	});
+	
+	$("#cash").on("change", function(){
+		$(".inputCreditInformation").hide();
+	});
+	
 });
