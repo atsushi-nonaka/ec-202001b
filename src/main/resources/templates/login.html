@@ -52,7 +52,9 @@
 							<legend>
 								ログイン
 							</legend>
- 							<label th:errors="*{email}" th:text="${email}" style="color: red" for="inputError"></label>
+ 							<div class="alert alert-danger" th:if="${errorMessage}">
+			                        <p th:text="${errorMessage}"></p>
+			                </div>
  							<div class="form-group">
 								<label for="inputEmail">メールアドレス:</label>
 								<input type="text" id="inputEmail" name="email" class="form-control"
