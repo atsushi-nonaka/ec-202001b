@@ -14,6 +14,6 @@ public class OrderFinishController {
 	 */
 	@RequestMapping("/toItemList")
 	public String toItemList() {
-		return "item_list_pizza";
+		return "forward:/";
 	}
 }

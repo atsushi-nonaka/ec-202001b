@@ -1,7 +1,8 @@
 package com.example.form;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Range;
 
 /**
  * オーダーフォーム.
@@ -17,11 +18,13 @@ public class BuyOrderForm {
 	@NotBlank(message="メールアドレスを入力して下さい")
 	private String destinationEmail;
 	/** 宛先郵便番号 */
+	@NotBlank(message="郵便番号を入力してください")
 	private String destinationZipcode;
 	/** 宛先住所 */
 	@NotBlank(message="住所を入力して下さい")
 	private String destinationAddress;
 	/** 宛先TEL */
+	@Range(message="数字を入力してください")
 	@NotBlank(message="電話番号を入力して下さい")
 	private String destinationTel;
 	/** 配達日 */
