@@ -20,10 +20,6 @@ public class OrderFinishController {
 	 */
 	@RequestMapping("/toItemList")
 	public String toItemList() {
-<<<<<<< HEAD
 		return "forward:/";
-=======
-		return "forward:/show_item_list";
->>>>>>> feature/form
 	}
 }
