@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import java.time.LocalTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -77,10 +79,10 @@ public class OrderConfirmController {
 								   Model model,
 								   @AuthenticationPrincipal LoginUser loginUser
 								   ) {
+		System.out.println(form);
 		
 		if(result.hasErrors()) {
 			return toOrderConfirm(model,loginUser);
-					
 		}
 		
 		buyOrderService.orderFinish(form);
