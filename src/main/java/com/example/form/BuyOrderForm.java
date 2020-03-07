@@ -24,8 +24,8 @@ public class BuyOrderForm {
 	@NotBlank(message="住所を入力して下さい")
 	private String destinationAddress;
 	/** 宛先TEL */
-	@Range(message="数字を入力してください")
 	@NotBlank(message="電話番号を入力して下さい")
+	@Range(message="数字を入力してください")
 	private String destinationTel;
 	/** 配達日 */
 	@NotBlank(message="配達日時を入力して下さい")
