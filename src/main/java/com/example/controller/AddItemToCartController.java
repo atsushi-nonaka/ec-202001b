@@ -1,11 +1,11 @@
 package com.example.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.domain.Order;
+import com.example.domain.LoginUser;
 import com.example.form.AddItemToCartForm;
 import com.example.service.AddItemToCartService;
 import com.example.service.ShowCartService;
@@ -32,11 +32,17 @@ public class AddItemToCartController {
 	 * 
 	 * @param form   商品詳細ページからのパラメータを受け取るフォームクラス
 	 * @param userId ユーザーID
-	 * @return toCartメソッドにリダイレクトします
+	 * @return showCartメソッドにリダイレクトします
 	 */
 	@RequestMapping("/addCart")
-	public String addItemToCart(AddItemToCartForm form, Integer userId) {
-		service.insertOrder(form, userId);
+	public String addItemToCart(AddItemToCartForm form,  @AuthenticationPrincipal LoginUser loginUser) {
+		if(loginUser==null) {
+			service.insertOrder(form, 0);
+			System.out.println("userID=0");
+		}else {
+			service.insertOrder(form, loginUser.getUser().getId());
+			System.out.println("userID=userID");
+		}
 		return "redirect:/showCart";
 	}
 	

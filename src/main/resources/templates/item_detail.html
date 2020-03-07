@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -45,8 +45,8 @@
 <!-- 						<a href="cart_list.html" th:href="@{'/showCart?userId='+${session.order.userId}}" class="navbar-link">
 						ショッピングカート</a> -->
 						<a href="order_history.html" class="navbar-link">注文履歴</a>&nbsp;&nbsp;
-						<a href="login.html" class="navbar-link" th:href="@{/rakuraku-pizza/toLogin}">ログイン</a>&nbsp;&nbsp; <a
-							href="item_list.html" class="navbar-link" th:href="@{/logout}">ログアウト</a>
+						<span sec:authorize="${!isAuthenticated()}"><a href="/rakuraku-pizza/toLogin">ログイン</a></span>
+						<span sec:authorize="hasRole('ROLE_USER')"><a href="/logout">ログアウト</a></span>
 					</p>
 				</div>
 				<!-- /.navbar-collapse -->
@@ -160,8 +160,7 @@
 										<input class="form-control btn btn-warning btn-block"
 											type="submit" value="カートに入れる">
 									</p>
-									<input type="hidden" value="223" name="userId"> <input
-										type="hidden" th:value="${item.id}" name="itemId">
+									<input type="hidden" th:value="${item.id}" name="itemId">
 
 								</div>
 							</div>
