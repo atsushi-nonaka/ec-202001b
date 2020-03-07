@@ -23,7 +23,7 @@
 					</button>
 
 					<a class="navbar-brand" href="item_list.html" th:href="@{/}"> <!-- 企業ロゴ --> 
-					<img alt="main log" th:src="@{/img_pizza/header_logo.png}" height="35">
+					<img alt="main log" src="../static/img_pizza/header_logo.png" th:src="@{/img_pizza/header_logo.png}" height="35">
 					</a>
 				</div>
 
@@ -54,7 +54,7 @@
 						<div class="panel-title">商品を検索する</div>
 					</div>
 					<div class="panel-body">
-						<form method="post" th:action="@{/show_item_list}" class="form-horizontal">
+						<form method="post" th:action="@{/}" class="form-horizontal">
 							<div class="form-group">
 								<label for="code" class="control-label col-sm-2">商品名</label>
 								<span th:if="${message}" th:text="${message}" style="color :green"></span>
@@ -92,7 +92,7 @@
 								</a><br> 
 								<a href="item_detail.html" th:href="@{'/show_item_detail?id=' + ${item.id}}"><span  th:text="${item.name}"></span></a><br>
 								<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;<span th:text="${#numbers.formatInteger(item.priceM,2,'COMMA')}"></span>円(税抜)<br>
-								<span class="price">&nbsp;L&nbsp;</span>&nbsp;&nbsp;<span th:text="${#numbers.formatInteger(item.priceL,2,'COMMA')}"></span>円(税抜)<br>
+								<span class="price">&nbsp;L &nbsp;</span>&nbsp;&nbsp;<span th:text="${#numbers.formatInteger(item.priceL,2,'COMMA')}"></span>円(税抜)<br>
 							</th>
 
 						</tr>
