@@ -1,7 +1,5 @@
 package com.example.controller;
 
-import java.time.LocalTime;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.LoginUser;
-import com.example.domain.Order;
 import com.example.domain.User;
 import com.example.form.BuyOrderForm;
 import com.example.service.BuyOrderService;
@@ -49,7 +46,7 @@ public class OrderConfirmController {
 	@RequestMapping("/toOrderConfirm")
 	public String toOrderConfirm(Model model,@AuthenticationPrincipal LoginUser loginUser) {
 		User user = loginUser.getUser();
-		Order order = service.findByUserIdAndStatus(user.getId());
+//		Order order = service.findByUserIdAndStatus(user.getId());
 //		if(userId==null) {
 //			return "login";
 //		}
@@ -79,7 +76,6 @@ public class OrderConfirmController {
 								   Model model,
 								   @AuthenticationPrincipal LoginUser loginUser
 								   ) {
-		System.out.println(form);
 		
 		if(result.hasErrors()) {
 			return toOrderConfirm(model,loginUser);
