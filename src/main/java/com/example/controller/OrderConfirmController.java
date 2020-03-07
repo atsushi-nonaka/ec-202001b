@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,7 @@ import com.example.domain.User;
 import com.example.form.BuyOrderForm;
 import com.example.service.BuyOrderService;
 import com.example.service.OrderConfirmService;
+import com.example.service.RegisterUserService;
 
 /**
  * 注文確認画面に関するコントローラーです.
@@ -28,13 +31,13 @@ public class OrderConfirmController {
 	
 	@Autowired
 	private OrderConfirmService service;
-	
+		
 	@Autowired
 	private BuyOrderService buyOrderService;
 	
-//	@Autowired
-//	private ShowCartService showCartService;
-
+	@Autowired
+	private HttpSession session;
+	
 	@ModelAttribute
 	public BuyOrderForm setUpForm() {
 		return new BuyOrderForm();
@@ -47,18 +50,18 @@ public class OrderConfirmController {
 	@RequestMapping("/toOrderConfirm")
 	public String toOrderConfirm(Model model,@AuthenticationPrincipal LoginUser loginUser) {
 		User user = loginUser.getUser();
+		System.out.println("user情報"+loginUser.getUser().getId());
+		
 		Order order = service.findByUserIdAndStatus(user.getId());
-//		if(userId==null) {
-//			return "login";
-//		}
-
-//		int tax=order.getTax();
-//		int totalPrice=tax+order.getTotalPrice();
-//				
-//		model.addAttribute("tax",tax);
-//		model.addAttribute("totalPrice",totalPrice);
-//		
-//		model.addAttribute("order",order);
+		System.out.println("OrderConfirmでorderの中身を表示"+order);
+		
+		int tax=order.getTax();
+		int totalPrice=tax+order.CalcTotalPrice();
+				
+		model.addAttribute("tax",tax);
+		model.addAttribute("totalPrice",totalPrice);
+		
+		model.addAttribute("order",order);
 		model.addAttribute("user", user);
 		
 		return "order_confirm";

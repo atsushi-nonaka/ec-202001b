@@ -48,7 +48,6 @@ public class OrderRepository {
 		order.setDestinationTel(rs.getString("destination_tel"));
 		order.setDeliveryTime(rs.getTimestamp("delivery_time"));
 		order.setPaymentMethod(rs.getInt("payment_method"));
-
 		return order;
 	};
 
@@ -157,12 +156,15 @@ public class OrderRepository {
 	 */
 	public Order checkByUserIdAndStatus(Integer userId) {
 		try {
-			String sql = "select id,user_id,status,total_price,order_date,destination_name,destination_email,destination_zipcode,destination_address,destination_tel,delivery_time,payment_method from orders where user_id = :id and status = 0";
-			SqlParameterSource param = new MapSqlParameterSource().addValue("id", userId);
-			Order order = template.queryForObject(sql, param, ORDER_ROW_MAPPER);
-			return order;
+			String sql = "select id,user_id,status,total_price,order_date,destination_name,destination_email,destination_zipcode,destination_address,destination_tel,delivery_time,payment_method from orders where user_id = :userId and status = 0";
+			SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
+			List<Order> orderList = template.query(sql, param, ORDER_ROW_MAPPER);
+			
+			return orderList.get(0);
 		} catch (Exception e) {
+			System.out.println("エラーがnullです");
 			return null;
+			
 		}
 
 	}
@@ -241,6 +243,16 @@ public class OrderRepository {
 				+ "destination_tel = :destinationTel, delivery_time = :deliveryTime, payment_method = :paymentMethod";
 
 		SqlParameterSource param = new BeanPropertySqlParameterSource(order);
+		template.update(sql, param);
+	}
+	
+	/**
+	 * userのID情報を更新します。
+	 * @param userId ユーザーID
+	 */
+	public void update(Integer userId) {
+		String sql="UPDATE orders SET user_id=:userId WHERE user_id=0";
+		SqlParameterSource param=new MapSqlParameterSource().addValue("userId", userId);
 		template.update(sql, param);
 	}
 }

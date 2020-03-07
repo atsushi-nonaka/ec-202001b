@@ -3,12 +3,17 @@ package com.example.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Item;
+import com.example.domain.LoginUser;
+import com.example.domain.User;
 import com.example.service.ShowItemListService;
 
 /**
@@ -23,6 +28,9 @@ public class ShowItemListController {
 	@Autowired
 	private ShowItemListService showItemListService;
 
+	@Autowired
+	private HttpSession session;
+	
 	/**
 	 * 全件検索または条件検索結果を表示します.
 	 * 
@@ -38,7 +46,8 @@ public class ShowItemListController {
 			model.addAttribute("message", "該当する商品がございません");
 		}
 		List<List<Item>> itemListList = putThreeItemsListInList(itemList);
-		model.addAttribute("itemListList", itemListList);
+		model.addAttribute("itemListList", itemListList);	
+		
 		return "item_list_pizza";
 	}
 

@@ -98,7 +98,6 @@ public class OrderItem {
 		int subTotal = 0;
 		List<OrderTopping> orderToppingList = getOrderToppingList();
 
-		System.out.println("orderToppingListの中身" + orderToppingList);
 
 		if (getSize() == 'M') {
 			itemPrice = item.getPriceM();

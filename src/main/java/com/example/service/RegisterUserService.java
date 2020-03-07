@@ -46,4 +46,5 @@ public class RegisterUserService {
 		User user = userRepository.findByEmail(email);
 		return user;
 	}
+
 }
