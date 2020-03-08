@@ -1,15 +1,13 @@
 package com.example.controller;
 
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.domain.LoginUser;
 import com.example.domain.Order;
 import com.example.form.AddItemToCartForm;
 import com.example.service.AddItemToCartService;

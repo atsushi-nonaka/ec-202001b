@@ -15,7 +15,6 @@ import com.example.domain.User;
 import com.example.form.BuyOrderForm;
 import com.example.service.BuyOrderService;
 import com.example.service.OrderConfirmService;
-import com.example.service.RegisterUserService;
 
 /**
  * 注文確認画面に関するコントローラーです.
