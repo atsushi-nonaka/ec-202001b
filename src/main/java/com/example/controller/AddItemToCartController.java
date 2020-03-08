@@ -37,7 +37,6 @@ public class AddItemToCartController {
 	 * 商品をカートに追加します.
 	 * 
 	 * @param form   商品詳細ページからのパラメータを受け取るフォームクラス
-	 * @param userId ユーザーID
 	 * @return showCartメソッドにリダイレクトします
 	 */
 	@RequestMapping("/addCart")
@@ -57,12 +56,12 @@ public class AddItemToCartController {
 	public String showCart(Model model) {
 		
 		Integer userId=(Integer)session.getAttribute("userId");
-		
+		System.out.println();
 		//未ログインの時sessionのIDを取得
 		if (userId== null) {
 			userId=session.getId().hashCode();
 		}
-		
+		System.out.println("showCart内のuserID"+userId);
 		Order order =showCartService.showCart(userId);
 		
 		//

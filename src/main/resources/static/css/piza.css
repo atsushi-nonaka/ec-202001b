@@ -18,3 +18,20 @@ span.price {
 span#total-price {
 	font-size: 35px;
 }
+
+tr#comment {
+	font-size:20px;
+	 text-align: center;
+	color:black;	
+	margin: 30px;
+}
+span#recommend {
+	font-size:30px;
+	color:#FF3366;	
+	background-color: #FFCC66;
+}
+img.image-center{
+	border-radius: 6px;
+  max-width: 100%;
+  height: auto;
+}
