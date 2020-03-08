@@ -42,14 +42,8 @@ public class AddItemToCartController {
 	 */
 	@RequestMapping("/addCart")
 	public String addItemToCart(AddItemToCartForm form) {
-		Integer userId=(Integer)session.getAttribute("userId");
-		if(userId==null) {
-			userId=0;
-		}
-		service.insertOrder(form, userId);
-		
-		System.out.println("addItemtoCartメソッドの引数"+userId);
-		
+
+		service.insertOrder(form);	
 		
 		return "redirect:/showCart";
 	}	
@@ -98,13 +92,20 @@ public class AddItemToCartController {
 	 */
 	@RequestMapping("/showCart")
 	public String showCart(Model model) {
-
+		
 		Integer userId=(Integer)session.getAttribute("userId");
-		if(userId==null) {
-			userId=0;
+		
+		//未ログインの時sessionのIDを取得
+		if (userId== null) {
+			userId=session.getId().hashCode();
 		}
 		
 		Order order =showCartService.showCart(userId);
+		System.out.println("showCartorderの中身"+order);
+		if(order==null) {
+			return "cart_list";
+		}
+		
 		int tax = order.getTax();
 		
 		int totalPrice = tax + order.CalcTotalPrice();

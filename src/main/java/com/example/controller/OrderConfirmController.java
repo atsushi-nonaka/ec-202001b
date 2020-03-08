@@ -34,10 +34,7 @@ public class OrderConfirmController {
 		
 	@Autowired
 	private BuyOrderService buyOrderService;
-	
-	@Autowired
-	private HttpSession session;
-	
+		
 	@ModelAttribute
 	public BuyOrderForm setUpForm() {
 		return new BuyOrderForm();
@@ -50,10 +47,8 @@ public class OrderConfirmController {
 	@RequestMapping("/toOrderConfirm")
 	public String toOrderConfirm(Model model,@AuthenticationPrincipal LoginUser loginUser) {
 		User user = loginUser.getUser();
-		System.out.println("user情報"+loginUser.getUser().getId());
 		
 		Order order = service.findByUserIdAndStatus(user.getId());
-		System.out.println("OrderConfirmでorderの中身を表示"+order);
 		
 		int tax=order.getTax();
 		int totalPrice=tax+order.CalcTotalPrice();

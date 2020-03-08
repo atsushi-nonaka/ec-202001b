@@ -33,7 +33,7 @@ public class OrderConfirmService {
 	 * 注文情報のユーザーIDを更新します.
 	 * @param userId ユーザーID
 	 */
-	public void updateUserId(Integer userId) {
-		repository.update(userId);
+	public void updateUserId(Integer userId,Integer sessionId) {
+		repository.update(userId,sessionId);
 	}
 }

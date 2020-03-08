@@ -58,10 +58,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		
 		//ログイン成功時にuser情報をsessionスコープに格納する
 		session.setAttribute("userId",user.getId());
-		System.out.println("userDetailsServiceのuserId"+user.getId());
-		//注文情報のIDを仮の「0」からログイン者のIDに更新
-		orderConfirmService.updateUserId(user.getId());
-		
+		//注文情報のIDを仮sessionIDからログイン者のIDに更新
+		orderConfirmService.updateUserId(user.getId(),session.getId().hashCode());
 		//		if(member.isAdmin()) {
 //			authorityList.add(new SimpleGrantedAuthority("ROLE_ADMIN")); // 管理者権限付与
 //		}

@@ -42,8 +42,6 @@
 					<p class="navbar-text navbar-right">
 					<a href="cart_list.html" th:href="@{/showCart}" class="navbar-link">
 						ショッピングカート</a>
-<!-- 						<a href="cart_list.html" th:href="@{'/showCart?userId='+${session.userId}}" class="navbar-link">
-						ショッピングカート</a> -->
 						<a href="order_history.html" class="navbar-link">注文履歴</a>&nbsp;&nbsp;
 						<a href="login.html" class="navbar-link" th:href="@{/rakuraku-pizza/toLogin}">ログイン</a>&nbsp;&nbsp; <a
 							href="item_list.html" class="navbar-link" th:href="@{/logout}">ログアウト</a>
@@ -160,8 +158,7 @@
 										<input class="form-control btn btn-warning btn-block"
 											type="submit" value="カートに入れる">
 									</p>
-<!-- 									<input type="hidden" th:value="${session.userId}" name="userId"> 
- -->									<input type="hidden" th:value="${item.id}" name="itemId">
+								<input type="hidden" th:value="${item.id}" name="itemId">
 								</div>
 							</div>
 						</div>

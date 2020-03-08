@@ -27,9 +27,6 @@ import com.example.service.ShowItemListService;
 public class ShowItemListController {
 	@Autowired
 	private ShowItemListService showItemListService;
-
-	@Autowired
-	private HttpSession session;
 	
 	/**
 	 * 全件検索または条件検索結果を表示します.
@@ -46,7 +43,7 @@ public class ShowItemListController {
 			model.addAttribute("message", "該当する商品がございません");
 		}
 		List<List<Item>> itemListList = putThreeItemsListInList(itemList);
-		model.addAttribute("itemListList", itemListList);	
+		model.addAttribute("itemListList", itemListList);
 		
 		return "item_list_pizza";
 	}

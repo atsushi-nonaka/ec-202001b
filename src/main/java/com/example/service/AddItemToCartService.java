@@ -54,26 +54,23 @@ public class AddItemToCartService {
 	 * @param form   商品一覧画面からのパラメーターを受け取るフォーム
 	 * @param userId ユーザーID
 	 */
-	public void insertOrder(AddItemToCartForm form, Integer userId) {
+	public void insertOrder(AddItemToCartForm form) {
 		Order order=new Order();
-		userId=(Integer)session.getAttribute("userId");
-		System.out.println("insertorder内の"+userId);
-		//データベース上にないuserIdだったらその値をセットしてデータベースにインサート
+		//userIdを取得
+		Integer userId=(Integer)session.getAttribute("userId");
+	
+		//未ログインの時sessionのIDを取得
 		if (userId== null) {
-			order.setUserId(0);
-			//insertでorder.setIdが自動採番される
-			order = orderRepository.insert(order);
-
-		} else if(orderRepository.checkByUserIdAndStatus(userId) == null){
-			//データベース上にあれば注文情報を取得
-			order.setUserId(userId);
-			order = orderRepository.insert(order);
-		} else if(orderRepository.checkByUserIdAndStatus(userId) != null){
-			//データベース上にあれば注文情報を取得
-			order = orderRepository.checkByUserIdAndStatus(userId);
+			userId=session.getId().hashCode();
 		}
 
-		System.out.println("insertOrderのメソッド内"+order);
+		//データベース上にないuserIdだったらインサート、あれば注文情報を取得
+		if(orderRepository.checkByUserIdAndStatus(userId) == null){
+			order.setUserId(userId);
+			order = orderRepository.insert(order);
+		} else{
+			order = orderRepository.checkByUserIdAndStatus(userId);
+		}
 		
 		OrderItem orderItem = new OrderItem();
 		BeanUtils.copyProperties(form, orderItem);
@@ -103,10 +100,8 @@ public class AddItemToCartService {
 //		}
 //		int newTotalPrice = fomerTotalPrice + subTotal;
 //		order.setTotalPrice(newTotalPrice);
-		order.setTotalPrice(0);
 		
 		orderRepository.update2(order);
-		System.out.println("update後の"+order);
 
 	}
 	
