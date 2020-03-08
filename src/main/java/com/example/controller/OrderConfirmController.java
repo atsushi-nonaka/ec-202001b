@@ -72,7 +72,6 @@ public class OrderConfirmController {
 								   Model model,
 								   @AuthenticationPrincipal LoginUser loginUser
 								   ) {
-		System.out.println(form);
 		
 		if(result.hasErrors()) {
 			return toOrderConfirm(model,loginUser);
