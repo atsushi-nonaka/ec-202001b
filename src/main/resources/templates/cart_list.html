@@ -16,7 +16,7 @@
 	<div class="container">
 		<nav class="navbar navbar-default">
 			<div class="container-fluid">
-				<!-- Brand and toggle get grouped for better mobile display -->
+			<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle collapsed"
 						data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
@@ -35,13 +35,11 @@
 				<div class="collapse navbar-collapse"
 					id="bs-example-navbar-collapse-1">
 					<p class="navbar-text navbar-right">
-					<a href="cart_list.html" th:href="@{/AddItemToCart/showCart}" class="navbar-link">
-						ショッピングカート</a> 
-<!-- 						<a href="cart_list.html" th:href="@{'/showCart?userId='+${session.order.userId}}" class="navbar-link">
-						ショッピングカート</a> -->
+					<a href="cart_list.html" th:href="@{/showCart}" class="navbar-link">
+						ショッピングカート</a>&nbsp;&nbsp;
 						<a href="order_history.html" class="navbar-link">注文履歴</a>&nbsp;&nbsp;
-						<a href="login.html" class="navbar-link" th:href="@{/rakuraku-pizza/toLogin}">ログイン</a>&nbsp;&nbsp;
-						<a href="item_list.html" class="navbar-link" th:href="@{/logout}">ログアウト</a>
+						<span sec:authorize="${!isAuthenticated()}"><a href="/rakuraku-pizza/toLogin">ログイン</a></span>
+						<span sec:authorize="hasRole('ROLE_USER')"><a href="/logout">ログアウト</a></span>
 					</p>
 				</div>
 				<!-- /.navbar-collapse -->
@@ -49,8 +47,14 @@
 			<!-- /.container-fluid -->
 		</nav>
 
-
+ 
 		<!-- table -->
+		<h3 class="text-center">
+			<span th:if="${order==null}">
+			カートに商品がありません
+			</span>
+		</h3>
+	 <span th:unless="${order==null}">
 		<div class="row">
 			<div
 				class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
@@ -81,8 +85,7 @@
 							<th>
 							</th>
 						</tr>
-						
-						<!-- <tr th:each="orderItem:${order.orderItemList}">
+						<tr th:each="orderItem:${order.orderItemList}">
 							<td>
 								<div class="center">
 									<img src="../static/img_pizza/1.jpg" th:src="@{'/img_pizza/' + ${orderItem.item.imagePath}}"
@@ -115,13 +118,13 @@
 									<button type="submit" class="btn btn-primary">削除</button>
 								</div>
 							</td>
-						</tr> -->
+						</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
 
-<!-- 		<div class="row">
+		<div class="row">
 			<div class="col-xs-offset-2 col-xs-8">
 				<div class="form-group text-center">
 					<span id="total-price">
@@ -130,20 +133,21 @@
 					</span>
 				</div>
 			</div>
-		</div> -->
+		</div>
 
 		<div class="row">
 			<div class="col-xs-offset-5 col-xs-3">
 				<div class="form-group">
 					<form action="order_confirm.html" th:action="@{/toOrderConfirm}">
-						<input type="hidden" name="userId" th:value="1">
-<!-- 					<input type="hidden" name="userId" th:value="${order.userId}"> -->
 						<input class="form-control btn btn-warning btn-block"
 							type="submit" value="注文に進む">
 					</form>
 				</div>
 			</div>
 		</div>
+		</span>
+	</div>
+	<!-- end container -->
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="../static/js/bootstrap.min.js"></script>

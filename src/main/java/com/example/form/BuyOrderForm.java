@@ -1,7 +1,9 @@
 package com.example.form;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Range;
 
 /**
  * オーダーフォーム.
@@ -17,12 +19,15 @@ public class BuyOrderForm {
 	@NotBlank(message="メールアドレスを入力して下さい")
 	private String destinationEmail;
 	/** 宛先郵便番号 */
+	@NotBlank(message="郵便番号を入力してください")
+	@Pattern(regexp = "^[0-9]{7}$", message="7桁で入力してください")
 	private String destinationZipcode;
 	/** 宛先住所 */
 	@NotBlank(message="住所を入力して下さい")
 	private String destinationAddress;
 	/** 宛先TEL */
 	@NotBlank(message="電話番号を入力して下さい")
+	@Range(message="数字を入力してください")
 	private String destinationTel;
 	/** 配達日 */
 	@NotBlank(message="配達日時を入力して下さい")

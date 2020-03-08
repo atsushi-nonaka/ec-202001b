@@ -3,6 +3,8 @@ package com.example.service;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -27,6 +29,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private HttpSession session;
+	
+	@Autowired
+	private OrderConfirmService orderConfirmService;
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -38,6 +46,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			throws UsernameNotFoundException {
 		User user = userRepository.findByEmail(email);
 		System.out.println(user);
+		
 		if (user == null) {
 			System.out.println("ログイン失敗");
 			throw new UsernameNotFoundException("そのEmailは登録されていません。");
@@ -46,7 +55,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		// 権限付与の例
 		Collection<GrantedAuthority> authorityList = new ArrayList<>();
 		authorityList.add(new SimpleGrantedAuthority("ROLE_USER")); // ユーザ権限付与
-//		if(member.isAdmin()) {
+		
+		//ログイン成功時にuser情報をsessionスコープに格納する
+		session.setAttribute("userId",user.getId());
+		//注文情報のIDを仮sessionIDからログイン者のIDに更新
+		orderConfirmService.updateUserId(user.getId(),session.getId().hashCode());
+		//		if(member.isAdmin()) {
 //			authorityList.add(new SimpleGrantedAuthority("ROLE_ADMIN")); // 管理者権限付与
 //		}
 		return new LoginUser(user,authorityList);

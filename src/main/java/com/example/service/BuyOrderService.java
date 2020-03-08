@@ -26,23 +26,22 @@ import com.example.repository.OrderRepository;
 @Service
 @Transactional
 public class BuyOrderService {
-	
+
 	@Autowired
 	private OrderRepository orderRepository;
-	
+
 	@Value("${spring.mail.username}")
 	private String mailFrom;
-	
+
 	@Autowired
 	private MailSender mailSender;
-	
+
 //	@Autowired
 //	private RestTemplate restTemplate;
 //	
 //	/** クレジット決済のAPIURL */
 //	private final String URL = "http://153.126.174.131:8080/sample-credit-card-web-api/credit-card/payment";
 
-	
 	/**
 	 * 注文情報の更新を行う.
 	 * 
@@ -51,44 +50,60 @@ public class BuyOrderService {
 	public void orderFinish(BuyOrderForm form) {
 		Order order = new Order();
 		BeanUtils.copyProperties(form, order);
-		//String型の配達日付を取得
+		// String型の配達日付を取得
 		String shippingDate = form.getDeliveryDate();
-		//Integer型の配達時間を取得
+		// Integer型の配達時間を取得
 		Integer shippingHour = Integer.parseInt(form.getDeliveryTime());
-		//配達日付をLocalDate型に変更
+		// 配達日付をLocalDate型に変更
 		LocalDate localDate = LocalDate.parse(shippingDate);
-		//配達時間をLocalTime型に変更（分,秒は0とする）
+		// 配達時間をLocalTime型に変更（分,秒は0とする）
 		LocalTime localTime = LocalTime.of(shippingHour, 0, 0);
-		//配達日付と時間を結合
+		// 配達日付と時間を結合
 		LocalDateTime localDateTime = LocalDateTime.of(localDate, localTime);
-		//Timestamp型に変更（DataBaseに合わせる）
+		// Timestamp型に変更（DataBaseに合わせる）
 		Timestamp timestamp = Timestamp.valueOf(localDateTime);
 		order.setDeliveryTime(timestamp);
-		
-		//クレジット払いと現金払いで分岐
-		if(form.getPaymentMethod().equals("credit")) {
-			order.setPaymentMethod(1);	
+
+		// クレジット払いと現金払いで分岐
+		if (form.getPaymentMethod().equals("credit")) {
+			order.setPaymentMethod(1);
 			order.setStatus(2);
-		}else {
+		} else {
 			order.setPaymentMethod(2);
 			order.setStatus(1);
 		}
 		orderRepository.update(order);
-		sendMail();
+		String mailText = mailText(order);
+		sendMail(mailText);
 	}
-	
-	
+
 	/**
 	 * 注文確定後、メールを送信する.
 	 */
-	public void sendMail(){
-		SimpleMailMessage mailmsg = new SimpleMailMessage();    
-	    mailmsg.setFrom(mailFrom);
-	    mailmsg.setTo("test@test.co.jp");//メールの宛先
-	    mailmsg.setSubject("テストメール");//タイトルの設定
-	    mailmsg.setText("Spring Boot より本文送信"); //本文の設定
-	    mailSender.send(mailmsg);
+	public void sendMail(String mailText) {
+		SimpleMailMessage mailmsg = new SimpleMailMessage();
+		mailmsg.setFrom(mailFrom);
+		mailmsg.setTo("test@test.co.jp");// メールの宛先
+		mailmsg.setSubject("ご注文品についての詳細");// タイトルの設定
+		mailmsg.setText(mailText);
+		mailSender.send(mailmsg);
 	}
-	
-	
+
+	/**
+	 * 注文後に送られるメール内容.
+	 * 
+	 * @param order 注文情報
+	 * @return メールテキスト
+	 */
+	public String mailText(Order order) {
+		StringBuilder mailText = new StringBuilder();
+		mailText.append(order.getDestinationName() + "様" + "\r\n");
+		mailText.append("郵便番号：" + order.getDestinationZipcode() + "\r\n");
+		mailText.append("住所：" + order.getDestinationAddress() + "\r\n");
+		mailText.append("配達日時：" + order.getDeliveryTime() + "\r\n");
+		mailText.append("ご注文ありがとうございます。" + "\r\n");
+		mailText.append("ご不明点等ございましたら、お手数ですが当アドレスまで返信の程よろしくお願い致します。");
+		return mailText.toString();
+	}
+
 }

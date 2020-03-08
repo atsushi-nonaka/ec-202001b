@@ -28,13 +28,10 @@ public class OrderConfirmController {
 	
 	@Autowired
 	private OrderConfirmService service;
-	
+		
 	@Autowired
 	private BuyOrderService buyOrderService;
-	
-//	@Autowired
-//	private ShowCartService showCartService;
-
+		
 	@ModelAttribute
 	public BuyOrderForm setUpForm() {
 		return new BuyOrderForm();
@@ -47,18 +44,16 @@ public class OrderConfirmController {
 	@RequestMapping("/toOrderConfirm")
 	public String toOrderConfirm(Model model,@AuthenticationPrincipal LoginUser loginUser) {
 		User user = loginUser.getUser();
+		
 		Order order = service.findByUserIdAndStatus(user.getId());
-//		if(userId==null) {
-//			return "login";
-//		}
-
-//		int tax=order.getTax();
-//		int totalPrice=tax+order.getTotalPrice();
-//				
-//		model.addAttribute("tax",tax);
-//		model.addAttribute("totalPrice",totalPrice);
-//		
-//		model.addAttribute("order",order);
+		
+		int tax=order.getTax();
+		int totalPrice=tax+order.CalcTotalPrice();
+				
+		model.addAttribute("tax",tax);
+		model.addAttribute("totalPrice",totalPrice);
+		
+		model.addAttribute("order",order);
 		model.addAttribute("user", user);
 		
 		return "order_confirm";
@@ -80,7 +75,6 @@ public class OrderConfirmController {
 		
 		if(result.hasErrors()) {
 			return toOrderConfirm(model,loginUser);
-					
 		}
 		
 		buyOrderService.orderFinish(form);

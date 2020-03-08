@@ -1,5 +1,8 @@
 package com.example.controller;
 
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,44 +29,58 @@ public class AddItemToCartController {
 	
 	@Autowired
 	private ShowCartService showCartService;
+	
+	@Autowired
+	private HttpSession session;
 
 	/**
 	 * 商品をカートに追加します.
 	 * 
 	 * @param form   商品詳細ページからのパラメータを受け取るフォームクラス
 	 * @param userId ユーザーID
-	 * @return toCartメソッドにリダイレクトします
+	 * @return showCartメソッドにリダイレクトします
 	 */
 	@RequestMapping("/addCart")
-	public String addItemToCart(AddItemToCartForm form, Integer userId) {
-		service.insertOrder(form, userId);
+	public String addItemToCart(AddItemToCartForm form) {
+
+		service.insertOrder(form);	
+
 		return "redirect:/showCart";
-	}
+	}	
 	
 	/**
-	 * ショッピングカートの中身を表示します.
-	 * @param id sessionスコープに入ったorderのuserID情報
-	 * @param model 消費税、合計金額、orderオブジェクトを格納.
-	 * @return ショッピングカートリスト
+	 * ショッピングカートのリンクから中身を表示させます.
+	 * @param userId
+	 * @return ショッピングカート
 	 */
 	@RequestMapping("/showCart")
-	public String showCart() {
+	public String showCart(Model model) {
 		
-//		Integer userId, Model model
-//		上記は引数です。
-//		System.out.println("showCartメソッドの引数"+userId);
-//		
-//		Order order =showCartService.showCart(userId);
-//		
-//		int tax = order.getTax();
-//		
-//		int totalPrice = tax + order.getTotalPrice();
-//
-//		model.addAttribute("tax", tax);
-//		model.addAttribute("totalPrice", totalPrice);
-//		model.addAttribute("order", order);
+		Integer userId=(Integer)session.getAttribute("userId");
+		
+		//未ログインの時sessionのIDを取得
+		if (userId== null) {
+			userId=session.getId().hashCode();
+		}
+		
+		Order order =showCartService.showCart(userId);
+		
+		//
+		if(order==null) {
+			return "cart_list";
+		}
+		
+		int tax = order.getTax();
+		
+		int totalPrice = tax + order.CalcTotalPrice();
+
+		model.addAttribute("tax", tax);
+		model.addAttribute("totalPrice", totalPrice);
+		model.addAttribute("order", order);
 
 		return "cart_list";
 	}
+	
+	
 
 }
