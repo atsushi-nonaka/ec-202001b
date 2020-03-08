@@ -1,11 +1,16 @@
 package com.example.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.domain.LoginUser;
+import com.example.domain.Order;
 import com.example.form.AddItemToCartForm;
 import com.example.service.AddItemToCartService;
 import com.example.service.ShowCartService;
@@ -26,6 +31,9 @@ public class AddItemToCartController {
 	
 	@Autowired
 	private ShowCartService showCartService;
+	
+	@Autowired
+	private HttpSession session;
 
 	/**
 	 * 商品をカートに追加します.
@@ -35,41 +43,46 @@ public class AddItemToCartController {
 	 * @return showCartメソッドにリダイレクトします
 	 */
 	@RequestMapping("/addCart")
-	public String addItemToCart(AddItemToCartForm form,  @AuthenticationPrincipal LoginUser loginUser) {
-		if(loginUser==null) {
-			service.insertOrder(form, 0);
-			System.out.println("userID=0");
-		}else {
-			service.insertOrder(form, loginUser.getUser().getId());
-			System.out.println("userID=userID");
-		}
+	public String addItemToCart(AddItemToCartForm form) {
+
+		service.insertOrder(form);	
+
 		return "redirect:/showCart";
-	}
+	}	
 	
 	/**
-	 * ショッピングカートの中身を表示します.
-	 * @param id sessionスコープに入ったorderのuserID情報
-	 * @param model 消費税、合計金額、orderオブジェクトを格納.
-	 * @return ショッピングカートリスト
+	 * ショッピングカートのリンクから中身を表示させます.
+	 * @param userId
+	 * @return ショッピングカート
 	 */
 	@RequestMapping("/showCart")
-	public String showCart() {
+	public String showCart(Model model) {
 		
-//		Integer userId, Model model
-//		上記は引数です。
-//		System.out.println("showCartメソッドの引数"+userId);
-//		
-//		Order order =showCartService.showCart(userId);
-//		
-//		int tax = order.getTax();
-//		
-//		int totalPrice = tax + order.getTotalPrice();
-//
-//		model.addAttribute("tax", tax);
-//		model.addAttribute("totalPrice", totalPrice);
-//		model.addAttribute("order", order);
+		Integer userId=(Integer)session.getAttribute("userId");
+		
+		//未ログインの時sessionのIDを取得
+		if (userId== null) {
+			userId=session.getId().hashCode();
+		}
+		
+		Order order =showCartService.showCart(userId);
+		
+		//
+		if(order==null) {
+			return "cart_list";
+		}
+		
+		int tax = order.getTax();
+		
+		int totalPrice = tax + order.CalcTotalPrice();
+
+		model.addAttribute("tax", tax);
+		model.addAttribute("totalPrice", totalPrice);
+		model.addAttribute("order", order);
 
 		return "cart_list";
 	}
+	
+	
 
 }

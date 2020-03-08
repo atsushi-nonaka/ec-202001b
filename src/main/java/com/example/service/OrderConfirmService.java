@@ -29,4 +29,11 @@ public class OrderConfirmService {
 		return repository.findByUserIdAndStatus(userId);
 	}
 	
+	/**
+	 * 注文情報のユーザーIDを更新します.
+	 * @param userId ユーザーID
+	 */
+	public void updateUserId(Integer userId,Integer sessionId) {
+		repository.update(userId,sessionId);
+	}
 }

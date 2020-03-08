@@ -152,7 +152,6 @@ public class Order {
 		for (OrderItem orderItem : orderItemList) {
 			totalPrice += orderItem.getSubTotal();
 			
-			System.out.println("Order小計の表示"+orderItem.getSubTotal());
 		}
 		
 		int tax = (int) (totalPrice * 0.1);
