@@ -161,7 +161,7 @@ public class OrderRepository {
 	public Order checkByUserIdAndStatus(Integer userId) {
 		try {
 			String sql = "select id,user_id,status,total_price,order_date,destination_name,destination_email,destination_zipcode,destination_address,destination_tel,delivery_time,payment_method from orders where user_id = :userId and status = 0";
-			SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
+			SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("status", 0);
 			Order order = template.queryForObject(sql, param, ORDER_ROW_MAPPER);
 			
 			return order;
@@ -196,7 +196,7 @@ public class OrderRepository {
 	public void update2(Order order) {
 		String sql = "update orders set status = :status,total_price = :totalPrice where user_id = :userId";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", order.getUserId()).addValue("status", 0)
-				.addValue("totalPrice", 0);
+				.addValue("totalPrice", order.getTotalPrice());
 		template.update(sql, param);
 	}	
 	
@@ -256,6 +256,12 @@ public class OrderRepository {
 	public void update(Integer userId,Integer sessionId) {
 		String sql="UPDATE orders SET user_id=:userId WHERE user_id=:sessionId";
 		SqlParameterSource param=new MapSqlParameterSource().addValue("userId", userId).addValue("sessionId", session.getId().hashCode());
+		template.update(sql, param);
+	}
+	
+	public void deleteById(Integer userId) {
+		String sql="DELETE FROM orders where user_id = :userId";
+		SqlParameterSource param=new MapSqlParameterSource().addValue("userId", userId);
 		template.update(sql, param);
 	}
 }

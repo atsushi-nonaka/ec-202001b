@@ -13,8 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Item;
 import com.example.domain.LoginUser;
+import com.example.domain.Order;
 import com.example.domain.User;
+import com.example.repository.OrderItemRepository;
+import com.example.repository.OrderRepository;
 import com.example.service.ShowItemListService;
+
 
 /**
  * 商品情報を操作するコントローラー.
@@ -27,7 +31,7 @@ import com.example.service.ShowItemListService;
 public class ShowItemListController {
 	@Autowired
 	private ShowItemListService showItemListService;
-	
+
 	/**
 	 * 全件検索または条件検索結果を表示します.
 	 * 
@@ -36,7 +40,7 @@ public class ShowItemListController {
 	 * @return 商品一覧画面
 	 */
 	@RequestMapping("")
-	public String showItemList(Model model, String code) {
+	public String showItemList(Model model, String code, @AuthenticationPrincipal LoginUser loginUser) {
 		List<Item> itemList = showItemListService.showItemList(code);
 		if (itemList.size() == 0) {
 			itemList = showItemListService.showItemList("");
@@ -44,7 +48,7 @@ public class ShowItemListController {
 		}
 		List<List<Item>> itemListList = putThreeItemsListInList(itemList);
 		model.addAttribute("itemListList", itemListList);
-		
+
 		return "item_list_pizza";
 	}
 
@@ -66,7 +70,7 @@ public class ShowItemListController {
 		}
 		return itemListList;
 	}
-	
+
 	@RequestMapping("/cheap_items")
 	private String showCheapItem(Model model, String priceM) {
 		List<Item> itemList = showItemListService.showCheapItem(Integer.parseInt(priceM));
@@ -74,6 +78,7 @@ public class ShowItemListController {
 		model.addAttribute("itemListList", itemListList);
 		return "item_list_pizza";
 	}
+
 	@RequestMapping("/expensive_items")
 	private String showExpensiveItem(Model model, String priceM) {
 		List<Item> itemList = showItemListService.showExpensiveItem(Integer.parseInt(priceM));
@@ -83,4 +88,3 @@ public class ShowItemListController {
 	}
 
 }
-

@@ -48,6 +48,9 @@ public class AddItemToCartService {
 	@Autowired
 	private HttpSession session;
 	
+	@Autowired
+	private OrderConfirmService service;
+	
 	/**
 	 * 注文情報をリポジトリに渡しデータベースに挿入するためのメソッドです.
 	 * 
@@ -99,10 +102,13 @@ public class AddItemToCartService {
 //			fomerTotalPrice = order.getTotalPrice();
 //		}
 //		int newTotalPrice = fomerTotalPrice + subTotal;
-//		order.setTotalPrice(newTotalPrice);
-		
+		order = service.findByUserIdAndStatus(userId);
+		order.setTotalPrice(order.CalcTotalPrice());
 		orderRepository.update2(order);
 
+		if(userId==session.getId().hashCode()) {
+			session.setAttribute("hashedOrder", order);
+		}
 	}
 	
 	
