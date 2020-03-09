@@ -1,5 +1,6 @@
 package com.example.form;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.validation.constraints.NotBlank;
@@ -19,6 +20,8 @@ import com.example.domain.OrderItem;
 public class BuyOrderForm {
 	/** ID */
 	private String userId;
+	/** 注文日 */
+	private Date orderDate;
 	/** 宛先氏名 */
 	@NotBlank(message = "お名前を入力して下さい")
 	private String destinationName;
@@ -56,6 +59,14 @@ public class BuyOrderForm {
 
 	public Integer getIntUserId() {
 		return Integer.parseInt(userId);
+	}
+
+	public Date getOrderDate() {
+		return orderDate;
+	}
+
+	public void setOrderDate(Date orderDate) {
+		this.orderDate = orderDate;
 	}
 
 	public String getDestinationName() {

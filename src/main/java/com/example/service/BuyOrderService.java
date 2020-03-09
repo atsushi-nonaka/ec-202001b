@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.Date;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +66,8 @@ public class BuyOrderService {
 		// Timestamp型に変更（DataBaseに合わせる）
 		Timestamp timestamp = Timestamp.valueOf(localDateTime);
 		order.setDeliveryTime(timestamp);
-
+		LocalDate nowDate = LocalDate.now();
+		order.setOrderDate(Date.from(nowDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
 		// クレジット払いと現金払いで分岐
 		if (form.getPaymentMethod().equals("credit")) {
 			order.setPaymentMethod(1);
