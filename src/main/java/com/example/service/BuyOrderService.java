@@ -4,6 +4,9 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +53,33 @@ public class BuyOrderService {
 	public void orderFinish(BuyOrderForm form) {
 		Order order = new Order();
 		BeanUtils.copyProperties(form, order);
+		// Timestamp型に変更（DataBaseに合わせる）
+		Timestamp timestamp = Timestamp.valueOf(toLocalDateTime(form));
+		//現時刻
+		LocalDate nowDate = LocalDate.now();
+		// クレジット払いと現金払いで分岐
+		order.setUserId(form.getIntUserId());
+		order.setDeliveryTime(timestamp);
+		//LocalDate->Dateに変換しセット
+		order.setOrderDate(Date.from(nowDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		if (form.getPaymentMethod().equals("credit")) {
+			order.setPaymentMethod(1);
+			order.setStatus(2);
+		} else {
+			order.setPaymentMethod(2);
+			order.setStatus(1);
+		}
+		orderRepository.update(order);
+		sendMail(order);
+	}
+	
+     /**
+	 * 配達日時をLocalDateTime型に変換する.
+	 * 
+	 * @param form BuyOrderForm
+	 * @return 配達日時(LocalDateTime型)
+	 */
+	public LocalDateTime toLocalDateTime(BuyOrderForm form) {
 		// String型の配達日付を取得
 		String shippingDate = form.getDeliveryDate();
 		// Integer型の配達時間を取得
@@ -60,30 +90,17 @@ public class BuyOrderService {
 		LocalTime localTime = LocalTime.of(shippingHour, 0, 0);
 		// 配達日付と時間を結合
 		LocalDateTime localDateTime = LocalDateTime.of(localDate, localTime);
-		// Timestamp型に変更（DataBaseに合わせる）
-		Timestamp timestamp = Timestamp.valueOf(localDateTime);
-		order.setDeliveryTime(timestamp);
-
-		// クレジット払いと現金払いで分岐
-		if (form.getPaymentMethod().equals("credit")) {
-			order.setPaymentMethod(1);
-			order.setStatus(2);
-		} else {
-			order.setPaymentMethod(2);
-			order.setStatus(1);
-		}
-		orderRepository.update(order);
-		String mailText = mailText(order);
-		sendMail(mailText);
+		return localDateTime ;
 	}
 
 	/**
 	 * 注文確定後、メールを送信する.
 	 */
-	public void sendMail(String mailText) {
+	public void sendMail(Order order) {
 		SimpleMailMessage mailmsg = new SimpleMailMessage();
+		String mailText = mailText(order);
 		mailmsg.setFrom(mailFrom);
-		mailmsg.setTo("test@test.co.jp");// メールの宛先
+		mailmsg.setTo(order.getDestinationEmail());// メールの宛先
 		mailmsg.setSubject("ご注文品についての詳細");// タイトルの設定
 		mailmsg.setText(mailText);
 		mailSender.send(mailmsg);
@@ -97,13 +114,28 @@ public class BuyOrderService {
 	 */
 	public String mailText(Order order) {
 		StringBuilder mailText = new StringBuilder();
-		mailText.append(order.getDestinationName() + "様" + "\r\n");
+		mailText.append(order.getDestinationName() + "様" + "\r\n" + "\r\n");
 		mailText.append("郵便番号：" + order.getDestinationZipcode() + "\r\n");
 		mailText.append("住所：" + order.getDestinationAddress() + "\r\n");
+		mailText.append("電話番号：" + order.getDestinationTel() + "\r\n");
 		mailText.append("配達日時：" + order.getDeliveryTime() + "\r\n");
+		mailText.append("ーーーーーーーーーーーーーーーーーーーーーーー" + "\r\n");
 		mailText.append("ご注文ありがとうございます。" + "\r\n");
 		mailText.append("ご不明点等ございましたら、お手数ですが当アドレスまで返信の程よろしくお願い致します。");
 		return mailText.toString();
 	}
+	
+	
 
+	/**
+	 * 	 * ユーザIDと状態から注文済みの情報を取得します. 
+	 * 注文情報に含まれている、注文商品リスト、注文トッピングリストも取得します。
+	 * statusは0以外を指定しています。
+	 * 
+	 * @param userId ユーザID
+	 * @return 注文リスト
+	 */
+	public List<Order> findOrderHistory(Integer userId){
+		return orderRepository.findOrderHistory(userId);
+	}
 }

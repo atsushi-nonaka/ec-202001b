@@ -66,6 +66,8 @@ public class AddItemToCartService {
 		if (userId== null) {
 			userId=session.getId().hashCode();
 		}
+		
+		System.out.println("isertOrderのuserId"+userId);
 
 		//データベース上にないuserIdだったらインサート、あれば注文情報を取得
 		if(orderRepository.checkByUserIdAndStatus(userId) == null){

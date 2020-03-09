@@ -3,8 +3,6 @@ package com.example.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -13,10 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Item;
 import com.example.domain.LoginUser;
-import com.example.domain.Order;
-import com.example.domain.User;
-import com.example.repository.OrderItemRepository;
-import com.example.repository.OrderRepository;
+import com.example.form.ItemForm;
 import com.example.service.ShowItemListService;
 
 /**
@@ -35,12 +30,15 @@ public class ShowItemListController {
 	 * 全件検索または条件検索結果を表示します.
 	 * 
 	 * @param model リクエストスコープ
-	 * @param code  リクエストパラメーター
+	 * @param itemForm  リクエストパラメーター
 	 * @return 商品一覧画面
 	 */
 	@RequestMapping("")
-	public String showItemList(Model model, String code, @AuthenticationPrincipal LoginUser loginUser) {
-		List<Item> itemList = showItemListService.showItemList(code);
+	public String showItemList(Model model, ItemForm itemForm, @AuthenticationPrincipal LoginUser loginUser) {
+		List<Item> itemList = showItemListService.showItemList(itemForm.getName());
+		if(itemForm.getName() == null) {
+			itemList =showItemListService.showItemList("");
+		}
 		if (itemList.size() == 0) {
 			itemList = showItemListService.showItemList("");
 			model.addAttribute("message", "該当する商品がございません");

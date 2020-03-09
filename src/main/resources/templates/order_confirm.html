@@ -38,7 +38,7 @@
 					<p class="navbar-text navbar-right">
 					<a href="cart_list.html" th:href="@{/showCart}" class="navbar-link">
 						ショッピングカート</a>&nbsp;&nbsp;
-						<a href="order_history.html" class="navbar-link">注文履歴</a>&nbsp;&nbsp;
+					<span sec:authorize="hasRole('ROLE_USER')"><a href="/showOrderHistory" class="navbar-link">注文履歴</a>&nbsp;&nbsp;</span>
 						<span sec:authorize="${!isAuthenticated()}"><a href="/rakuraku-pizza/toLogin">ログイン</a></span>
 						<span sec:authorize="hasRole('ROLE_USER')"><a href="/logout">ログアウト</a></span>
 					</p>
@@ -82,11 +82,11 @@
 						<tr th:each="orderItem:${order.orderItemList}">
 							<td>
 								<div class="center">
-									<img src="../static/img_pizza/1.jpg" th:src="@{'/img_pizza/' + ${orderItem.item.imagePath}}" class="img-responsive img-rounded" width="100" height="300"><br>
+									<img src="../static/img_pizza/1.jpg" th:src="@{'/img_pizza/' + ${orderItem.item.imagePath}}" class="disp-block blockcenter" width="100" height="300"><br>
 								<span th:text="${orderItem.item.name}">じゃがバターベーコン</span>	
 								</div>
 							</td>
-							<td>
+							<td class="showlist">
 								<span class="price" th:text=" ${orderItem.size}">&nbsp;Ｌ</span>&nbsp;&nbsp;
 								<span th:if="${orderItem.size}=='M'" th:text="${#numbers.formatInteger(orderItem.item.priceM,2,'COMMA')}+円">1,490円</span>
 								<span th:if="${orderItem.size}=='L'" th:text="${#numbers.formatInteger(orderItem.item.priceL,2,'COMMA')}+円">2,570円</span>
@@ -139,7 +139,7 @@
 								</td>
 								<td>
 									<div th:errors="*{destinationName}" style="color: red;"></div>
-									<input type="text" name="destinationName" th:value="${user.name}">
+									<input type="text" name="destinationName" th:value="${user.name}" >
 								</td>
 							</tr>
 							<tr>
@@ -323,7 +323,8 @@
 							</select><br>
 							カード名義人：<input id="creditUserName" type="text" name="creditUserName" ><br>
 							セキュリティーコード：<input id="creditSecurityCode" type="text" name="creditSecurityCode" ><br>
-						</div>
+						</div>						
+						<input type="hidden" name="userId" th:value="${user.id}">						
 						<input class="form-control btn btn-warning btn-block" type="submit" value="この内容で注文する">
 					</div>
 				</div>

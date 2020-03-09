@@ -1,6 +1,11 @@
 package com.example.controller;
 
+<<<<<<< HEAD
 import javax.servlet.http.HttpSession;
+=======
+import java.time.LocalDateTime;
+import java.util.List;
+>>>>>>> origin/develop
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -77,6 +82,10 @@ public class OrderConfirmController {
 								   Model model,
 								   @AuthenticationPrincipal LoginUser loginUser
 								   ) {
+		System.out.println(form);
+		if(LocalDateTime.now().isAfter(buyOrderService.toLocalDateTime(form))) {
+			result.rejectValue("deliveryDate", null, "配達時間が正しくありません");
+		}
 		
 		if(result.hasErrors()) {
 			return toOrderConfirm(model,loginUser);
@@ -84,6 +93,29 @@ public class OrderConfirmController {
 		
 		buyOrderService.orderFinish(form);
 		return "order_finished";
+	}
+	
+	/**
+	 * 注文履歴の情報を表示します
+	 * @param loginUser ログイン者のユーザ情報
+	 * @return　注文確認画面
+	 */
+	@RequestMapping("/showOrderHistory")
+	public String showOrderHistory(Model model,@AuthenticationPrincipal LoginUser loginUser) {
+		User user = loginUser.getUser();
+		
+		Integer userId=user.getId();
+		
+		List<Order> orderHistoryList=buyOrderService.findOrderHistory(userId);
+		if(orderHistoryList==null) {
+			return "order_history";
+		}
+		
+		model.addAttribute("orderHistoryList", orderHistoryList);
+		
+		
+		return "order_history";
+				
 	}
 
 }
