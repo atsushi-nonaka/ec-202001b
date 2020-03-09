@@ -9,7 +9,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.domain.Order;
 import com.example.domain.User;
@@ -45,21 +44,17 @@ public class LoginController {
 	 * @return ログイン画面
 	 */
 	@RequestMapping("/toLogin")
-	public String toLogin(Model model,@RequestParam(required = false) String error) {
-		if (error != null) {
-			System.err.println("login failed");
-			model.addAttribute("errorMessage", "メールアドレスまたはパスワードが不正です。");
-		}
-		return "login.html";
+	public String toLogin() {
+		return "login";
 	}
 
-	/**
-	 * ログイン処理です.
-	 * 
-	 * @param form ログイン画面からのパラーメターを受け取るフォーム
-	 * @param result エラーメッセージを表示するためのオブジェクト
-	 * @return ログインが成功すると商品一覧画面に遷移します
-	 */
+//	/**
+//	 * ログイン処理です.
+//	 * 
+//	 * @param form ログイン画面からのパラーメターを受け取るフォーム
+//	 * @param result エラーメッセージを表示するためのオブジェクト
+//	 * @return ログインが成功すると商品一覧画面に遷移します
+//	 */
 //	@RequestMapping("/login")
 //	public String login(@Validated LoginForm form,BindingResult result,Model model) {
 //		if(result.hasErrors()) {

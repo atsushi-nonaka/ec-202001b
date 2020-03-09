@@ -19,7 +19,6 @@ import com.example.repository.OrderItemRepository;
 import com.example.repository.OrderRepository;
 import com.example.service.ShowItemListService;
 
-
 /**
  * 商品情報を操作するコントローラー.
  * 
@@ -36,7 +35,7 @@ public class ShowItemListController {
 	 * 全件検索または条件検索結果を表示します.
 	 * 
 	 * @param model リクエストスコープ
-	 * @param name  リクエストパラメーター
+	 * @param code  リクエストパラメーター
 	 * @return 商品一覧画面
 	 */
 	@RequestMapping("")
@@ -48,7 +47,8 @@ public class ShowItemListController {
 		}
 		List<List<Item>> itemListList = putThreeItemsListInList(itemList);
 		model.addAttribute("itemListList", itemListList);
-
+		StringBuilder itemListForAutocomplete = showItemListService.getItemListForAutocomplete(itemList);
+		model.addAttribute("itemListForAutocomplete", itemListForAutocomplete);
 		return "item_list_pizza";
 	}
 
