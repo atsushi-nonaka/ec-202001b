@@ -8,6 +8,8 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,6 +40,9 @@ public class BuyOrderService {
 
 	@Autowired
 	private MailSender mailSender;
+	
+	@Autowired
+	private HttpSession session;
 
 //	@Autowired
 //	private RestTemplate restTemplate;
@@ -51,7 +56,7 @@ public class BuyOrderService {
 	 * @param order 注文情報
 	 */
 	public void orderFinish(BuyOrderForm form) {
-		Order order = new Order();
+		Order order = (Order) session.getAttribute("order");
 		BeanUtils.copyProperties(form, order);
 		// Timestamp型に変更（DataBaseに合わせる）
 		Timestamp timestamp = Timestamp.valueOf(toLocalDateTime(form));

@@ -62,7 +62,8 @@ public class OrderConfirmController {
 		
 		model.addAttribute("order",order);
 		model.addAttribute("user", user);
-		
+		session.setAttribute("order", order);
+
 		return "order_confirm";
 				
 	}
