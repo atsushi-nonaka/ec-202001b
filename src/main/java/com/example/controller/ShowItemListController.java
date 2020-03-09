@@ -3,17 +3,13 @@ package com.example.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Item;
-import com.example.domain.LoginUser;
-import com.example.domain.User;
+import com.example.form.ItemForm;
 import com.example.service.ShowItemListService;
 
 /**
@@ -36,8 +32,8 @@ public class ShowItemListController {
 	 * @return 商品一覧画面
 	 */
 	@RequestMapping("")
-	public String showItemList(Model model, String code) {
-		List<Item> itemList = showItemListService.showItemList(code);
+	public String showItemList(Model model, ItemForm itemForm) {
+		List<Item> itemList = showItemListService.showItemList(itemForm.getName());
 		if (itemList.size() == 0) {
 			itemList = showItemListService.showItemList("");
 			model.addAttribute("message", "該当する商品がございません");
