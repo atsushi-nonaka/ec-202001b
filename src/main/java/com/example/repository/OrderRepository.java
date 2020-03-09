@@ -294,8 +294,8 @@ public class OrderRepository {
 	}
 	
 	public void deleteById(Integer userId) {
-		String sql="DELETE FROM orders where user_id = :userId";
-		SqlParameterSource param=new MapSqlParameterSource().addValue("userId", userId);
+		String sql="DELETE FROM orders where user_id = :userId and status=:status";
+		SqlParameterSource param=new MapSqlParameterSource().addValue("userId", userId).addValue("status", 0);
 		template.update(sql, param);
 	}
 }
