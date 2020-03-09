@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -72,6 +74,10 @@ public class OrderConfirmController {
 								   Model model,
 								   @AuthenticationPrincipal LoginUser loginUser
 								   ) {
+		System.out.println(form);
+//		if(LocalDateTime.now().isAfter(buyOrderService.toLocalDateTime(form))) {
+//			result.rejectValue("deliveryDate", null, "配達時間が正しくありません");
+//		}
 		
 		if(result.hasErrors()) {
 			return toOrderConfirm(model,loginUser);
