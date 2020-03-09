@@ -75,9 +75,9 @@ public class OrderConfirmController {
 								   @AuthenticationPrincipal LoginUser loginUser
 								   ) {
 		System.out.println(form);
-//		if(LocalDateTime.now().isAfter(buyOrderService.toLocalDateTime(form))) {
-//			result.rejectValue("deliveryDate", null, "配達時間が正しくありません");
-//		}
+		if(LocalDateTime.now().isAfter(buyOrderService.toLocalDateTime(form))) {
+			result.rejectValue("deliveryDate", null, "配達時間が正しくありません");
+		}
 		
 		if(result.hasErrors()) {
 			return toOrderConfirm(model,loginUser);
