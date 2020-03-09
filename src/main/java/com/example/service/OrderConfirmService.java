@@ -1,5 +1,6 @@
 package com.example.service;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +29,7 @@ public class OrderConfirmService {
 	public Order findByUserIdAndStatus(Integer userId){
 		return repository.findByUserIdAndStatus(userId);
 	}
+	
 	
 	/**
 	 * 注文情報のユーザーIDを更新します.
