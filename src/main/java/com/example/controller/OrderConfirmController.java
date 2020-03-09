@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -31,6 +33,9 @@ public class OrderConfirmController {
 		
 	@Autowired
 	private BuyOrderService buyOrderService;
+	
+	@Autowired
+	private HttpSession session;
 		
 	@ModelAttribute
 	public BuyOrderForm setUpForm() {

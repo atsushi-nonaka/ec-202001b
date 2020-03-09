@@ -241,7 +241,7 @@ public class OrderRepository {
 	 * @param order 注文情報
 	 */
 	public void update(Order order) {
-		String sql = "UPDATE orders SET status = :status, destination_name = :destinationName, destination_email = :destinationEmail, "
+		String sql = "UPDATE orders SET status = :status, total_price = :totalPrice, order_date = :orderDate, destination_name = :destinationName, destination_email = :destinationEmail, "
 				+ "destination_zipcode = :destinationZipcode, destination_address = :destinationAddress, "
 				+ "destination_tel = :destinationTel, delivery_time = :deliveryTime, payment_method = :paymentMethod";
 

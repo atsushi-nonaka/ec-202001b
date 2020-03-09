@@ -91,7 +91,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				System.out.println("hashedOrderId="+hashedOrderId);
 				System.out.println("loginUsersOrderId="+loginUsersOrderId);
 				orderItemRepository.updateOrderIdByOrderId(hashedOrderId, loginUsersOrderId);
-				session.setAttribute("hashedOrder", null);
 				//ハッシュのDB消す
 				orderRepository.deleteById(order.getUserId());
 				//金額揃える

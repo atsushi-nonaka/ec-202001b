@@ -4,6 +4,7 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -11,6 +12,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
+import com.example.domain.Order;
 import com.example.domain.OrderItem;
 
 /**
@@ -21,6 +23,21 @@ import com.example.domain.OrderItem;
  */
 @Repository
 public class OrderItemRepository {
+	
+	public static final RowMapper<OrderItem> ORDER_ITEM_ROW_MAPPER = (rs, i) -> {
+		OrderItem orderItem = new OrderItem();
+		orderItem.setId(rs.getInt("id"));
+		orderItem.setItemId(rs.getInt("item_id"));
+		orderItem.setOrderId(rs.getInt("order_id"));
+		orderItem.setQuantity(rs.getInt("quantity"));
+		
+		// sizeはドメインがchar型のため、String型→Char型に変換
+		String size = rs.getString("size");
+		char[] sizeChar = size.toCharArray();
+		orderItem.setSize(sizeChar[0]);
+		
+		return orderItem;
+	};
 
 	@Autowired
 	private NamedParameterJdbcTemplate template;
@@ -53,6 +70,19 @@ public class OrderItemRepository {
 	public void updateOrderIdByOrderId(Integer hashedId,Integer loginUsersOrderId) {
 		String sql = "update order_items set order_id=:loginUsersOrderId where order_id = :hashedId";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("loginUsersOrderId", loginUsersOrderId).addValue("hashedId", hashedId);
+		template.update(sql, param);
+	}
+	
+	public OrderItem findById(Integer orderItemId) {
+		String sql = "SELECT id,item_id,order_id,quantity,size from order_items where id = :orderItemId";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("orderItemId", orderItemId);
+		OrderItem orderItem = template.queryForObject(sql, param, ORDER_ITEM_ROW_MAPPER);
+		return orderItem;
+	}
+	
+	public void deleteById(Integer id) {
+		String sql = "DELETE FROM order_items where id = :orderItemId";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("orderItemId", id);
 		template.update(sql, param);
 	}
 
