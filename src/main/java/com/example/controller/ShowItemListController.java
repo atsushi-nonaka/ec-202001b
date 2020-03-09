@@ -28,12 +28,15 @@ public class ShowItemListController {
 	 * 全件検索または条件検索結果を表示します.
 	 * 
 	 * @param model リクエストスコープ
-	 * @param code  リクエストパラメーター
+	 * @param itemForm  リクエストパラメーター
 	 * @return 商品一覧画面
 	 */
 	@RequestMapping("")
 	public String showItemList(Model model, ItemForm itemForm) {
 		List<Item> itemList = showItemListService.showItemList(itemForm.getName());
+		if(itemForm.getName() == null) {
+			itemList =showItemListService.showItemList("");
+		}
 		if (itemList.size() == 0) {
 			itemList = showItemListService.showItemList("");
 			model.addAttribute("message", "該当する商品がございません");
