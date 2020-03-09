@@ -27,12 +27,12 @@ import com.example.service.ShowItemListService;
 public class ShowItemListController {
 	@Autowired
 	private ShowItemListService showItemListService;
-	
+
 	/**
 	 * 全件検索または条件検索結果を表示します.
 	 * 
 	 * @param model リクエストスコープ
-	 * @param name  リクエストパラメーター
+	 * @param code  リクエストパラメーター
 	 * @return 商品一覧画面
 	 */
 	@RequestMapping("")
@@ -44,7 +44,9 @@ public class ShowItemListController {
 		}
 		List<List<Item>> itemListList = putThreeItemsListInList(itemList);
 		model.addAttribute("itemListList", itemListList);
-		
+
+		StringBuilder itemListForAutocomplete = showItemListService.getItemListForAutocomplete(itemList);
+		model.addAttribute("itemListForAutocomplete", itemListForAutocomplete);
 		return "item_list_pizza";
 	}
 
@@ -66,7 +68,7 @@ public class ShowItemListController {
 		}
 		return itemListList;
 	}
-	
+
 	@RequestMapping("/cheap_items")
 	private String showCheapItem(Model model, String priceM) {
 		List<Item> itemList = showItemListService.showCheapItem(Integer.parseInt(priceM));
@@ -74,6 +76,7 @@ public class ShowItemListController {
 		model.addAttribute("itemListList", itemListList);
 		return "item_list_pizza";
 	}
+
 	@RequestMapping("/expensive_items")
 	private String showExpensiveItem(Model model, String priceM) {
 		List<Item> itemList = showItemListService.showExpensiveItem(Integer.parseInt(priceM));
@@ -83,4 +86,3 @@ public class ShowItemListController {
 	}
 
 }
-

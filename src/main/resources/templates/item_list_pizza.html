@@ -7,6 +7,18 @@
 <title>ピザ屋のネット注文</title>
 <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}">
 <link href="../static/css/piza.css" rel="stylesheet" th:href="@{/css/piza.css}">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+$( function() {
+  var availableTags = [ [(${itemListForAutocomplete})] ];
+
+  $( "#code" ).autocomplete({
+    source: availableTags
+  });
+} );
+</script>
 </head>
 <body>
 	<div class="container">
@@ -102,8 +114,8 @@
 		</div>
 	</div>
 	<!-- end container -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<!-- <script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
 	<script src="../static/js/bootstrap.min.js"></script>
 </body>
 </html>
