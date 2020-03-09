@@ -52,23 +52,15 @@ public class BuyOrderService {
 	public void orderFinish(BuyOrderForm form) {
 		Order order = new Order();
 		BeanUtils.copyProperties(form, order);
-		order.setUserId(form.getIntUserId());
-		// String型の配達日付を取得
-		String shippingDate = form.getDeliveryDate();
-		// Integer型の配達時間を取得
-		Integer shippingHour = Integer.parseInt(form.getDeliveryTime());
-		// 配達日付をLocalDate型に変更
-		LocalDate localDate = LocalDate.parse(shippingDate);
-		// 配達時間をLocalTime型に変更（分,秒は0とする）
-		LocalTime localTime = LocalTime.of(shippingHour, 0, 0);
-		// 配達日付と時間を結合
-		LocalDateTime localDateTime = LocalDateTime.of(localDate, localTime);
 		// Timestamp型に変更（DataBaseに合わせる）
-		Timestamp timestamp = Timestamp.valueOf(localDateTime);
-		order.setDeliveryTime(timestamp);
+		Timestamp timestamp = Timestamp.valueOf(toLocalDateTime(form));
+		//現時刻
 		LocalDate nowDate = LocalDate.now();
-		order.setOrderDate(Date.from(nowDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
 		// クレジット払いと現金払いで分岐
+		order.setUserId(form.getIntUserId());
+		order.setDeliveryTime(timestamp);
+		//LocalDate->Dateに変換しセット
+		order.setOrderDate(Date.from(nowDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
 		if (form.getPaymentMethod().equals("credit")) {
 			order.setPaymentMethod(1);
 			order.setStatus(2);
@@ -80,15 +72,25 @@ public class BuyOrderService {
 		sendMail(order);
 	}
 	
-//	/**
-//	 * 配達日時をLocalDateTime型に変換する.
-//	 * 
-//	 * @param form BuyOrderForm
-//	 * @return 配達日時(LocalDateTime型)
-//	 */
-//	public LocalDateTime toLocalDateTime(BuyOrderForm form) {
-//		return localDateTime ;
-//	}
+     /**
+	 * 配達日時をLocalDateTime型に変換する.
+	 * 
+	 * @param form BuyOrderForm
+	 * @return 配達日時(LocalDateTime型)
+	 */
+	public LocalDateTime toLocalDateTime(BuyOrderForm form) {
+		// String型の配達日付を取得
+		String shippingDate = form.getDeliveryDate();
+		// Integer型の配達時間を取得
+		Integer shippingHour = Integer.parseInt(form.getDeliveryTime());
+		// 配達日付をLocalDate型に変更
+		LocalDate localDate = LocalDate.parse(shippingDate);
+		// 配達時間をLocalTime型に変更（分,秒は0とする）
+		LocalTime localTime = LocalTime.of(shippingHour, 0, 0);
+		// 配達日付と時間を結合
+		LocalDateTime localDateTime = LocalDateTime.of(localDate, localTime);
+		return localDateTime ;
+	}
 
 	/**
 	 * 注文確定後、メールを送信する.
@@ -117,8 +119,6 @@ public class BuyOrderService {
 		mailText.append("電話番号：" + order.getDestinationTel() + "\r\n");
 		mailText.append("配達日時：" + order.getDeliveryTime() + "\r\n");
 		mailText.append("ーーーーーーーーーーーーーーーーーーーーーーー" + "\r\n");
-		mailText.append("ご注文品："  + "\r\n");
-		mailText.append("ご不明点等ございましたら、お手数ですが当アドレスまで返信の程よろしくお願い致します。");
 		mailText.append("ご注文ありがとうございます。" + "\r\n");
 		mailText.append("ご不明点等ございましたら、お手数ですが当アドレスまで返信の程よろしくお願い致します。");
 		return mailText.toString();
