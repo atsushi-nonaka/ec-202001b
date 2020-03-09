@@ -84,11 +84,15 @@ public class BuyOrderService {
 		// Integer型の配達時間を取得
 		Integer shippingHour = Integer.parseInt(form.getDeliveryTime());
 		// 配達日付をLocalDate型に変更
-		LocalDate localDate = LocalDate.parse(shippingDate);
-		// 配達時間をLocalTime型に変更（分,秒は0とする）
-		LocalTime localTime = LocalTime.of(shippingHour, 0, 0);
-		// 配達日付と時間を結合
-		LocalDateTime localDateTime = LocalDateTime.of(localDate, localTime);
+		LocalDate localDate = null;
+		LocalDateTime localDateTime = null;
+		if (!(shippingDate.equals(""))) {
+			localDate = LocalDate.parse(shippingDate);
+			// 配達時間をLocalTime型に変更（分,秒は0とする）
+			LocalTime localTime = LocalTime.of(shippingHour, 0, 0);
+			// 配達日付と時間を結合
+			localDateTime = LocalDateTime.of(localDate, localTime);
+		}
 		return localDateTime ;
 	}
 

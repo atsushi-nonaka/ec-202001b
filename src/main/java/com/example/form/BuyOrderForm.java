@@ -40,7 +40,7 @@ public class BuyOrderForm {
 	@Range(message = "数字を入力してください")
 	private String destinationTel;
 	/** 配達日 */
-	@NotBlank(message = "配達日時を入力して下さい")
+	@NotBlank(message = "配達日時を入力してください")
 	private String deliveryDate;
 	/** 配達時間 */
 	private String deliveryTime;
