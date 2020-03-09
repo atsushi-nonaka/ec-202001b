@@ -61,10 +61,9 @@ public class AddItemToCartController {
 		if (userId== null) {
 			userId=session.getId().hashCode();
 		}
-		System.out.println("showCart内のuserID"+userId);
 		Order order =showCartService.showCart(userId);
 		
-		//
+		//データベース上で注文がない場合
 		if(order==null) {
 			return "cart_list";
 		}

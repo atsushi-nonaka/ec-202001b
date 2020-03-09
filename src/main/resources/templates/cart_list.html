@@ -57,12 +57,15 @@
 		<table class="table table-striped">
 		<tr id="comment">
 		<td>
+		<a href="item_detail.html" th:href="@{'/show_item_detail?id=' + 1}">
 		<img th:src="@{/img_pizza/1.jpg}" class="image-center" width="200" height="400">
+		</a><br>
+		<a href="item_detail.html" th:href="@{'/show_item_detail?id=' + 1}">じゃがバターベーコン</a><br>
 		</td>
 		<td>
 		ようこそ、ラクラクピザへ！<br>
 		弊社総リーダー土屋のおすすめは<br>
-		<span id="recommend">「じゃがばたベーコン」</span>
+		<span id="recommend">「じゃがバターベーコン」</span>
 		です。<br>
 		引き続きお買い物をお楽しみください！
 		</td>
@@ -118,6 +121,7 @@
 								<span th:text="${orderItem.quantity}+個">1個</span>	
 							</td>
 							<td>
+<!-- 								<span th:if="${orderItem.orderToppingList}==null">トッピングなし</span> -->
 								<ul th:each="orderTopping:${orderItem.orderToppingList}">
 									<li th:if="${orderItem.size}=='M'" th:text="${orderTopping.topping.name+orderTopping.topping.priceM}+円">ピーマン
 									</li>
