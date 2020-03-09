@@ -1,11 +1,8 @@
 package com.example.controller;
 
-<<<<<<< HEAD
 import javax.servlet.http.HttpSession;
-=======
 import java.time.LocalDateTime;
 import java.util.List;
->>>>>>> origin/develop
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
