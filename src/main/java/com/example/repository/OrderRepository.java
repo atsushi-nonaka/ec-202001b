@@ -194,7 +194,7 @@ public class OrderRepository {
 	 * @param order 更新したい注文情報
 	 */
 	public void update2(Order order) {
-		String sql = "update orders set status = :status,total_price = :totalPrice where user_id = :userId";
+		String sql = "update orders set total_price = :totalPrice where user_id = :userId and status = :status";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", order.getUserId()).addValue("status", 0)
 				.addValue("totalPrice", order.getTotalPrice());
 		template.update(sql, param);
