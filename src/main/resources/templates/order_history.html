@@ -37,7 +37,7 @@
 					<p class="navbar-text navbar-right">
 					<a href="cart_list.html" th:href="@{/showCart}" class="navbar-link">
 						ショッピングカート</a>&nbsp;&nbsp;
-						<a href="order_history.html" class="navbar-link">注文履歴</a>&nbsp;&nbsp;
+						<span sec:authorize="hasRole('ROLE_USER')"><a href="/showOrderHistory" class="navbar-link">注文履歴</a>&nbsp;&nbsp;</span>
 						<span sec:authorize="${!isAuthenticated()}"><a href="/rakuraku-pizza/toLogin">ログイン</a></span>
 						<span sec:authorize="hasRole('ROLE_USER')"><a href="/logout">ログアウト</a></span>
 					</p>
@@ -48,19 +48,37 @@
 		</nav>
  
 		
-<!-- 		<h3 class="text-center">
+		<h3 class="text-center">
 			<span th:if="${orderHistoryList==null}">
-			カートに商品がありません
+			注文履歴がありません
 			</span>
-		</h3> -->
+		</h3>
+		
+		<table class="table table-striped">
+		<tr id="comment">
+			<td th:if="${orderHistoryList==null}">
+				ラクラクピザにご登録いただきありがとうございます！<br>
+				ショッピングカートページでおすすめをお届けしております。<br>
+				引き続きお買い物をお楽しみください！
+			</td>
+			<td th:if="${orderHistoryList!=null}">
+				ラクラクピザをご利用いただきありがとうざいます！<br>
+				お好みのピザには出会えたでしょうか？<br>
+				またのご利用をお待ちしております。
+			</td>
+			<td>
+		    	<img th:src="@{/img_pizza/delivery_pizza.png}" class="image-center" width="200" height="400">
+			</td>
+		</tr>
+		</table>
 		
 		<!-- table -->
 		<div class="row">
 			<div
 				class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
-				<h3 class="text-center">注文履歴</h3>
-				<table class="table table-striped">
-					<tbody th:each="order:${orderHistoryList}">
+				<h3 class="text-center" th:if="${orderHistoryList!=null}">注文履歴</h3>
+				<table class="table table-striped" th:if="${orderHistoryList!=null}">
+					<tbody>
 						<tr>
 							<th>
 								<div class="text-center">
@@ -93,6 +111,7 @@
 								</div>
 							</th>
 						</tr>
+						<tbody th:each="order:${orderHistoryList}">
 						<tr th:each="orderItem:${order.orderItemList}">
 								<td>
 								<div class="text-center">
@@ -145,6 +164,7 @@
 							</div>
 							</td>
 						</tr>
+						</tbody>
 					</tbody>
 				</table>
 			</div>

@@ -95,8 +95,12 @@ public class OrderConfirmController {
 		Integer userId=user.getId();
 		
 		List<Order> orderHistoryList=buyOrderService.findOrderHistory(userId);
+		if(orderHistoryList==null) {
+			return "order_history";
+		}
 		
 		model.addAttribute("orderHistoryList", orderHistoryList);
+		
 		
 		return "order_history";
 				
