@@ -20,10 +20,10 @@ span#total-price {
 }
 
 tr#comment {
-	font-size:20px;
+	font-size:18px;
 	 text-align: center;
 	color:black;	
-	margin: 30px;
+	margin: 20px;
 }
 span#recommend {
 	font-size:30px;
@@ -35,4 +35,33 @@ img.image-center{
   max-width: 100%;
   height: auto;
 }
-
+td#show {
+	 text-align: center;
+}
+.showlist {
+	 text-align: center;
+}
+img.disp-block {
+  border-radius: 6px;
+  display: block; /* これでブロック要素の扱いになります */
+}
+.blockcenter{
+  max-width: 100%;
+  height: auto;
+  margin-left: auto;  /* 【ポイント】*/
+  margin-right: auto; /* 【ポイント】*/
+}
+div#beaf{
+	text-align: center;
+	font-size:12px;
+	color:black;	
+}
+.panel-title {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 16px;
+  color: inherit;
+}
+.center{
+	text-align: center;	
+}

@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,4 +107,15 @@ public class BuyOrderService {
 		return mailText.toString();
 	}
 
+	/**
+	 * 	 * ユーザIDと状態から注文済みの情報を取得します. 
+	 * 注文情報に含まれている、注文商品リスト、注文トッピングリストも取得します。
+	 * statusは0以外を指定しています。
+	 * 
+	 * @param userId ユーザID
+	 * @return 注文リスト
+	 */
+	public List<Order> findOrderHistory(Integer userId){
+		return orderRepository.findOrderHistory(userId);
+	}
 }

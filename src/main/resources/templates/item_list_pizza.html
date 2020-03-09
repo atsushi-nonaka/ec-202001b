@@ -45,9 +45,9 @@ $( function() {
 					<p class="navbar-text navbar-right">
 					<a href="cart_list.html" th:href="@{/showCart}" class="navbar-link">
 						ショッピングカート</a>&nbsp;&nbsp;
-						<a href="order_history.html" class="navbar-link">注文履歴</a>&nbsp;&nbsp;
-				<span sec:authorize="${!isAuthenticated()}"><a href="/rakuraku-pizza/toLogin">ログイン</a></span>
-				<span sec:authorize="hasRole('ROLE_USER')"><a href="/logout">ログアウト</a></span>
+						<span sec:authorize="hasRole('ROLE_USER')"><a href="/showOrderHistory" class="navbar-link">注文履歴</a>&nbsp;&nbsp;</span>
+						<span sec:authorize="${!isAuthenticated()}"><a href="/rakuraku-pizza/toLogin">ログイン</a></span>
+						<span sec:authorize="hasRole('ROLE_USER')"><a href="/logout">ログアウト</a></span>
 					</p>
 				</div>
 				<!-- /.navbar-collapse -->
@@ -61,13 +61,13 @@ $( function() {
 				class="col-lg-offset-3 col-lg-6 col-md-offset-2 col-md-8 col-sm-10 col-xs-12">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<div class="panel-title">商品を検索する</div>
+						<div class="panel-title center">商品を検索する</div>
 					</div>
 					<div class="panel-body">
 						<form method="post" th:action="@{/}" class="form-horizontal">
 							<div class="form-group">
+								<div th:if="${message}" th:text="${message}" style="color :green" class="text-center"></div>
 								<label for="code" class="control-label col-sm-2">商品名</label>
-								<span th:if="${message}" th:text="${message}" style="color :green"></span>
 								<div class="col-sm-9">
 									<input type="text" name="code" id="code"
 										class="form-control input-sm" />
@@ -95,10 +95,10 @@ $( function() {
 				<table class="table table-striped">
 					<tbody>
 						<tr th:each="itemList:${itemListList}">
-							<th th:each="item :${itemList}">
+							<th th:each="item :${itemList}" class="showlist">
 							 <a href="item_detail.html" th:href="@{'/show_item_detail?id=' + ${item.id}}">
 								<img th:src="${'/img_pizza/' + item.imagePath}"
-										class="img-responsive img-rounded" width="200" height="600">
+										class="disp-block blockcenter" width="200" height="600">
 								</a><br> 
 								<a href="item_detail.html" th:href="@{'/show_item_detail?id=' + ${item.id}}"><span  th:text="${item.name}"></span></a><br>
 								<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;<span th:text="${#numbers.formatInteger(item.priceM,2,'COMMA')}"></span>円(税抜)<br>

@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -79,6 +81,25 @@ public class OrderConfirmController {
 		
 		buyOrderService.orderFinish(form);
 		return "order_finished";
+	}
+	
+	/**
+	 * 注文履歴の情報を表示します
+	 * @param loginUser ログイン者のユーザ情報
+	 * @return　注文確認画面
+	 */
+	@RequestMapping("/showOrderHistory")
+	public String showOrderHistory(Model model,@AuthenticationPrincipal LoginUser loginUser) {
+		User user = loginUser.getUser();
+		
+		Integer userId=user.getId();
+		
+		List<Order> orderHistoryList=buyOrderService.findOrderHistory(userId);
+		
+		model.addAttribute("orderHistoryList", orderHistoryList);
+		
+		return "order_history";
+				
 	}
 
 }
