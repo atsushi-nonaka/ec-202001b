@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,9 +19,15 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.domain.Item;
 import com.example.domain.Order;
+import com.example.domain.OrderItem;
+import com.example.domain.Topping;
 import com.example.form.BuyOrderForm;
+import com.example.repository.ItemRepository;
+import com.example.repository.OrderItemRepository;
 import com.example.repository.OrderRepository;
+import com.example.repository.ToppingRepository;
 
 /**
  * 注文情報を操作するサービス.
@@ -34,6 +41,15 @@ public class BuyOrderService {
 
 	@Autowired
 	private OrderRepository orderRepository;
+	
+	@Autowired
+	private ItemRepository itemRepository;
+	
+	@Autowired
+	private OrderItemRepository orderItemRepository;
+	
+	@Autowired
+	private ToppingRepository toppingRepository;
 
 	@Value("${spring.mail.username}")
 	private String mailFrom;
@@ -75,7 +91,7 @@ public class BuyOrderService {
 			order.setStatus(1);
 		}
 		orderRepository.update(order);
-		sendMail(order);
+		sendMail(form);
 	}
 	
      /**
@@ -101,11 +117,11 @@ public class BuyOrderService {
 	/**
 	 * 注文確定後、メールを送信する.
 	 */
-	public void sendMail(Order order) {
+	public void sendMail(BuyOrderForm form) {
 		SimpleMailMessage mailmsg = new SimpleMailMessage();
-		String mailText = mailText(order);
+		String mailText = mailText(form);
 		mailmsg.setFrom(mailFrom);
-		mailmsg.setTo(order.getDestinationEmail());// メールの宛先
+		mailmsg.setTo(form.getDestinationEmail());// メールの宛先
 		mailmsg.setSubject("ご注文品についての詳細");// タイトルの設定
 		mailmsg.setText(mailText);
 		mailSender.send(mailmsg);
@@ -117,14 +133,35 @@ public class BuyOrderService {
 	 * @param order 注文情報
 	 * @return メールテキスト
 	 */
-	public String mailText(Order order) {
+	public String mailText(BuyOrderForm form) {
 		StringBuilder mailText = new StringBuilder();
-		mailText.append(order.getDestinationName() + "様" + "\r\n" + "\r\n");
-		mailText.append("郵便番号：" + order.getDestinationZipcode() + "\r\n");
-		mailText.append("住所：" + order.getDestinationAddress() + "\r\n");
-		mailText.append("電話番号：" + order.getDestinationTel() + "\r\n");
-		mailText.append("配達日時：" + order.getDeliveryTime() + "\r\n");
-		mailText.append("ーーーーーーーーーーーーーーーーーーーーーーー" + "\r\n");
+		mailText.append(form.getDestinationName() + "　様" + "\r\n" + "\r\n");
+		mailText.append("郵便番号：" + form.getDestinationZipcode() + "\r\n");
+		mailText.append("住所：" + form.getDestinationAddress() + "\r\n");
+		mailText.append("電話番号：" + form.getDestinationTel() + "\r\n");
+		mailText.append("配達日時：" + form.getDeliveryDate() + " " + form.getDeliveryTime()  + ":00\r\n");
+		List<OrderItem> orderItemList = new ArrayList<>();
+		for(Integer orderItemId : form.getOrderItemId()) {
+			orderItemList.add(orderItemRepository.findById(orderItemId));
+		}
+		
+		for(Integer i=0; i < orderItemList.size(); i++) {
+			Item item = itemRepository.load(orderItemList.get(i).getItemId());
+			mailText.append("\r\n" +"ーーーーーーーーーーーーーーーーーーーーーーー" + "\r\n");
+			mailText.append("商品名" + (i + 1) + ":" + item.getName() + "\r\n個数:" + orderItemList.get(i).getQuantity() + "\r\nサイズ:" + orderItemList.get(i).getSize());	
+			
+			List<Topping> toppingList = new ArrayList<>();
+			for(Integer toppingId : form.getOrderToppingId()) {
+				toppingList.add(toppingRepository.findByToppingId(toppingId));
+			}
+			for(Integer j=0; j < toppingList.size(); j++) {
+				mailText.append("トッピング:" + toppingList.get(j).getName());								
+			}
+			mailText.append("\r\n\r\n" +"ーーーーーーーーーーーーーーーーーーーーーーー");
+		}
+		
+		mailText.append("\r\n合計金額：" + form.getTotalPrice() + "円");
+		mailText.append("\r\n" +"ーーーーーーーーーーーーーーーーーーーーーーー" + "\r\n");
 		mailText.append("ご注文ありがとうございます。" + "\r\n");
 		mailText.append("ご不明点等ございましたら、お手数ですが当アドレスまで返信の程よろしくお願い致します。");
 		return mailText.toString();

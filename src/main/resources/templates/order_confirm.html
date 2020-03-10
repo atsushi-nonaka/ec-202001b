@@ -328,7 +328,14 @@
 						<input type="hidden" name="user_id" th:value="${user.id}">
 						<input type="hidden" name="userId" th:value="${user.id}">
 						<input type="hidden" name="amount" th:value="${totalPrice}">		
-						<input type="hidden" name="order_number" th:value="${order.id}">						
+						<input type="hidden" name="order_number" th:value="${order.id}">												
+						<div th:each="orderItem : ${order.orderItemList}">
+							<input type="hidden" name="orderItemId" th:value="${orderItem.id}">
+							<div th:each="orderTopping : ${orderItem.orderToppingList}">
+								<input type="hidden"  name="orderToppingId" th:value="${orderTopping.toppingId}">
+							</div>
+						</div>
+						<input type="hidden" name="totalPrice" th:value="${totalPrice}">
 						<input class="form-control btn btn-warning btn-block" type="submit" value="この内容で注文する">
 					</div>
 				</div>

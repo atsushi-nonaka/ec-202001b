@@ -1,49 +1,61 @@
 <!DOCTYPE html>
-<html lang="ja"
-	xmlns:th="http://www.thymeleaf.org"
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<link href="../static/css/error.css" rel="stylesheet" th:href="@{/css/error.css}">
-<link href="../static/css/piza.css" rel="stylesheet" th:href="@{/css/piza.css}">
-
+<title>500 Internal Server Error</title>
+<link href="../static/css/error.css" rel="stylesheet"
+	th:href="@{/css/error.css}">
+<link href="../static/css/piza.css" rel="stylesheet"
+	th:href="@{/css/piza.css}">
+<link href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" rel="stylesheet">
 </head>
 <body>
-<div class="container">
-		<nav class="navbar navbar-default">
-			<div class="container-fluid">
-				<!-- Brand and toggle get grouped for better mobile display -->
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed"
-						data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-						aria-expanded="false">
-						<span class="sr-only">Toggle navigation</span> <span
-							class="icon-bar"></span> <span class="icon-bar"></span> <span
-							class="icon-bar"></span>
-					</button>
-
-					<a class="navbar-brand" href="item_list.html" th:href="@{/}"> <!-- 企業ロゴ --> 
-					<img alt="main log" src="/img_pizza/header_logo.png" height="35">
+	<div class="bg-image2">
+		<div class="bg-mask">
+			<div class="container">
+				<nav class="navbar navbar-default">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<a class="navbar-brand cp_link" href="item_list.html"
+						th:href="@{/}"> <!-- 企業ロゴ --> <img alt="main log"
+						src="/img_pizza/header_logo.png" height="35">
 					</a>
-				</div>
-				</div>
 				</nav>
-				
-				
-<pre style="text-align:center; font-size: 14px; font-family: 'mugenplus';
-  -webkit-text-size-adjust: 100%;
-      -ms-text-size-adjust: 100%;"> 
-	以下のいずれかの理由でシステムの操作を中断しました。
 
-		・不正な操作が行われた
-		・長い時間操作を行わなかった
-		・現在システムメンテナンス中
-	
-	しばらく経ってからもう一度操作してください。<br>
-	<a th:href="@{/}" class="navbar-link" style="font-size: 14px">‣ ピザ屋のネット注文トップページへ戻る</a>
-</pre>
+				 <div class="errortext"> 
+					<p style="padding-top: 20px">以下のいずれかの理由でシステムの操作を中断しました。</p>
+					<p style="text-indent: -3em"><i class="fas fa-pizza-slice pizaa-icon fa-fw" style="text-indent: 0em"></i>不正な操作が行われた</p>
+					<p><i class="fas fa-pizza-slice pizaa-icon fa-fw"></i>長い時間操作を行わなかった</p>
+					<p><i class="fas fa-pizza-slice pizaa-icon fa-fw"></i>現在システムメンテナンス中</p>
+					<p>しばらく経ってからもう一度操作してください。<p>
+					<img src="/img_pizza/pizza_tuchi4.jpg" class="image-center" width="200" height="400">
+					<p style="padding-bottom: 20px"><a th:href="@{/}" class="arrow04"></a>
+					<a th:href="@{/}" class="navbar-link cp_link3" style="font-size:16px;text-decoration: none;">ピザ屋のネット注文トップページへ戻る</a></p>
+				</div>
 
-</div>
+		<!-- <table>
+			<tr>
+				<td>
+				</td>
+			    <td>
+			    	<div class="errortext"> 
+					<p style="padding-top: 20px">以下のいずれかの理由でシステムの操作を中断しました。</p>
+					<p style="text-indent: -3em"><i class="fas fa-pizza-slice pizaa-icon fa-fw" style="text-indent: 0em"></i>不正な操作が行われた</p>
+					<p><i class="fas fa-pizza-slice pizaa-icon fa-fw"></i>長い時間操作を行わなかった</p>
+					<p><i class="fas fa-pizza-slice pizaa-icon fa-fw"></i>現在システムメンテナンス中</p>
+					<p>しばらく経ってからもう一度操作してください。<p>
+					<p style="padding-bottom: 20px"><a th:href="@{/}" class="arrow04"></a>
+					<a th:href="@{/}" class="navbar-link cp_link3" style="font-size:20px;text-decoration: none;">ピザ屋のネット注文トップページへ戻る</a></p>
+				</div>
+				</td>
+				<td>
+		    	<img src="/img_pizza/pizza_tuchi4.jpg" class="image-center" width="200" height="400">
+				</td>
+			</tr>
+		</table>
+	 -->			
+			</div>
+		</div>
+	</div>
 </body>
 </html>
