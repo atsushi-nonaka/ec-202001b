@@ -1,7 +1,11 @@
 package com.example.service;
 
+import java.sql.Array;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -66,15 +70,16 @@ public class AddItemToCartService {
 		if (userId == null) {
 			userId = session.getId().hashCode();
 		}
-
-		// データベース上にないuserIdだったらインサート、あれば注文情報を取得
+		System.out.println("userId"+userId);
+		// データベース上にないuserIdだったらインサート、orderItemListをインスタンス化
+		//あれば注文情報を取得
 		if (orderRepository.checkByUserIdAndStatus(userId) == null) {
 			order.setUserId(userId);
 			order = orderRepository.insert(order);
 		} else {
 			order = orderRepository.checkByUserIdAndStatus(userId);
 		}
-
+		
 		OrderItem orderItem = new OrderItem();
 		BeanUtils.copyProperties(form, orderItem);
 		orderItem.setOrderId(order.getId());
@@ -82,16 +87,13 @@ public class AddItemToCartService {
 		orderItem.setItem(itemRepository.load(orderItem.getItemId()));
 
 		if (form.getToppingIdList() != null) {
-			List<OrderTopping> orderToppingList = new ArrayList<>();
 			for (Integer toppingId : form.getToppingIdList()) {
 				OrderTopping orderTopping = new OrderTopping();
 				orderTopping.setToppingId(toppingId);
 				orderTopping.setOrderItemId(orderItem.getId());
 				orderTopping.setTopping(toppingRepository.findByToppingId(toppingId));
 				orderToppingRepository.insert(orderTopping);
-				orderToppingList.add(orderTopping);
 			}
-			orderItem.setOrderToppingList(orderToppingList);
 
 		}
 //		int subTotal = orderItem.getSubTotal();
@@ -102,10 +104,10 @@ public class AddItemToCartService {
 //			fomerTotalPrice = order.getTotalPrice();
 //		}
 //		int newTotalPrice = fomerTotalPrice + subTotal;
-		order = service.findByUserIdAndStatus(userId);
+//		order = service.findByUserIdAndStatus(userId);
+
 		order.setTotalPrice(order.CalcTotalPrice());
 		orderRepository.update2(order);
-
 		if (userId == session.getId().hashCode()) {
 			session.setAttribute("hashedOrder", order);
 		}

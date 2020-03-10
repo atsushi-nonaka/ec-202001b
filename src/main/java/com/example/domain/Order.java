@@ -170,7 +170,7 @@ public class Order {
 		for (OrderItem orderItem : orderItemList) {
 			totalPrice += orderItem.getSubTotal();
 		}
-
+		
 		return totalPrice;
 
 	}

@@ -44,7 +44,7 @@ public class AddItemToCartController {
 	public String addItemToCart(AddItemToCartForm form) {
 
 		service.insertOrder(form);	
-
+		
 		return "redirect:/showCart";
 	}	
 	
@@ -68,6 +68,8 @@ public class AddItemToCartController {
 		if(order==null) {
 			return "cart_list";
 		}
+		System.out.println("showCartの中身"+order);
+		System.out.println("orderItem"+order.getOrderItemList());
 		
 		int tax = order.getTax();
 		
