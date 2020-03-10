@@ -5,41 +5,48 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>お探しのページが見つかりません Page not found</title>
-<link href="../static/css/error.css" rel="stylesheet" th:href="@{/css/error.css}">
-<link href="../static/css/piza.css" rel="stylesheet" th:href="@{/css/piza.css}">
+<link href="../static/css/error.css" rel="stylesheet"
+	th:href="@{/css/error.css}">
+<link href="../static/css/piza.css" rel="stylesheet"
+	th:href="@{/css/piza.css}">
 </head>
 <body>
-<div class="container">
+<div  class="bg-image">
+<div class="bg-mask">
+	<div class="container">
+		
 		<nav class="navbar navbar-default">
-			<div class="container-fluid">
-				<!-- Brand and toggle get grouped for better mobile display -->
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed"
+			<!-- 			<div class="container-fluid"> -->
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<!-- 				<div class="navbar-header"> -->
+			<!-- 					<button type="button" class="navbar-toggle collapsed"
 						data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
 						aria-expanded="false">
 						<span class="sr-only">Toggle navigation</span> <span
 							class="icon-bar"></span> <span class="icon-bar"></span> <span
 							class="icon-bar"></span>
-					</button>
+					</button> -->
 
-					<a class="navbar-brand" href="item_list.html" th:href="@{/}"> <!-- 企業ロゴ --> 
-					<img alt="main log" src="/img_pizza/header_logo.png" height="35">
-					</a>
-				</div>
-				</div>
-				</nav>
-				
-				
-<pre style="text-align:center;font-family: 'mugenplus';
-  -webkit-text-size-adjust: 100%;
-      -ms-text-size-adjust: 100%;">
-<span style="font-size: 54px">404 Not Found</span>
-<span style="font-size: 14px">申し訳ございません。お探しのページは見つかりませんでした。</span>
+			<a class="navbar-brand cp_link" href="item_list.html" th:href="@{/}">
+				<!-- 企業ロゴ --> <img alt="main log" src="/img_pizza/header_logo.png"
+				height="35">
+			</a>
+			<!-- 				</div> -->
+			<!-- 				</div> -->
+		</nav>
+		
 
-<a th:href="@{/}" class="navbar-link" style="font-size: 14px">‣ ピザ屋のネット注文トップページへ戻る</a>
-<!--<a th:href="@{/rakuraku-pizza/toLogin}" class="navbar-link" style="font-size: 18px">ログイン画面へ</a>  -->
-</pre>
+		 <div style="text-align: center">
+			<!-- style="background-color: transparent; border: transparent; text-align: center" -->
+			<p style="font-size: 62px"><span class="text-mask" style="color:#4d4d4d">404 Not Found</span></p>
+			<p style="font-size: 24px"><span class="text-mask" style="color:#4d4d4d">申し訳ございません。お探しのページは見つかりませんでした。</span></p>
+			<br>
+			<a th:href="@{/}" class="arrow04"></a><a th:href="@{/}" class="navbar-link cp_link2" style="font-size: 20px; text-decoration: none;">
+			<span>ピザ屋のネット注文トップページへ戻る </span></a>
+			<!--<a th:href="@{/rakuraku-pizza/toLogin}" class="navbar-link" style="font-size: 18px">ログイン画面へ</a>  -->
+		</div>
+	</div>
 </div>
-
+</div>
 </body>
 </html>
