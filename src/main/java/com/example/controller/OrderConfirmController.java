@@ -73,20 +73,17 @@ public class OrderConfirmController {
 	 * 注文情報を更新する.
 	 * 
 	 * @param form オーダーフォーム
-	 * @return 完了画面
+	 * @return リダイレクト
 	 */
 	@RequestMapping("/toComplete")
 	public String orderFinish(@Validated BuyOrderForm form,
 								   BindingResult result,
 								   Model model,
 								   @AuthenticationPrincipal LoginUser loginUser
-								   ) {
-//		System.out.println(form);
-		
-		
+								   ) {	
 		System.out.println(form);
 		if(form.getDeliveryDate().matches("[0-9]{4}-[0-9]{2}-[0-9]{2}") && LocalDateTime.now().isAfter(buyOrderService.toLocalDateTime(form))) {
-			result.rejectValue("deliveryDate", null, "配達時間が正しくありません");
+			result.rejectValue("deliveryDate", null, "配達時間が過去に設定されています");
 		}
 		
 		if(result.hasErrors()) {
@@ -94,8 +91,16 @@ public class OrderConfirmController {
 		}
 		
 		buyOrderService.orderFinish(form);
-		
-
+		return "redirect:/finish";
+	}
+	
+	/**
+	 * 完了画面へ遷移する.
+	 * 
+	 * @return 完了画面
+	 */
+	@RequestMapping("/finish")
+	public String finish() {
 		return "order_finished";
 	}
 	

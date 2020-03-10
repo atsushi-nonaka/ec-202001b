@@ -324,7 +324,16 @@
 							カード名義人：<input id="creditUserName" type="text" name="creditUserName" ><br>
 							セキュリティーコード：<input id="creditSecurityCode" type="text" name="creditSecurityCode" ><br>
 						</div>				
-						<input type="hidden" name="userId" th:value="${user.id}">						
+						<input type="hidden" name="userId" th:value="${user.id}">
+						
+						<div th:each="orderItem : ${order.orderItemList}">
+							<input type="hidden" name="orderItemId" th:value="${orderItem.id}">
+							<div th:each="orderTopping : ${orderItem.orderToppingList}">
+								<input type="text"  name="orderToppingId" th:value="${orderTopping.toppingId}">
+							</div>
+						</div>
+						
+						<input type="hidden" name="totalPrice" th:value="${totalPrice}">
 						<input class="form-control btn btn-warning btn-block" type="submit" value="この内容で注文する">
 					</div>
 				</div>

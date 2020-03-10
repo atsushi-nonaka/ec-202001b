@@ -8,10 +8,8 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Range;
 
-import com.example.domain.Order;
 import com.example.domain.OrderItem;
-
-
+import com.example.domain.OrderTopping;
 /**
  * オーダーフォーム.
  * 
@@ -47,8 +45,11 @@ public class BuyOrderForm {
 	private String deliveryTime;
 	/** 支払方法 */
 	private String paymentMethod;
-	/** 注文商品リスト */
-	private Order order;
+	/** 合計金額 */
+	private String totalPrice;
+	/** 注文商品ID */
+	private List<Integer> orderItemId;
+	private List<Integer> orderToppingId;
 
 	public String getUserId() {
 		return userId;
@@ -134,12 +135,28 @@ public class BuyOrderForm {
 		this.paymentMethod = paymentMethod;
 	}
 
-	public Order getOrder() {
-		return order;
+	public String getTotalPrice() {
+		return totalPrice;
 	}
 
-	public void setOrder(Order order) {
-		this.order = order;
+	public void setTotalPrice(String totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	public List<Integer> getOrderItemId() {
+		return orderItemId;
+	}
+
+	public void setOrderItemId(List<Integer> orderItemId) {
+		this.orderItemId = orderItemId;
+	}
+
+	public List<Integer> getOrderToppingId() {
+		return orderToppingId;
+	}
+
+	public void setOrderToppingId(List<Integer> orderToppingId) {
+		this.orderToppingId = orderToppingId;
 	}
 
 	@Override
@@ -148,7 +165,7 @@ public class BuyOrderForm {
 				+ ", destinationEmail=" + destinationEmail + ", destinationZipcode=" + destinationZipcode
 				+ ", destinationAddress=" + destinationAddress + ", destinationTel=" + destinationTel
 				+ ", deliveryDate=" + deliveryDate + ", deliveryTime=" + deliveryTime + ", paymentMethod="
-				+ paymentMethod + ", order=" + order + "]";
+				+ paymentMethod + ", totalPrice=" + totalPrice + ", orderItemId=" + orderItemId + ", orderToppingId="
+				+ orderToppingId + "]";
 	}
-
 }
