@@ -29,20 +29,13 @@ public class ShowItemListController {
 	/**
 	 * 全件検索または条件検索結果を表示します.
 	 * 
-	 * @param model リクエストスコープ
-	 * @param itemForm  リクエストパラメーター
+	 * @param model    リクエストスコープ
+	 * @param itemForm リクエストパラメーター
 	 * @return 商品一覧画面
 	 */
 	@RequestMapping("")
-	public String showItemList(Model model, ItemForm itemForm, @AuthenticationPrincipal LoginUser loginUser) {
-		List<Item> itemList = showItemListService.showItemList(itemForm.getName());
-		if(itemForm.getName() == null) {
-			itemList =showItemListService.showItemList("");
-		}
-		if (itemList.size() == 0) {
-			itemList = showItemListService.showItemList("");
-			model.addAttribute("message", "該当する商品がございません");
-		}
+	public String showItemList(Model model, ItemForm itemForm) {
+		List<Item> itemList =  showItemListService.findAll();
 		List<List<Item>> itemListList = putThreeItemsListInList(itemList);
 		model.addAttribute("itemListList", itemListList);
 		StringBuilder itemListForAutocomplete = showItemListService.getItemListForAutocomplete(itemList);
@@ -68,21 +61,41 @@ public class ShowItemListController {
 		}
 		return itemListList;
 	}
-
-	@RequestMapping("/cheap_items")
-	private String showCheapItem(Model model, String priceM) {
-		List<Item> itemList = showItemListService.showCheapItem(Integer.parseInt(priceM));
+	
+	@RequestMapping("/search")
+	public String search(Model model,ItemForm itemForm) {
+		List<Item> itemList = new ArrayList<>();
+		if(itemForm.getHighLow().equals("1")) {
+			itemList = showItemListService.showItemListByName(itemForm.getName());
+		}else if(itemForm.getHighLow().equals("2")){
+			itemList = showItemListService.showItemListByNameDesc(itemForm.getName());
+		}
+		if (itemList.size() == 0) {
+			itemList = showItemListService.showItemListByName("");
+			model.addAttribute("message", "該当する商品がございません");
+		}
+		
 		List<List<Item>> itemListList = putThreeItemsListInList(itemList);
 		model.addAttribute("itemListList", itemListList);
+		StringBuilder itemListForAutocomplete = showItemListService.getItemListForAutocomplete(itemList);
+		model.addAttribute("itemListForAutocomplete", itemListForAutocomplete);
 		return "item_list_pizza";
 	}
 
-	@RequestMapping("/expensive_items")
-	private String showExpensiveItem(Model model, String priceM) {
-		List<Item> itemList = showItemListService.showExpensiveItem(Integer.parseInt(priceM));
-		List<List<Item>> itemListList = putThreeItemsListInList(itemList);
-		model.addAttribute("itemListList", itemListList);
-		return "item_list_pizza";
-	}
+//	@RequestMapping("/cheap_items")
+//	private String showCheapItem(Model model, String priceM) {
+//		List<Item> itemList = showItemListService.showCheapItem(Integer.parseInt(priceM));
+//		List<List<Item>> itemListList = putThreeItemsListInList(itemList);
+//		model.addAttribute("itemListList", itemListList);
+//		return "item_list_pizza";
+//	}
+//
+//	@RequestMapping("/expensive_items")
+//	private String showExpensiveItem(Model model, String priceM) {
+//		List<Item> itemList = showItemListService.showExpensiveItem(Integer.parseInt(priceM));
+//		List<List<Item>> itemListList = putThreeItemsListInList(itemList);
+//		model.addAttribute("itemListList", itemListList);
+//		return "item_list_pizza";
+//	}
 
 }

@@ -10,10 +10,15 @@ public class ItemForm {
 	 * 商品名
 	 */
 	private String name;
+	
+	/**
+	 * 商品の順番
+	 */
+	private String highLow;
 
 	@Override
 	public String toString() {
-		return "ItemForm [name=" + name + "]";
+		return "ItemForm [name=" + name + ", highLow=" + highLow + "]";
 	}
 
 	public String getName() {
@@ -23,4 +28,16 @@ public class ItemForm {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public String getHighLow() {
+		return highLow;
+	}
+
+	public void setHighLow(String highLow) {
+		this.highLow = highLow;
+	}
+	
+	
+	
+	
 }

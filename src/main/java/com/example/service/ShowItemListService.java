@@ -20,13 +20,24 @@ public class ShowItemListService {
 	private ItemRepository itemRepository;
 
 	/**
-	 * 全件検索及び、曖昧検索をします.
+	 * 全件検索をします.
 	 * 
 	 * @param name 商品名
 	 * @return 商品一覧を返します
 	 */
-	public List<Item> showItemList(String name) {
+	public List<Item> findAll() {
+		List<Item> itemList = itemRepository.findAll();
+		return itemList;
+	}
+	
+	
+	public List<Item> showItemListByName(String name) {
 		List<Item> itemList = itemRepository.findByLikeName(name);
+		return itemList;
+	}
+	
+	public List<Item> showItemListByNameDesc(String name) {
+		List<Item> itemList = itemRepository.findByLikeNameDesc(name);
 		return itemList;
 	}
 
@@ -36,8 +47,8 @@ public class ShowItemListService {
 	 * @param priceM Mサイズ商品
 	 * @return 商品一覧
 	 */
-	public List<Item> showCheapItem(Integer priceM) {
-		List<Item> itemList = itemRepository.findByPriceOrederBy(priceM);
+	public List<Item> showCheapItem() {
+		List<Item> itemList = itemRepository.findByPriceOrederBy();
 		return itemList;
 	}
 
@@ -47,8 +58,8 @@ public class ShowItemListService {
 	 * @param priceM Mサイズ商品
 	 * @return 商品一覧
 	 */
-	public List<Item> showExpensiveItem(Integer priceM) {
-		List<Item> itemList = itemRepository.findByPriceOrederByDeac(priceM);
+	public List<Item> showExpensiveItem() {
+		List<Item> itemList = itemRepository.findByPriceOrederByDeac();
 		return itemList;
 	}
 
