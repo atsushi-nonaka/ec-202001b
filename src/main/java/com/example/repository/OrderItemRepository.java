@@ -61,18 +61,31 @@ public class OrderItemRepository {
 	public OrderItem insert(OrderItem orderItem) {
 		String sql = "insert into order_items(item_id,order_id,quantity,size)values(:itemId,:orderId,:quantity,:size)";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(orderItem);
+		
+		//insert文の自動生成、実行、自動採番されたIDの取得、自動採番されたIDのreturn
 		Number key = insert.executeAndReturnKey(param);
 		orderItem.setId(key.intValue());
 
+		//呼び出し側で自動採番されたID情報がつまったorderItem情報が使用できる
 		return orderItem;
 	}
 	
+	/**
+	 * 注文情報のorderIdをsessionのorderId→ログインユーザのorderIdに更新します.
+	 * @param hashedId sessionスコープのorderId
+	 * @param loginUsersOrderId ログインユーザのorderId
+	 */
 	public void updateOrderIdByOrderId(Integer hashedId,Integer loginUsersOrderId) {
 		String sql = "update order_items set order_id=:loginUsersOrderId where order_id = :hashedId";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("loginUsersOrderId", loginUsersOrderId).addValue("hashedId", hashedId);
 		template.update(sql, param);
 	}
 	
+	/**
+	 * 注文商品IDから注文商品情報を取得します.
+	 * @param orderItemId 注文商品ID
+	 * @return　注文商品情報
+	 */
 	public OrderItem findById(Integer orderItemId) {
 		String sql = "SELECT id,item_id,order_id,quantity,size from order_items where id = :orderItemId";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("orderItemId", orderItemId);
@@ -80,6 +93,10 @@ public class OrderItemRepository {
 		return orderItem;
 	}
 	
+	/**
+	 * 注文商品IDの注文商品を削除します.
+	 * @param id 注文商品ID
+	 */
 	public void deleteById(Integer id) {
 		String sql = "DELETE FROM order_items where id = :orderItemId";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("orderItemId", id);

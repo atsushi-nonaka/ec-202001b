@@ -47,10 +47,10 @@ public class AddItemToCartService {
 
 	@Autowired
 	private HttpSession session;
-	
+
 	@Autowired
 	private OrderConfirmService service;
-	
+
 	/**
 	 * 注文情報をリポジトリに渡しデータベースに挿入するためのメソッドです.
 	 * 
@@ -58,25 +58,23 @@ public class AddItemToCartService {
 	 * @param userId ユーザーID
 	 */
 	public void insertOrder(AddItemToCartForm form) {
-		Order order=new Order();
-		//userIdを取得
-		Integer userId=(Integer)session.getAttribute("userId");
-	
-		//未ログインの時sessionのIDを取得
-		if (userId== null) {
-			userId=session.getId().hashCode();
-		}
-		
-		System.out.println("isertOrderのuserId"+userId);
+		Order order = new Order();
+		// userIdを取得
+		Integer userId = (Integer) session.getAttribute("userId");
 
-		//データベース上にないuserIdだったらインサート、あれば注文情報を取得
-		if(orderRepository.checkByUserIdAndStatus(userId) == null){
+		// 未ログインの時sessionのIDを取得
+		if (userId == null) {
+			userId = session.getId().hashCode();
+		}
+
+		// データベース上にないuserIdだったらインサート、あれば注文情報を取得
+		if (orderRepository.checkByUserIdAndStatus(userId) == null) {
 			order.setUserId(userId);
 			order = orderRepository.insert(order);
-		} else{
+		} else {
 			order = orderRepository.checkByUserIdAndStatus(userId);
 		}
-		
+
 		OrderItem orderItem = new OrderItem();
 		BeanUtils.copyProperties(form, orderItem);
 		orderItem.setOrderId(order.getId());
@@ -108,66 +106,8 @@ public class AddItemToCartService {
 		order.setTotalPrice(order.CalcTotalPrice());
 		orderRepository.update2(order);
 
-		if(userId==session.getId().hashCode()) {
+		if (userId == session.getId().hashCode()) {
 			session.setAttribute("hashedOrder", order);
 		}
 	}
-	
-	
-	
-//	/**
-//	 * 注文情報をリポジトリに渡しデータベースに挿入するためのメソッドです.
-//	 * 
-//	 * @param form   商品一覧画面からのパラメーターを受け取るフォーム
-//	 * @param userId ユーザーID
-//	 */
-//	public void insertOrder(AddItemToCartForm form, Integer userId) {
-//		Order order = new Order();
-//
-//		//データベース上にないuserIdだったらその値をセットしてデータベースにインサート
-//		if (orderRepository.checkByUserIdAndStatus(userId) == null) {
-//			order.setUserId(userId);
-//			//insertでorder.setIdが自動採番される
-//			order = orderRepository.insert(order);
-//
-//		} else {
-//			//データベース上にあれば注文情報を取得
-//			order.setUserId(userId);
-//			order = orderRepository.checkByUserIdAndStatus(userId);
-//		}
-//
-//		OrderItem orderItem = new OrderItem();
-//		BeanUtils.copyProperties(form, orderItem);
-//		orderItem.setOrderId(order.getId());
-//		orderItem = orderItemRepository.insert(orderItem);
-//		orderItem.setItem(itemRepository.load(orderItem.getItemId()));
-//
-//		if (form.getToppingIdList() != null) {
-//			List<OrderTopping> orderToppingList = new ArrayList<>();
-//			for (Integer toppingId : form.getToppingIdList()) {
-//				OrderTopping orderTopping = new OrderTopping();
-//				orderTopping.setToppingId(toppingId);
-//				orderTopping.setOrderItemId(orderItem.getId());
-//				orderTopping.setTopping(toppingRepository.findByToppingId(toppingId));
-//				orderToppingRepository.insert(orderTopping);
-//				orderToppingList.add(orderTopping);
-//			}
-//			orderItem.setOrderToppingList(orderToppingList);
-//
-//		}
-////		int subTotal = orderItem.getSubTotal();
-////
-////		// orderドメインのtotalPriceにsubTotalを追加して再度update
-////		int fomerTotalPrice = 0;
-////		if (order.getTotalPrice() != null) {
-////			fomerTotalPrice = order.getTotalPrice();
-////		}
-////		int newTotalPrice = fomerTotalPrice + subTotal;
-////		order.setTotalPrice(newTotalPrice);
-//		order.setTotalPrice(0);
-//		
-//		orderRepository.update2(order);
-//
-//	}
-
 }

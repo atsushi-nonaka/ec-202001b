@@ -1,7 +1,6 @@
 package com.example.controller;
 
 
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -11,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Order;
-import com.example.domain.OrderItem;
 import com.example.form.AddItemToCartForm;
 import com.example.service.AddItemToCartService;
 import com.example.service.ShowCartService;
@@ -59,7 +57,7 @@ public class AddItemToCartController {
 	public String showCart(Model model) {
 		
 		Integer userId=(Integer)session.getAttribute("userId");
-		System.out.println();
+
 		//未ログインの時sessionのIDを取得
 		if (userId== null) {
 			userId=session.getId().hashCode();
