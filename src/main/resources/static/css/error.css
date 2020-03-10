@@ -6442,7 +6442,7 @@ body{
 	/* margin: 50px 0px; */
 	/* opacity: 0.5; */
 	/* height: 100%; */
-    background-color: rgba(255,255,255,0.3);
+    background-color: rgba(255,255,255,0.2);
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -6478,8 +6478,10 @@ body{
 	color:##4d4d4d;
 	text-align: center;
 	font-size: 16px;
-	background-color: rgba(255,192,203,0.8);
+	background-color: rgba(255,215,0,0.7);
+	width: 50%;
+	margin:  0 auto;
 }
 .pizaa-icon{
-		color: #FFA000;
+		color: #ff4500;
 }
