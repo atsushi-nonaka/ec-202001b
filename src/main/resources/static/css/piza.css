@@ -71,6 +71,7 @@ div#beaf{
 body{
 	background-image: url("/img_pizza/CorkBoard.jpg");
 }
-#table-color{
+.body-color{
 	background-color:#f9f9f9;
+	padding:20px;
 }
