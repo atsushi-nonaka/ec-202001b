@@ -7,6 +7,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Range;
+
+import com.example.domain.OrderItem;
 /**
  * オーダーフォーム.
  * 
@@ -42,12 +44,10 @@ public class BuyOrderForm {
 	private String deliveryTime;
 	/** 支払方法 */
 	private String paymentMethod;
-	/** 注文商品リスト */
-	private List<String>orderItemNameList;
-	/** トッピングリスト */
-	private List<String>orderItemToppingList;
 	/** 合計金額 */
 	private String totalPrice;
+	/** 注文商品ID */
+	private List<Integer> orderItemId;
 
 	public String getUserId() {
 		return userId;
@@ -133,22 +133,6 @@ public class BuyOrderForm {
 		this.paymentMethod = paymentMethod;
 	}
 
-	public List<String> getOrderItemNameList() {
-		return orderItemNameList;
-	}
-
-	public void setOrderItemNameList(List<String> orderItemNameList) {
-		this.orderItemNameList = orderItemNameList;
-	}
-
-	public List<String> getOrderItemToppingList() {
-		return orderItemToppingList;
-	}
-
-	public void setOrderItemToppingList(List<String> orderItemToppingList) {
-		this.orderItemToppingList = orderItemToppingList;
-	}
-
 	public String getTotalPrice() {
 		return totalPrice;
 	}
@@ -157,14 +141,21 @@ public class BuyOrderForm {
 		this.totalPrice = totalPrice;
 	}
 
+	public List<Integer> getOrderItemId() {
+		return orderItemId;
+	}
+
+	public void setOrderItemId(List<Integer> orderItemId) {
+		this.orderItemId = orderItemId;
+	}
+
 	@Override
 	public String toString() {
 		return "BuyOrderForm [userId=" + userId + ", orderDate=" + orderDate + ", destinationName=" + destinationName
 				+ ", destinationEmail=" + destinationEmail + ", destinationZipcode=" + destinationZipcode
 				+ ", destinationAddress=" + destinationAddress + ", destinationTel=" + destinationTel
 				+ ", deliveryDate=" + deliveryDate + ", deliveryTime=" + deliveryTime + ", paymentMethod="
-				+ paymentMethod + ", orderItemNameList=" + orderItemNameList + ", orderItemToppingList="
-				+ orderItemToppingList + ", totalPrice=" + totalPrice + "]";
+				+ paymentMethod + ", totalPrice=" + totalPrice + ", orderItemId=" + orderItemId + "]";
 	}
 
 }

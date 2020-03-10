@@ -325,12 +325,11 @@
 							セキュリティーコード：<input id="creditSecurityCode" type="text" name="creditSecurityCode" ><br>
 						</div>				
 						<input type="hidden" name="userId" th:value="${user.id}">
+						
 						<div th:each="orderItem : ${order.orderItemList}">
-							<input type="text" name="orderItemNameList" th:value="${orderItem.item.name}">						
-							<div th:each="orderTopping:${orderItem.orderToppingList}">
-								<input type="text" name="orderItemToppingList" th:value="${orderTopping.topping.name}">
-							</div>
+							<input type="text" name="orderItemId" th:value="${orderItem.id}">
 						</div>
+						
 						<input type="hidden" name="totalPrice" th:value="${totalPrice}">
 						<input class="form-control btn btn-warning btn-block" type="submit" value="この内容で注文する">
 					</div>

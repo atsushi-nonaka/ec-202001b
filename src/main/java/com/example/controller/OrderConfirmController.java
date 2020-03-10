@@ -83,7 +83,7 @@ public class OrderConfirmController {
 								   ) {	
 		System.out.println(form);
 		if(form.getDeliveryDate().matches("[0-9]{4}-[0-9]{2}-[0-9]{2}") && LocalDateTime.now().isAfter(buyOrderService.toLocalDateTime(form))) {
-			result.rejectValue("deliveryDate", null, "配達時間が正しくありません");
+			result.rejectValue("deliveryDate", null, "配達時間が過去に設定されています");
 		}
 		
 		if(result.hasErrors()) {

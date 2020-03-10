@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,8 +19,12 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.domain.Item;
 import com.example.domain.Order;
+import com.example.domain.OrderItem;
 import com.example.form.BuyOrderForm;
+import com.example.repository.ItemRepository;
+import com.example.repository.OrderItemRepository;
 import com.example.repository.OrderRepository;
 
 /**
@@ -34,6 +39,12 @@ public class BuyOrderService {
 
 	@Autowired
 	private OrderRepository orderRepository;
+	
+	@Autowired
+	private ItemRepository itemRepository;
+	
+	@Autowired
+	private OrderItemRepository orderItemRepository;
 
 	@Value("${spring.mail.username}")
 	private String mailFrom;
@@ -124,13 +135,18 @@ public class BuyOrderService {
 		mailText.append("住所：" + form.getDestinationAddress() + "\r\n");
 		mailText.append("電話番号：" + form.getDestinationTel() + "\r\n");
 		mailText.append("配達日時：" + form.getDeliveryDate() + " " + form.getDeliveryTime()  + ":00\r\n");
-		for(String name : form.getOrderItemNameList()) {
-			mailText.append("\r\n" + "ご注文品：" + name);
+		List<OrderItem> orderItemList = new ArrayList<>();
+		for(Integer orderItemId : form.getOrderItemId()) {
+			orderItemList.add(orderItemRepository.findById(orderItemId));
 		}
-		mailText.append("\r\nトッピングリスト：");
-		for(String topping : form.getOrderItemToppingList()) {
-			mailText.append(topping + " ");
+		
+		for(Integer i=0; i < orderItemList.size(); i++) {
+			Item item = itemRepository.load(orderItemList.get(i).getItemId());
+			mailText.append("\r\n" +"ーーーーーーーーーーーーーーーーーーーーーーー" + "\r\n");
+			mailText.append("商品名" + (i + 1) + ":" + item.getName() + "\r\n個数:" + orderItemList.get(i).getQuantity() + "\r\nサイズ:" + orderItemList.get(i).getSize() + "\r\nトッピング:" + item.getToppingList());	
+			mailText.append("\r\n\r\n" +"ーーーーーーーーーーーーーーーーーーーーーーー");
 		}
+		
 		mailText.append("\r\n合計金額：" + form.getTotalPrice() + "円");
 		mailText.append("\r\n" +"ーーーーーーーーーーーーーーーーーーーーーーー" + "\r\n");
 		mailText.append("ご注文ありがとうございます。" + "\r\n");
