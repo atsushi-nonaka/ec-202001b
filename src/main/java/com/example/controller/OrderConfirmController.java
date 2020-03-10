@@ -80,10 +80,7 @@ public class OrderConfirmController {
 								   BindingResult result,
 								   Model model,
 								   @AuthenticationPrincipal LoginUser loginUser
-								   ) {
-//		System.out.println(form);
-		
-		
+								   ) {	
 		System.out.println(form);
 		if(form.getDeliveryDate().matches("[0-9]{4}-[0-9]{2}-[0-9]{2}") && LocalDateTime.now().isAfter(buyOrderService.toLocalDateTime(form))) {
 			result.rejectValue("deliveryDate", null, "配達時間が正しくありません");
@@ -94,8 +91,6 @@ public class OrderConfirmController {
 		}
 		
 		buyOrderService.orderFinish(form);
-		
-
 		return "order_finished";
 	}
 	
