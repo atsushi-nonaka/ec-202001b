@@ -8,6 +8,7 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Range;
 
+import com.example.domain.Order;
 import com.example.domain.OrderItem;
 
 
@@ -40,14 +41,14 @@ public class BuyOrderForm {
 	@Range(message = "数字を入力してください")
 	private String destinationTel;
 	/** 配達日 */
-	@NotBlank(message = "配達日時を入力して下さい")
+	@NotBlank(message = "配達日時を入力してください")
 	private String deliveryDate;
 	/** 配達時間 */
 	private String deliveryTime;
 	/** 支払方法 */
 	private String paymentMethod;
 	/** 注文商品リスト */
-	private List<OrderItem> orderItemList;
+	private Order order;
 
 	public String getUserId() {
 		return userId;
@@ -133,20 +134,21 @@ public class BuyOrderForm {
 		this.paymentMethod = paymentMethod;
 	}
 
-	public List<OrderItem> getOrderItemList() {
-		return orderItemList;
+	public Order getOrder() {
+		return order;
 	}
 
-	public void setOrderItemList(List<OrderItem> orderItemList) {
-		this.orderItemList = orderItemList;
+	public void setOrder(Order order) {
+		this.order = order;
 	}
 
 	@Override
 	public String toString() {
-		return "BuyOrderForm [destinationName=" + destinationName + ", destinationEmail=" + destinationEmail
-				+ ", destinationZipcode=" + destinationZipcode + ", destinationAddress=" + destinationAddress
-				+ ", destinationTel=" + destinationTel + ", deliveryDate=" + deliveryDate + ", deliveryTime="
-				+ deliveryTime + ", paymentMethod=" + paymentMethod + ", orderItemList=" + orderItemList + "]";
+		return "BuyOrderForm [userId=" + userId + ", orderDate=" + orderDate + ", destinationName=" + destinationName
+				+ ", destinationEmail=" + destinationEmail + ", destinationZipcode=" + destinationZipcode
+				+ ", destinationAddress=" + destinationAddress + ", destinationTel=" + destinationTel
+				+ ", deliveryDate=" + deliveryDate + ", deliveryTime=" + deliveryTime + ", paymentMethod="
+				+ paymentMethod + ", order=" + order + "]";
 	}
 
 }
