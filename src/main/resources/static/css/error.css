@@ -6323,4 +6323,49 @@ button.close {
     display: none !important;
   }
 
+.arrow04 {
+     position: relative;
+     padding-left: 22px;
+}
+.arrow04:before {
+     position: absolute;
+     content: '';
+     width: 16px;
+     height: 16px;
+     background: #697b91;
+     border-radius: 50%;
+     top: 50%;
+     left: 0;
+     margin-top: -7px;
+}
+.arrow04:after {
+     position: absolute;
+     content: '';
+     width: 0;
+     height: 0;
+     border: solid 4px transparent;
+     border-left: solid 6px #fff;
+     top: 50%;
+     left:6px;
+     margin-top: -3px;
+}
+.btn-square-pop {
+  position: relative;
+  display: inline-block;
+  padding: 0.25em 0.5em;
+  text-decoration: none;
+  color: #FFF;
+  background: #fd9535;/*îwåiêF*/
+  border-bottom: solid 2px #d27d00;/*è≠ÇµîZÇ¢ñ⁄ÇÃêFÇ…*/
+  border-radius: 4px;/*äpÇÃä€Ç›*/
+  box-shadow: inset 0 2px 0 rgba(255,255,255,0.2), 0 2px 2px rgba(0, 0, 0, 0.19);
+  font-weight: bold;
+}
+
+.btn-square-pop:active {
+  border-bottom: solid 2px #fd9535;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.30);
+}
+
+
 }
