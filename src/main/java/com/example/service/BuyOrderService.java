@@ -140,6 +140,7 @@ public class BuyOrderService {
 		mailText.append("住所：" + form.getDestinationAddress() + "\r\n");
 		mailText.append("電話番号：" + form.getDestinationTel() + "\r\n");
 		mailText.append("配達日時：" + form.getDeliveryDate() + " " + form.getDeliveryTime()  + ":00\r\n");
+		
 		List<OrderItem> orderItemList = new ArrayList<>();
 		for(Integer orderItemId : form.getOrderItemId()) {
 			orderItemList.add(orderItemRepository.findById(orderItemId));
@@ -147,27 +148,23 @@ public class BuyOrderService {
 		
 		for(Integer i=0; i < orderItemList.size(); i++) {
 			Item item = itemRepository.load(orderItemList.get(i).getItemId());
-			mailText.append("\r\n" +"ーーーーーーーーーーーーーーーーーーーーーーー" + "\r\n");
+			mailText.append("\r\n");
 			mailText.append("商品名" + (i + 1) + ":" + item.getName() + "\r\n個数:" + orderItemList.get(i).getQuantity() + "\r\nサイズ:" + orderItemList.get(i).getSize());	
 			
-			List<Topping> toppingList = new ArrayList<>();
-			for(Integer toppingId : form.getOrderToppingId()) {
-				toppingList.add(toppingRepository.findByToppingId(toppingId));
-			}
-			for(Integer j=0; j < toppingList.size(); j++) {
-				mailText.append("トッピング:" + toppingList.get(j).getName());								
-			}
-			mailText.append("\r\n\r\n" +"ーーーーーーーーーーーーーーーーーーーーーーー");
+			mailText.append("\r\n");
 		}
 		
+		List<Topping> toppingList = new ArrayList<>();
+		for(Integer toppingId : form.getOrderToppingId()) {
+			toppingList.add(toppingRepository.findByToppingId(toppingId));
+		}
+		mailText.append("\r\nトッピング合計:");
+		for(Integer j=0; j < toppingList.size(); j++) {
+			mailText.append(toppingList.get(j).getName() + " ");								
+		}
 		mailText.append("\r\n合計金額：" + form.getTotalPrice() + "円");
-		mailText.append("\r\n" +"ーーーーーーーーーーーーーーーーーーーーーーー" + "\r\n");
-		mailText.append("ご注文ありがとうございます。" + "\r\n");
-		mailText.append("ご不明点等ございましたら、お手数ですが当アドレスまで返信の程よろしくお願い致します。");
 		return mailText.toString();
 	}
-	
-	
 
 	/**
 	 * 	 * ユーザIDと状態から注文済みの情報を取得します. 
