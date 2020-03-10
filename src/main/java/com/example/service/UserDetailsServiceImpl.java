@@ -36,9 +36,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	private HttpSession session;
 	
 	@Autowired
-	private OrderConfirmService orderConfirmService;
-
-	@Autowired
 	private OrderRepository orderRepository;
 
 	@Autowired
@@ -68,8 +65,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		
 		//ログイン成功時にuser情報をsessionスコープに格納する
 		session.setAttribute("userId",user.getId());
-		//注文情報のIDを仮sessionIDからログイン者のIDに更新
-//		orderConfirmService.updateUserId(user.getId(),session.getId().hashCode());
 		//		if(member.isAdmin()) {
 //			authorityList.add(new SimpleGrantedAuthority("ROLE_ADMIN")); // 管理者権限付与
 //		}
@@ -78,21 +73,28 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			if (session.getAttribute("hashedOrder") != null) {
 				Order order = (Order) session.getAttribute("hashedOrder");
 				Integer hashedOrderId = order.getId();
+				
 				Order order2 = orderRepository.checkByUserIdAndStatus(user.getId());
+				//未ログインで買い物→ログイン→ログイン時の買い物はしていない時(データベースでnull)
+				//注文情報のuserIdをログインユーザで更新
 				if (order2 == null) {
 					order2 = new Order();
 					order2.setUserId(user.getId());
-					order2.setStatus(0);
-					order2.setTotalPrice(0);
+					
+//					order2.setStatus(0);　 insertメソッドで挿入される
+//					order2.setTotalPrice(0);
 					order2 = orderRepository.insert(order2);
 					System.out.println("order2=" + order2);
 				}
+				
+				//データベース上にログインユーザの注文情報があるときその注文Idを取得し
+				//sessionIDの注文ID→ログインユーザの注文IDに更新する。
 				Integer loginUsersOrderId = order2.getId();
 				System.out.println("hashedOrderId="+hashedOrderId);
 				System.out.println("loginUsersOrderId="+loginUsersOrderId);
 				orderItemRepository.updateOrderIdByOrderId(hashedOrderId, loginUsersOrderId);
-				//ハッシュのDB消す
-				orderRepository.deleteById(order.getUserId());
+				//ハッシュ(sessionID)の注文情報をDBから消す
+				orderRepository.deleteByUserId(order.getUserId());
 				//金額揃える
 				System.out.println("元々の金額"+order2.getTotalPrice());
 				order2.setTotalPrice(order2.getTotalPrice()+order.getTotalPrice());

@@ -25,6 +25,9 @@ tr#comment {
 	color:black;	
 	margin: 20px;
 }
+#border{
+	border-bottom: solid 5px #FFCC66;
+}
 span#recommend {
 	font-size:30px;
 	color:#FF3366;	
@@ -64,4 +67,11 @@ div#beaf{
 }
 .center{
 	text-align: center;	
+}
+body{
+	background-image: url("/img_pizza/CorkBoard.jpg");
+}
+.body-color{
+	background-color:#f9f9f9;
+	padding:20px;
 }

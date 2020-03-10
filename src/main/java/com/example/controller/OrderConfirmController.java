@@ -23,7 +23,7 @@ import com.example.service.OrderConfirmService;
 
 /**
  * 注文確認画面に関するコントローラーです.
- * 注文確認画面の表示、注文の操作をこのコントローラにまとめています。
+ * 注文確認画面の表示、注文の操作、注文履歴をこのコントローラにまとめています。
  * @author yuri.okada
  *
  */
@@ -121,7 +121,6 @@ public class OrderConfirmController {
 		}
 		
 		model.addAttribute("orderHistoryList", orderHistoryList);
-		
 		
 		return "order_history";
 				

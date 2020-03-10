@@ -5,19 +5,45 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="../static/css/error.css" rel="stylesheet" th:href="@{/css/error.css}">
+<link href="../static/css/piza.css" rel="stylesheet" th:href="@{/css/piza.css}">
+
 </head>
 <body>
-<pre>
-以下のいずれかの理由でシステムの操作を中断しました。
+<div class="container">
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed"
+						data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+						aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
 
-・不正な操作が行われた
-・長い時間操作を行わなかった
-・現在システムメンテナンス中
+					<a class="navbar-brand" href="item_list.html" th:href="@{/}"> <!-- 企業ロゴ --> 
+					<img alt="main log" src="/img_pizza/header_logo.png" height="35">
+					</a>
+				</div>
+				</div>
+				</nav>
+				
+				
+<pre style="text-align:center; font-size: 14px; font-family: 'mugenplus';
+  -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;"> 
+	以下のいずれかの理由でシステムの操作を中断しました。
 
-しばらく経ってからもう一度操作してください。
-
+		・不正な操作が行われた
+		・長い時間操作を行わなかった
+		・現在システムメンテナンス中
+	
+	しばらく経ってからもう一度操作してください。<br>
+	<a th:href="@{/}" class="navbar-link" style="font-size: 14px">‣ ピザ屋のネット注文トップページへ戻る</a>
 </pre>
 
-<a th:href="@{/}" class="navbar-link">ログイン画面</a>
+</div>
 </body>
 </html>

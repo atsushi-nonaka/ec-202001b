@@ -64,7 +64,7 @@ $( function() {
 						<div class="panel-title center">商品を検索する</div>
 					</div>
 					<div class="panel-body">
-						<form method="post" th:action="@{/}" class="form-horizontal" th:object="${itemForm}">
+						<form method="post" th:action="@{/search}" class="form-horizontal" th:object="${itemForm}">
 							<div class="form-group">
 								<div th:if="${message}" th:text="${message}" style="color :green" class="text-center"></div>
 								<label for="code" class="control-label col-sm-2">商品名</label>
@@ -76,9 +76,9 @@ $( function() {
 							<div class="text-center">
 								<button type="submit" value="検索" class="btn btn-primary">検索</button>
 								<button type="reset" value="クリア" class="btn btn-default">クリア</button>
-								<select>
-								<option>安い順</option>
-								<option>高い順</option>
+								<select name="highLow">
+								<option th:value="1">安い順</option>
+								<option th:value="2">高い順</option>
 								</select>
 								
 							</div>
