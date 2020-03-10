@@ -15,7 +15,7 @@
 </head>
 <body>
 	<div class="container">
-		<nav class="navbar navbar-default">
+		<nav class="navbar navbar-default cream-color">
 			<div class="container-fluid">
 				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
@@ -47,10 +47,10 @@
 		<!-- login form -->
 		<div class="row">
 			<div class="col-lg-offset-3 col-lg-6 col-md-offset-2 col-md-8 col-sm-10 col-xs-12">
-				<div class="well">
+				<div class="well cream-color">
 					<form method="post" action="item_list.html" th:action="@{/insert/insertUser}" th:object="${userForm}">
 						<fieldset>
-							<legend>ユーザ登録</legend>
+							<legend class="text-center">ユーザ登録</legend>
 							<div class="form-group">
 								<label for="inputName">名前:</label><label
 									class="control-label" style="color: red" for="inputError" th:errors="*{name}">名前を入力してください</label>
@@ -100,9 +100,11 @@
 								<input type="Password" id="inputConfirmationPassword" class="form-control"
 									placeholder="Confirmation Password" name="password2" th:field="*{password2}">
 							</div>
-							<div class="form-group">
-								<button type="submit" class="btn btn-primary">登録</button>
-								<button type="reset" class="btn btn-primary">クリア</button>
+							<div class="text-center">
+								<div class="form-group">
+									<button type="submit" class="btn btn-warning">登録</button>
+									<button type="reset" class="btn btn-default">クリア</button>
+								</div>
 							</div>
 						</fieldset>
 					</form>

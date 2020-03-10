@@ -14,7 +14,7 @@
 </head>
 <body>
 	<div class="container">
-		<nav class="navbar navbar-default">
+		<nav class="navbar navbar-default cream-color">
 			<div class="container-fluid">
 				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
@@ -46,11 +46,11 @@
 		<!-- login form -->
 		<div class="row">
 			<div class="col-lg-offset-3 col-lg-6 col-md-offset-2 col-md-8 col-sm-10 col-xs-12">
-				<div class="well">
+				<div class="well cream-color">
 					<form method="post" action="item_list.html" th:action="@{/login}" th:object="${loginForm}">
 
 						<fieldset>
-							<legend>
+							<legend class="center">
 								ログイン
 							</legend>
  							<div class="alert alert-danger" th:if="${errorMessage}">
@@ -67,8 +67,12 @@
 								<input type="password" id="inputPassword" name="password" class="form-control"
 									placeholder="Password" th:field="*{password}">
 							</div>
-							<div class="form-group">
-								<button type="submit" class="btn btn-primary">ログイン</button>
+							<div class="row">
+								<div class="col-xs-offset-4 col-xs-4">		
+									<div class="form-group">
+								<button type="submit" class="form-control btn btn-warning btn-block">ログイン</button>
+									</div>
+								</div>
 							</div>
 						</fieldset>
 					</form>
@@ -76,11 +80,9 @@
 			</div>
 		</div>
 
-		<div class="row">
-			<div class="text-center">
-				<a href="register_user.html" th:href="@{/insert}">ユーザ登録はこちら</a>
+			<div class="color-white userlink">
+				<a href="register_user.html" th:href="@{/insert}" class="link">ユーザ登録はこちら</a>
 			</div>
-		</div>
 		
 	</div>
 	<!-- end container -->

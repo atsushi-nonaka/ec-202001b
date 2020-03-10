@@ -76,7 +76,7 @@ public class OrderConfirmController {
 	 * @return 完了画面
 	 */
 	@RequestMapping("/toComplete")
-	public String orderFinish(@Validated BuyOrderForm form,
+	public String toorderFinish(@Validated BuyOrderForm form,
 								   BindingResult result,
 								   Model model,
 								   @AuthenticationPrincipal LoginUser loginUser
@@ -96,6 +96,15 @@ public class OrderConfirmController {
 		buyOrderService.orderFinish(form);
 		
 
+		return "redirect:/complete";
+	}
+	
+	/**
+	 * 注文完了画面を表示します.
+	 * @return 注文完了画面
+	 */
+	@RequestMapping("/complete")
+	public String orderFinish() {
 		return "order_finished";
 	}
 	
