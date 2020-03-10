@@ -73,7 +73,7 @@ public class OrderConfirmController {
 	 * 注文情報を更新する.
 	 * 
 	 * @param form オーダーフォーム
-	 * @return 完了画面
+	 * @return リダイレクト
 	 */
 	@RequestMapping("/toComplete")
 	public String orderFinish(@Validated BuyOrderForm form,
@@ -91,6 +91,16 @@ public class OrderConfirmController {
 		}
 		
 		buyOrderService.orderFinish(form);
+		return "redirect:/finish";
+	}
+	
+	/**
+	 * 完了画面へ遷移する.
+	 * 
+	 * @return 完了画面
+	 */
+	@RequestMapping("/finish")
+	public String finish() {
 		return "order_finished";
 	}
 	

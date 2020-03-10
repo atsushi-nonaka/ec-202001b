@@ -22,10 +22,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.domain.Item;
 import com.example.domain.Order;
 import com.example.domain.OrderItem;
+import com.example.domain.Topping;
 import com.example.form.BuyOrderForm;
 import com.example.repository.ItemRepository;
 import com.example.repository.OrderItemRepository;
 import com.example.repository.OrderRepository;
+import com.example.repository.ToppingRepository;
 
 /**
  * 注文情報を操作するサービス.
@@ -45,6 +47,9 @@ public class BuyOrderService {
 	
 	@Autowired
 	private OrderItemRepository orderItemRepository;
+	
+	@Autowired
+	private ToppingRepository toppingRepository;
 
 	@Value("${spring.mail.username}")
 	private String mailFrom;
@@ -143,7 +148,15 @@ public class BuyOrderService {
 		for(Integer i=0; i < orderItemList.size(); i++) {
 			Item item = itemRepository.load(orderItemList.get(i).getItemId());
 			mailText.append("\r\n" +"ーーーーーーーーーーーーーーーーーーーーーーー" + "\r\n");
-			mailText.append("商品名" + (i + 1) + ":" + item.getName() + "\r\n個数:" + orderItemList.get(i).getQuantity() + "\r\nサイズ:" + orderItemList.get(i).getSize() + "\r\nトッピング:" + item.getToppingList());	
+			mailText.append("商品名" + (i + 1) + ":" + item.getName() + "\r\n個数:" + orderItemList.get(i).getQuantity() + "\r\nサイズ:" + orderItemList.get(i).getSize());	
+			
+			List<Topping> toppingList = new ArrayList<>();
+			for(Integer toppingId : form.getOrderToppingId()) {
+				toppingList.add(toppingRepository.findByToppingId(toppingId));
+			}
+			for(Integer j=0; j < toppingList.size(); j++) {
+				mailText.append("トッピング:" + toppingList.get(j).getName());								
+			}
 			mailText.append("\r\n\r\n" +"ーーーーーーーーーーーーーーーーーーーーーーー");
 		}
 		

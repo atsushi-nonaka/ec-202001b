@@ -9,6 +9,7 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Range;
 
 import com.example.domain.OrderItem;
+import com.example.domain.OrderTopping;
 /**
  * オーダーフォーム.
  * 
@@ -48,6 +49,7 @@ public class BuyOrderForm {
 	private String totalPrice;
 	/** 注文商品ID */
 	private List<Integer> orderItemId;
+	private List<Integer> orderToppingId;
 
 	public String getUserId() {
 		return userId;
@@ -149,13 +151,21 @@ public class BuyOrderForm {
 		this.orderItemId = orderItemId;
 	}
 
+	public List<Integer> getOrderToppingId() {
+		return orderToppingId;
+	}
+
+	public void setOrderToppingId(List<Integer> orderToppingId) {
+		this.orderToppingId = orderToppingId;
+	}
+
 	@Override
 	public String toString() {
 		return "BuyOrderForm [userId=" + userId + ", orderDate=" + orderDate + ", destinationName=" + destinationName
 				+ ", destinationEmail=" + destinationEmail + ", destinationZipcode=" + destinationZipcode
 				+ ", destinationAddress=" + destinationAddress + ", destinationTel=" + destinationTel
 				+ ", deliveryDate=" + deliveryDate + ", deliveryTime=" + deliveryTime + ", paymentMethod="
-				+ paymentMethod + ", totalPrice=" + totalPrice + ", orderItemId=" + orderItemId + "]";
+				+ paymentMethod + ", totalPrice=" + totalPrice + ", orderItemId=" + orderItemId + ", orderToppingId="
+				+ orderToppingId + "]";
 	}
-
 }
