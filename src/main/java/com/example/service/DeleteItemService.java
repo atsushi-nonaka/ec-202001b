@@ -30,8 +30,8 @@ public class DeleteItemService {
 		return orderItem;
 	}
 	
-	public void deleteOrderById(Integer userId) {
-		orderRepository.deleteById(userId);
+	public void deleteOrderByUserId(Integer userId) {
+		orderRepository.deleteByUserId(userId);
 
 	}
 	

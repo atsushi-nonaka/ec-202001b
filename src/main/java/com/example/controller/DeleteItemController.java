@@ -14,6 +14,11 @@ import com.example.service.DeleteItemService;
 import com.example.service.OrderConfirmService;
 
 
+/**
+ * 注文商品情報を削除するコントローラ.
+ * @author yamaseki
+ *
+ */
 @Controller
 @RequestMapping("")
 public class DeleteItemController {
@@ -27,6 +32,11 @@ public class DeleteItemController {
 	@Autowired
 	private OrderConfirmService service;
 	
+	/**
+	 * 注文商品情報を削除します.
+	 * @param orderItemId 注文商品ID
+	 * @return ショッピングカート表示
+	 */
 	@RequestMapping("/deleteItem")
 	public String deleteItem(Integer orderItemId) {
 		Order order = (Order) session.getAttribute("order");
@@ -46,8 +56,9 @@ public class DeleteItemController {
 		deleteItemService.deleteOrderToppingById(orderItem.getId());
 		deleteItemService.deleteOrderItemById(orderItemId);
 		
+		//合計金額が0=order情報がなくなったらDBから削除する
 		if(order.getTotalPrice()==0) {
-			deleteItemService.deleteOrderById(order.getUserId());
+			deleteItemService.deleteOrderByUserId(order.getUserId());
 			session.setAttribute("hashedOrder", null);
 		}
 		

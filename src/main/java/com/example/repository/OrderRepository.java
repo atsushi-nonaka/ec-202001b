@@ -182,9 +182,12 @@ public class OrderRepository {
 		String sql = "insert into orders (user_id,status,total_price)values(:userId,:status,:totalPrice)";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", order.getUserId())
 				.addValue("status", 0).addValue("totalPrice", 0);
+		
+		//insert文の自動生成、実行、自動採番されたIDの取得、自動採番されたIDのreturn
 		Number key = insert.executeAndReturnKey(param);
 		order.setId(key.intValue());
-
+		
+		//呼び出し側で自動採番されたID情報がつまったorder情報が使用できる
 		return order;
 	}
 
@@ -293,7 +296,11 @@ public class OrderRepository {
 		template.update(sql, param);
 	}
 	
-	public void deleteById(Integer userId) {
+	/**
+	 * userIdの注文情報を削除します(status0)
+	 * @param userId ユーザID
+	 */
+	public void deleteByUserId(Integer userId) {
 		String sql="DELETE FROM orders where user_id = :userId and status=:status";
 		SqlParameterSource param=new MapSqlParameterSource().addValue("userId", userId).addValue("status", 0);
 		template.update(sql, param);
