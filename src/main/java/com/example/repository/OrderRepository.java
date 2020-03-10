@@ -234,6 +234,41 @@ public class OrderRepository {
 		return orderList.get(0);
 
 	}
+	
+	/**
+	 * ユーザIDと状態から注文済みの情報を取得します. 
+	 * 注文情報に含まれている、注文商品リスト、注文トッピングリストも取得します。
+	 * statusは0以外を指定しています。
+	 * 
+	 * @param userId ユーザID
+	 * @return 注文リスト
+	 */
+	public List<Order> findOrderHistory(Integer userId) {
+		String sql = "SELECT o.id AS o_id,o.user_id AS o_user_id,o.status AS o_status,o.total_price AS o_total_price"
+				+ ",o.order_date AS o_order_date,o.destination_name AS o_destination_name,o.destination_email AS o_destination_email"
+				+ ",o.destination_zipcode AS o_destination_zipcode,o.destination_tel AS o_destination_tel"
+				+ ",o.delivery_time AS o_delivery_time,o.payment_method AS o_payment_method"
+				+ ",oi.id AS oi_id,oi.item_id AS oi_item_id,oi.order_id AS oi_order_id,oi.quantity AS oi_quantity,oi.size AS oi_size"
+				+ ",i.id AS i_id,i.name AS i_name,i.description AS i_description,i.price_m AS i_price_m,i.price_l AS i_price_l"
+				+ ",i.image_path AS i_image_path,i.deleted AS i_deleted"
+				+ ",ot.id AS ot_id,ot.topping_id AS ot_topping_id,ot.order_item_id AS ot_order_item_id"
+				+ ",t.id AS t_id,t.name AS t_name,t.price_m AS t_price_m,t.price_l AS t_price_l"
+				+ " FROM orders o LEFT OUTER JOIN order_items oi ON o.id=oi.order_id"
+				+ " LEFT OUTER JOIN items i ON oi.item_id=i.id" + " LEFT OUTER JOIN order_toppings ot ON oi.id=ot.order_item_id"
+				+ " LEFT OUTER JOIN toppings t ON ot.topping_id=t.id"
+				+ " WHERE o.user_id=:userId AND o.status!=:status ORDER BY o_id, oi_id";
+
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("status", 0);
+
+		List<Order> orderHisotyrList = template.query(sql, param, ORDER_RESULT_SET_EXTRACTOR);
+
+		if (orderHisotyrList.size() == 0) {
+			return null;
+		}
+
+		return orderHisotyrList;
+
+	}
 
 	/**
 	 * 注文情報の更新を行う.
@@ -241,10 +276,9 @@ public class OrderRepository {
 	 * @param order 注文情報
 	 */
 	public void update(Order order) {
-		String sql = "UPDATE orders SET order_date = :orderDate, status = :status, destination_name = :destinationName, destination_email = :destinationEmail, "
+		String sql = "UPDATE orders SET order_date = :orderDate, user_id = :userId, total_price = :totalPrice, status = :status, destination_name = :destinationName, destination_email = :destinationEmail, "
 					+ "destination_zipcode = :destinationZipcode, destination_address = :destinationAddress, "
 					+ "destination_tel = :destinationTel, delivery_time = :deliveryTime, payment_method = :paymentMethod WHERE user_id = :userId AND status = 0";
-
 		SqlParameterSource param = new BeanPropertySqlParameterSource(order);
 		template.update(sql, param);
 	}
@@ -260,8 +294,8 @@ public class OrderRepository {
 	}
 	
 	public void deleteById(Integer userId) {
-		String sql="DELETE FROM orders where user_id = :userId";
-		SqlParameterSource param=new MapSqlParameterSource().addValue("userId", userId);
+		String sql="DELETE FROM orders where user_id = :userId and status=:status";
+		SqlParameterSource param=new MapSqlParameterSource().addValue("userId", userId).addValue("status", 0);
 		template.update(sql, param);
 	}
 }

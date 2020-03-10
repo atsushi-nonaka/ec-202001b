@@ -6,6 +6,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +40,9 @@ public class BuyOrderService {
 
 	@Autowired
 	private MailSender mailSender;
+	
+	@Autowired
+	private HttpSession session;
 
 //	@Autowired
 //	private RestTemplate restTemplate;
@@ -50,7 +56,7 @@ public class BuyOrderService {
 	 * @param order 注文情報
 	 */
 	public void orderFinish(BuyOrderForm form) {
-		Order order = new Order();
+		Order order = (Order) session.getAttribute("order");
 		BeanUtils.copyProperties(form, order);
 		// Timestamp型に変更（DataBaseに合わせる）
 		Timestamp timestamp = Timestamp.valueOf(toLocalDateTime(form));
@@ -126,4 +132,15 @@ public class BuyOrderService {
 	
 	
 
+	/**
+	 * 	 * ユーザIDと状態から注文済みの情報を取得します. 
+	 * 注文情報に含まれている、注文商品リスト、注文トッピングリストも取得します。
+	 * statusは0以外を指定しています。
+	 * 
+	 * @param userId ユーザID
+	 * @return 注文リスト
+	 */
+	public List<Order> findOrderHistory(Integer userId){
+		return orderRepository.findOrderHistory(userId);
+	}
 }
