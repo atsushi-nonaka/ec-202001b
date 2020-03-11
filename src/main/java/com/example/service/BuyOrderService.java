@@ -142,6 +142,8 @@ public class BuyOrderService {
 		mailText.append("配達日時：" + form.getDeliveryDate() + " " + form.getDeliveryTime()  + ":00\r\n");
 		
 		List<OrderItem> orderItemList = new ArrayList<>();
+		List<Topping> toppingList = new ArrayList<>();
+		
 		for(Integer orderItemId : form.getOrderItemId()) {
 			orderItemList.add(orderItemRepository.findById(orderItemId));
 		}
@@ -150,17 +152,17 @@ public class BuyOrderService {
 			Item item = itemRepository.load(orderItemList.get(i).getItemId());
 			mailText.append("\r\n");
 			mailText.append("商品名" + (i + 1) + ":" + item.getName() + "\r\n個数:" + orderItemList.get(i).getQuantity() + "\r\nサイズ:" + orderItemList.get(i).getSize());	
-			
 			mailText.append("\r\n");
 		}
 		
-		List<Topping> toppingList = new ArrayList<>();
-		for(Integer toppingId : form.getOrderToppingId()) {
-			toppingList.add(toppingRepository.findByToppingId(toppingId));
+		if(form.getOrderToppingId() != null) {
+			for(Integer toppingId : form.getOrderToppingId()) {
+				toppingList.add(toppingRepository.findByToppingId(toppingId));
+			}			
 		}
-		mailText.append("\r\nトッピング合計:");
-		for(Integer j=0; j < toppingList.size(); j++) {
-			mailText.append(toppingList.get(j).getName() + " ");								
+		mailText.append("\r\nトッピング名:");
+		for(Integer i=0; i < toppingList.size(); i++) {
+			mailText.append(toppingList.get(i).getName() + " ");								
 		}
 		mailText.append("\r\n合計金額：" + form.getTotalPrice() + "円");
 		return mailText.toString();
