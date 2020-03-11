@@ -128,9 +128,13 @@
 		<form action="order_finished.html" th:action="@{/toComplete}" method="post" th:object="${buyOrderForm}">
 			<div class="row">
 				<div class="table-responsive col-lg-offset-3 col-lg-6 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
-					<h3 class="text-center"><span class="color-clear cart">お届け先情報</span></h3>
 					<table class="table">
 						<tbody>
+						<tr  class="head-color">
+							<th colspan="2" class="text-center">
+								お届け先情報
+							</th>
+						</tr>
 							<tr>
 								<td>
 									<div class="text-center">
@@ -264,26 +268,27 @@
 			<div class="row">
 				<div
 					class="table-responsive col-lg-offset-3 col-lg-6 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
-					<h3 class="text-center">お支払い方法</h3>
-					<div id="creditNumber" style="color: red" th:text="${error}"></div>
-					<table class="table table-striped">
+					<table class="table">
 						<tbody>
-							<tr class="head-color">
+							<tr  class="head-color">
+								<th colspan="2" class="text-center">
+									<div class="text-center">
+										お支払い方法
+									</div>
+								</th>
+							</tr>
+							<tr>
 								<td>
 									<div class="text-center">
 										代金引換
 									</div>
 								</td>
-								<td>
-									<div class="row">
-										<div class="col-sm-12">
-											<label class="radio-inline">
-												<input id="cash" type="radio"
-													name="paymentMethod" checked="checked" value="cash">
-												代金引換
-											</label>
-										</div>
-									</div>
+								<td >
+									<label class="radio-inline">
+										<input id="cash" type="radio"
+										name="paymentMethod" checked="checked" value="cash">
+											代金引換
+									</label>
 								</td>
 							</tr>
 							<tr>
@@ -292,23 +297,76 @@
 										クレジットカード決済
 									</div>
 								</td>
-								<td align="center">
-									<div class="row">
-										<div class="col-sm-12">
-											<label class="radio-inline">
-												<input id="creditCard" type="radio"
-													name="paymentMethod" value="credit">
-												クレジットカード
-											</label><br><br>
-										</div>
-									</div>
+								<td>
+									<div id="creditNumber" style="color: red" th:text="${error}"></div>
+									<label class="radio-inline">
+									<input id="creditCard" type="radio"
+											name="paymentMethod" value="credit">
+											クレジットカード
+									</label>
+									<br>
 								</td>
 							</tr>
+							<tr class="inputCreditInformation">
+							<td class="text-center">
+								クレジットカード番号
+							</td>
+							<td>
+								<input id="creditNumber" type="text" name="card_number" >
+							</td>
+							</tr>
+							<tr class="inputCreditInformation">
+								<td class="text-center">
+									有効期限
+								</td>
+								<td>
+									<select name="card_exp_month">
+							   		 <option th:each="i : ${#numbers.sequence(1, 12)}" th:value="${i}" th:text="${i}">
+							    	</option>
+									</select>
+									<select name="card_exp_year">
+							    	<option th:each="i : ${#numbers.sequence(2018, 2038)}" th:value="${i}" th:text="${i}">
+							    	</option>
+							    	</select>
+								</td>
+								</tr>
+								<tr class="inputCreditInformation">
+									<td class="text-center">
+									カード名義人
+									</td>
+									<td>
+										<input id="creditUserName" type="text" name="card_name" >
+									</td>
+								</tr>
+								<tr class="inputCreditInformation">
+									<td class="text-center">
+										セキュリティーコード
+									</td>
+									<td>
+										<input id="creditSecurityCode" type="text" name="card_cvv" >
+									</td>
+								</tr>
 						</tbody>
 					</table>
+						<input type="hidden" name="user_id" th:value="${user.id}">
+						<input type="hidden" name="userId" th:value="${user.id}">
+						<input type="hidden" name="amount" th:value="${totalPrice}">		
+						<input type="hidden" name="order_number" th:value="${order.id}">												
+						<div th:each="orderItem : ${order.orderItemList}">
+							<input type="hidden" name="orderItemId" th:value="${orderItem.id}">
+							<div th:each="orderTopping : ${orderItem.orderToppingList}">
+								<input type="hidden"  name="orderToppingId" th:value="${orderTopping.toppingId}">
+							</div>
+						</div>
+							<input type="hidden" name="totalPrice" th:value="${totalPrice}">
+							<div class="text-center">
+								<div class="form-group">
+									<input class="btn btn-warning btn-block2" type="submit" value="この内容で注文する">
+								</div>
+							</div>
+					</div>
 				</div>
-			</div>
-			<div class="row">
+<!-- 			<div class="row">
 				<div class="col-xs-offset-4 col-xs-4">
 					<div class="form-group">
 						<div class="inputCreditInformation">
@@ -325,8 +383,8 @@
 							カード名義人：<input id="creditUserName" type="text" name="card_name" ><br>
 							セキュリティーコード：<input id="creditSecurityCode" type="text" name="card_cvv" ><br>
 						</div>				
-						<input type="hidden" name="user_id" th:value="${user.id}">
-						<input type="hidden" name="userId" th:value="${user.id}">
+							<input type="hidden" name="user_id" th:value="${user.id}">
+							<input type="hidden" name="userId" th:value="${user.id}">
 						<input type="hidden" name="amount" th:value="${totalPrice}">		
 						<input type="hidden" name="order_number" th:value="${order.id}">												
 						<div th:each="orderItem : ${order.orderItemList}">
@@ -339,9 +397,9 @@
 						<input class="form-control btn btn-warning btn-block" type="submit" value="この内容で注文する">
 					</div>
 				</div>
-			</div>
+			</div> -->
 		</form>
-	</div>
+		</div>
 	<!-- end container -->
 	
 	<script

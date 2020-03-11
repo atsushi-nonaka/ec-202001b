@@ -40,7 +40,7 @@ public class BuyOrderForm {
 	private String destinationTel;
 	/** 配達日 */
 	@NotBlank(message = "配達日時を入力してください")
-	@Pattern(regexp = "^[0-9]{4}-[0-9]{2}-[0-9]{2}$", message = "yyyy-MM-ddの形で入力してください")
+	@Pattern(regexp = "^[0-9]{4}-[0-9]{2}-[0-9]{2}$", message = "例の形式で入力してください(例:2020-01-01)")
 	private String deliveryDate;
 	/** 配達時間 */
 	private String deliveryTime;
