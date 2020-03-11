@@ -68,7 +68,7 @@
 			</td>
 			<td>
 				ようこそ、ラクラクピザへ！<br>
-				弊社総リーダー土屋くんのおすすめは<br>
+				新宿本店店長 土屋のおすすめは<br>
 				<span id="recommend">「とろけるビーフシチュー」</span>
 				です。<br>
 				ぜひリンクから商品情報をご覧ください！
@@ -144,7 +144,7 @@
 							<td>
 							<form th:action="@{/deleteItem}" method="post">
 								<div class="text-center">
-									<button type="submit" class="btn btn-primary" name="orderItemId" th:value="${orderItem.id}">削除</button>
+									<button type="submit" class="btn btn-warning btn-block" name="orderItemId" th:value="${orderItem.id}">削除</button>
 								</div>
 							</form>
 							</td>

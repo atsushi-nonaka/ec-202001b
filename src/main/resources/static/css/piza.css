@@ -88,7 +88,6 @@ body{
 	background-color:#FFFAF0;
 	padding:20px;
 }
-<<<<<<< HEAD
 .cream-color{
 	background-color:#FFFAF0;
 }
@@ -126,6 +125,9 @@ color:black;
 .btn-blocks {
   width: 20%;
 }
+.btn-block2 {
+  width: 40%;
+}
 h5#comment{
 	margin-left:8%;
 }
@@ -135,4 +137,6 @@ h5#comment{
 #name-margin{
 	border-bottom: solid 5px #FFCC66;
 }
-
+.pay-width{
+	width:200px;
+}
