@@ -6,10 +6,6 @@ import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
-import org.hibernate.validator.constraints.Range;
-
-import com.example.domain.OrderItem;
-import com.example.domain.OrderTopping;
 /**
  * オーダーフォーム.
  * 
@@ -29,14 +25,14 @@ public class BuyOrderForm {
 	private String destinationEmail;
 	/** 宛先郵便番号 */
 	@NotBlank(message = "郵便番号を入力してください")
-	@Pattern(regexp = "^[0-9]{7}$", message = "7桁で入力してください")
+	@Pattern(regexp="^[0-9]{7}$", message="ハイフンを付けず、半角数字7桁の形式で入力してください (例:3335555)")
 	private String destinationZipcode;
 	/** 宛先住所 */
 	@NotBlank(message = "住所を入力して下さい")
 	private String destinationAddress;
 	/** 宛先TEL */
 	@NotBlank(message = "電話番号を入力して下さい")
-	@Range(message = "数字を入力してください")
+	@Pattern(regexp="^[0-9]{10,11}$", message="ハイフンを付けず、半角数字で入力してください (例:09011112222)")
 	private String destinationTel;
 	/** 配達日 */
 	@NotBlank(message = "配達日時を入力してください")
@@ -48,10 +44,6 @@ public class BuyOrderForm {
 	private String paymentMethod;
 	/** 合計金額 */
 	private String totalPrice;
-	/** 注文商品IDリスト */
-	private List<Integer> orderItemId;
-	/** トッピングIDリスト */
-	private List<Integer> orderToppingId;
 
 	public String getUserId() {
 		return userId;
@@ -145,29 +137,13 @@ public class BuyOrderForm {
 		this.totalPrice = totalPrice;
 	}
 
-	public List<Integer> getOrderItemId() {
-		return orderItemId;
-	}
-
-	public void setOrderItemId(List<Integer> orderItemId) {
-		this.orderItemId = orderItemId;
-	}
-
-	public List<Integer> getOrderToppingId() {
-		return orderToppingId;
-	}
-
-	public void setOrderToppingId(List<Integer> orderToppingId) {
-		this.orderToppingId = orderToppingId;
-	}
-
 	@Override
 	public String toString() {
 		return "BuyOrderForm [userId=" + userId + ", orderDate=" + orderDate + ", destinationName=" + destinationName
 				+ ", destinationEmail=" + destinationEmail + ", destinationZipcode=" + destinationZipcode
 				+ ", destinationAddress=" + destinationAddress + ", destinationTel=" + destinationTel
 				+ ", deliveryDate=" + deliveryDate + ", deliveryTime=" + deliveryTime + ", paymentMethod="
-				+ paymentMethod + ", totalPrice=" + totalPrice + ", orderItemId=" + orderItemId + ", orderToppingId="
-				+ orderToppingId + "]";
+				+ paymentMethod + ", totalPrice=" + totalPrice + "]";
 	}
+
 }

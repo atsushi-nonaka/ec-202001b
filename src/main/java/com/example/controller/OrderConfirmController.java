@@ -4,7 +4,6 @@ import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -86,20 +85,27 @@ public class OrderConfirmController {
 	public String orderFinish(@Validated BuyOrderForm form, BindingResult result, Model model,
 			@AuthenticationPrincipal LoginUser loginUser, CreditCardForm creditCardForm) {
 
+		System.out.println(form);
 		if (form.getDeliveryDate().matches("[0-9]{4}-[0-9]{2}-[0-9]{2}")
 				&& LocalDateTime.now().isAfter(buyOrderService.toLocalDateTime(form))) {
 			result.rejectValue("deliveryDate", null, "配達時間が過去に設定されています");
 		}
+		
+		if(result.hasErrors()) {
+			return toOrderConfirm(model, loginUser);
+		}
 
 		CreditCard creditCard = null;
+		System.out.println(creditCardForm);
 		if ("credit".equals(form.getPaymentMethod())) {
 			creditCard = creditCardService.getCreditCard(creditCardForm);
 			if ("error".equals(creditCard.getStatus())) {
 				model.addAttribute("error", "入力されたカード情報は不正です。");
+				System.out.println(creditCard);
 				return toOrderConfirm(model, loginUser);
 			}
 		}
-
+		
 		buyOrderService.orderFinish(form);
 
 		return "redirect:/finish";

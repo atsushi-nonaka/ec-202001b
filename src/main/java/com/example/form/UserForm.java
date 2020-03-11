@@ -25,7 +25,7 @@ public class UserForm {
 	private String address;
 	/** 電話番号 */
     @NotBlank(message="電話番号を入力してください")
-    @Pattern(regexp="^[0-9]{11}$", message="ハイフンを付けず、半角数字11桁の形式で入力してください (例:09011112222)")
+    @Pattern(regexp="^[0-9]{10,11}$", message="ハイフンを付けず、半角数字で入力してください (例:09011112222)")
 	private String telephone;
 	/** パスワード */
     @NotBlank(message="パスワードを入力してください")
