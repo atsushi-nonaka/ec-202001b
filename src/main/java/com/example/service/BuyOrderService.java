@@ -127,7 +127,7 @@ public class BuyOrderService {
 			mailText.append("ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー\r\n");
 			mailText.append("商品名：" + orderItem.getItem().getName() + "\r\n個数：" + orderItem.getQuantity() + "\r\nサイズ：" + orderItem.getSize());	
 			mailText.append("\r\n");
-			if(form.getOrderToppingId() != null) {
+			if(orderItem.getOrderToppingList().size() != 0) {
 				mailText.append("トッピング名：");
 				for(OrderTopping orderTopping : orderItem.getOrderToppingList()) {
 					mailText.append(orderTopping.getTopping().getName() + " ");								
