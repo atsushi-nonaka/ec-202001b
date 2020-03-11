@@ -144,7 +144,7 @@
 							<td>
 							<form th:action="@{/deleteItem}" method="post">
 								<div class="text-center">
-									<button type="submit" class="btn btn-primary" name="orderItemId" th:value="${orderItem.id}">削除</button>
+									<button type="submit" class="btn btn-warning btn-block" name="orderItemId" th:value="${orderItem.id}">削除</button>
 								</div>
 							</form>
 							</td>
@@ -159,7 +159,7 @@
 					<span id="total-price" th:unless="${order==null}">
 					消費税：<span id="total-price" th:text="${#numbers.formatInteger(tax,3,'COMMA')}+円">8,000円</span><br>
 					<span id="total-price-border">ご注文金額合計：
-						<span id="total-price" th:text="${#numbers.formatInteger(totalPrice,3,'COMMA')}+円">38,000円 (税込)</span>
+						<span id="total-price" th:text="${#numbers.formatInteger(totalPrice,3,'COMMA')}+円">38,000円(税込)</span>(税込)
 						</span>
 					</span>
 				</div>

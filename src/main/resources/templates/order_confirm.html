@@ -118,7 +118,7 @@
 				<span id="total-price">
 					消費税：<span id="total-price" th:text="${#numbers.formatInteger(tax,3,'COMMA')}+円">8,000円</span><br>
 			 	  	<span id="total-price-border">ご注文金額合計：
-						<span id="total-price" th:text="${#numbers.formatInteger(totalPrice,3,'COMMA')}+円">38,000円 (税込)</span>
+						<span id="total-price" th:text="${#numbers.formatInteger(totalPrice,3,'COMMA')}+円">38,000円 </span>(税込)
 					</span>
 				</span>
 			</div>
@@ -325,7 +325,7 @@
 							    	</option>
 									</select>
 									<select name="card_exp_year">
-							    	<option th:each="i : ${#numbers.sequence(2018, 2038)}" th:value="${i}" th:text="${i}">
+							    	<option th:each="i : ${#numbers.sequence(2020, 2038)}" th:value="${i}" th:text="${i}">
 							    	</option>
 							    	</select>
 								</td>
@@ -343,7 +343,7 @@
 										セキュリティーコード
 									</td>
 									<td>
-										<input id="creditSecurityCode" type="text" name="card_cvv" >
+										<input id="creditSecurityCode" type="password" name="card_cvv" >
 									</td>
 								</tr>
 						</tbody>
@@ -366,31 +366,6 @@
 							</div>
 					</div>
 				</div>
-<!-- 			<div class="row">
-				<div class="col-xs-offset-4 col-xs-4">
-					<div class="form-group">
-						<div class="inputCreditInformation">
-							クレジットカード番号：<input id="creditNumber" type="text" name="card_number" ><br>
-							有効期限：
-							<select name="card_exp_month">
-							    <option th:each="i : ${#numbers.sequence(1, 12)}" th:value="${i}" th:text="${i}">
-							    </option>
-							</select>
-							<select name="card_exp_year">
-							    <option th:each="i : ${#numbers.sequence(2020, 2040)}" th:value="${i}" th:text="${i}">
-							    </option>
-							</select><br>
-							カード名義人：<input id="creditUserName" type="text" name="card_name" ><br>
-							セキュリティーコード：<input id="creditSecurityCode" type="text" name="card_cvv" ><br>
-						</div>				
-							<input type="hidden" name="user_id" th:value="${user.id}">
-							<input type="hidden" name="userId" th:value="${user.id}">
-						<input type="hidden" name="amount" th:value="${totalPrice}">		
-						<input type="hidden" name="order_number" th:value="${order.id}">												
-						<input class="form-control btn btn-warning btn-block" type="submit" value="この内容で注文する">
-					</div>
-				</div>
-			</div> -->
 		</form>
 		</div>
 	<!-- end container -->
