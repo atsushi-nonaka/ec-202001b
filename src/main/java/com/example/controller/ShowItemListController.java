@@ -34,15 +34,79 @@ public class ShowItemListController {
 	 * @return 商品一覧画面
 	 */
 	@RequestMapping("")
-	public String showItemList(Model model, ItemForm itemForm) {
-		List<Item> itemList =  showItemListService.findAll();
+	public String showItemList(Model model, ItemForm itemForm,Integer page) {
+		// 全件検索で取得したItemオブジェクト群が入ったリスト（要素数１８）
+		List<Item> itemList = showItemListService.findAll();
+		// itemオブジェクトを三つずつリストに格納しそれをリストに入れる（要素数６）
 		List<List<Item>> itemListList = putThreeItemsListInList(itemList);
-		model.addAttribute("itemListList", itemListList);
+		//
+		List<List<Item>> bigThreeList = new ArrayList<>();
+		//上記itemListListを二つずつ入れたリストをさらにリストに格納する（要素数３）
+		List<List<List<Item>>> superItemList = new ArrayList<>();
+		for (int i = 0; i < itemListList.size(); i++) {
+			bigThreeList.add(itemListList.get(i));
+			if (bigThreeList.size() == 2) {
+				superItemList.add(bigThreeList);
+				bigThreeList = new ArrayList<>();
+			}
+		}
+		if (bigThreeList.size() != 0) {
+			superItemList.add(bigThreeList);
+		}
 		StringBuilder itemListForAutocomplete = showItemListService.getItemListForAutocomplete(itemList);
 		model.addAttribute("itemListForAutocomplete", itemListForAutocomplete);
+		
+		Integer index = 0;
+		if(page != null) {
+			index = page -1;
+		}
+		model.addAttribute("superItemList", superItemList);
+		//従来のItemオブジェクトを３つずつ格納したリスト
+		//model.addAttribute("itemListList", itemListList);
+		model.addAttribute("bigThreeList", superItemList.get(index));
 		return "item_list_pizza";
 	}
 
+	@RequestMapping("/search")
+	public String search(Model model, ItemForm itemForm,Integer page) {
+		List<Item> itemList = new ArrayList<>();
+		if (itemForm.getHighLow().equals("1")) {
+			itemList = showItemListService.showItemListByName(itemForm.getName());
+		} else if (itemForm.getHighLow().equals("2")) {
+			itemList = showItemListService.showItemListByNameDesc(itemForm.getName());
+		}
+		if (itemList.size() == 0) {
+			itemList = showItemListService.showItemListByName("");
+			model.addAttribute("message", "該当する商品がございません");
+		}
+		//条件検索したItemオブジェクトが3つずつ格納されたリスト
+		List<List<Item>> itemListList = putThreeItemsListInList(itemList);
+		//
+		List<List<Item>> bigThreeList = new ArrayList<>();
+		//
+		List<List<List<Item>>> superItemList = new ArrayList<>();
+		for (int i = 0; i < itemListList.size(); i++) {
+			bigThreeList.add(itemListList.get(i));
+			if (bigThreeList.size() == 2) {
+				superItemList.add(bigThreeList);
+				bigThreeList = new ArrayList<>();
+			}
+		}
+		if (bigThreeList.size() != 0) {
+			superItemList.add(bigThreeList);
+		}
+		StringBuilder itemListForAutocomplete = showItemListService.getItemListForAutocomplete(itemList);
+		model.addAttribute("itemListForAutocomplete", itemListForAutocomplete);
+		Integer index = 0;
+		if(page != null) {
+			index = page -1;
+		}
+		model.addAttribute("superItemList", superItemList);
+		model.addAttribute("bigThreeList", superItemList.get(index));
+		//model.addAttribute("itemListList", itemListList);
+		return "item_list_pizza";
+	}
+	
 	/**
 	 * Itemオブジェクトを3つずつリストに入れそのリストオブジェクト群を大枠のリスト格納する.
 	 * 
@@ -60,26 +124,6 @@ public class ShowItemListController {
 			}
 		}
 		return itemListList;
-	}
-	
-	@RequestMapping("/search")
-	public String search(Model model,ItemForm itemForm) {
-		List<Item> itemList = new ArrayList<>();
-		if(itemForm.getHighLow().equals("1")) {
-			itemList = showItemListService.showItemListByName(itemForm.getName());
-		}else if(itemForm.getHighLow().equals("2")){
-			itemList = showItemListService.showItemListByNameDesc(itemForm.getName());
-		}
-		if (itemList.size() == 0) {
-			itemList = showItemListService.showItemListByName("");
-			model.addAttribute("message", "該当する商品がございません");
-		}
-		
-		List<List<Item>> itemListList = putThreeItemsListInList(itemList);
-		model.addAttribute("itemListList", itemListList);
-		StringBuilder itemListForAutocomplete = showItemListService.getItemListForAutocomplete(itemList);
-		model.addAttribute("itemListForAutocomplete", itemListForAutocomplete);
-		return "item_list_pizza";
 	}
 
 //	@RequestMapping("/cheap_items")
