@@ -8,8 +8,6 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Range;
 
-import com.example.domain.OrderItem;
-import com.example.domain.OrderTopping;
 /**
  * オーダーフォーム.
  * 

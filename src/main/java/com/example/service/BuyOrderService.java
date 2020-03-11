@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,15 +18,11 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.domain.Item;
 import com.example.domain.Order;
 import com.example.domain.OrderItem;
-import com.example.domain.Topping;
+import com.example.domain.OrderTopping;
 import com.example.form.BuyOrderForm;
-import com.example.repository.ItemRepository;
-import com.example.repository.OrderItemRepository;
 import com.example.repository.OrderRepository;
-import com.example.repository.ToppingRepository;
 
 /**
  * 注文情報を操作するサービス.
@@ -42,15 +37,6 @@ public class BuyOrderService {
 	@Autowired
 	private OrderRepository orderRepository;
 	
-	@Autowired
-	private ItemRepository itemRepository;
-	
-	@Autowired
-	private OrderItemRepository orderItemRepository;
-	
-	@Autowired
-	private ToppingRepository toppingRepository;
-
 	@Value("${spring.mail.username}")
 	private String mailFrom;
 
@@ -59,12 +45,6 @@ public class BuyOrderService {
 	
 	@Autowired
 	private HttpSession session;
-
-//	@Autowired
-//	private RestTemplate restTemplate;
-//	
-//	/** クレジット決済のAPIURL */
-//	private final String URL = "http://153.126.174.131:8080/sample-credit-card-web-api/credit-card/payment";
 
 	/**
 	 * 注文情報の更新を行う.
@@ -135,36 +115,27 @@ public class BuyOrderService {
 	 */
 	public String mailText(BuyOrderForm form) {
 		StringBuilder mailText = new StringBuilder();
-		mailText.append(form.getDestinationName() + "　様" + "\r\n" + "\r\n");
-		mailText.append("郵便番号：" + form.getDestinationZipcode() + "\r\n");
-		mailText.append("住所：" + form.getDestinationAddress() + "\r\n");
-		mailText.append("電話番号：" + form.getDestinationTel() + "\r\n");
-		mailText.append("配達日時：" + form.getDeliveryDate() + " " + form.getDeliveryTime()  + ":00\r\n");
-		
-		List<OrderItem> orderItemList = new ArrayList<>();
-		List<Topping> toppingList = new ArrayList<>();
-		
-		for(Integer orderItemId : form.getOrderItemId()) {
-			orderItemList.add(orderItemRepository.findById(orderItemId));
-		}
-		
-		for(Integer i=0; i < orderItemList.size(); i++) {
-			Item item = itemRepository.load(orderItemList.get(i).getItemId());
+		Order order = (Order)session.getAttribute("order");
+		mailText.append(order.getDestinationName() + "　様" + "\r\n" + "\r\n");
+		mailText.append("郵便番号：" + order.getDestinationZipcode() + "\r\n");
+		mailText.append("住所：" + order.getDestinationAddress() + "\r\n");
+		mailText.append("電話番号：" + order.getDestinationTel() + "\r\n");
+		mailText.append("配達日時：" + order.getDeliveryTime() + "\r\n");
+
+		for(OrderItem orderItem : order.getOrderItemList()) {
 			mailText.append("\r\n");
-			mailText.append("商品名" + (i + 1) + ":" + item.getName() + "\r\n個数:" + orderItemList.get(i).getQuantity() + "\r\nサイズ:" + orderItemList.get(i).getSize());	
+			mailText.append("ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー\r\n");
+			mailText.append("商品名：" + orderItem.getItem().getName() + "\r\n個数：" + orderItem.getQuantity() + "\r\nサイズ：" + orderItem.getSize());	
 			mailText.append("\r\n");
+			if(form.getOrderToppingId() != null) {
+				mailText.append("トッピング名：");
+				for(OrderTopping orderTopping : orderItem.getOrderToppingList()) {
+					mailText.append(orderTopping.getTopping().getName() + " ");								
+				}
+			}
 		}
-		
-		if(form.getOrderToppingId() != null) {
-			for(Integer toppingId : form.getOrderToppingId()) {
-				toppingList.add(toppingRepository.findByToppingId(toppingId));
-			}			
-		}
-		mailText.append("\r\nトッピング名:");
-		for(Integer i=0; i < toppingList.size(); i++) {
-			mailText.append(toppingList.get(i).getName() + " ");								
-		}
-		mailText.append("\r\n合計金額：" + form.getTotalPrice() + "円");
+		mailText.append("\r\nーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー");
+		mailText.append("\r\n合計金額：" + order.getTotalPrice() + "円");
 		return mailText.toString();
 	}
 
