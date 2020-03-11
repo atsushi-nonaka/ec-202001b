@@ -105,6 +105,9 @@ public class ShowItemListController {
 		model.addAttribute("superItemList", superItemList);
 		model.addAttribute("bigThreeList", superItemList.get(index));
 		//model.addAttribute("itemListList", itemListList);
+		model.addAttribute("name", itemForm.getName());
+		model.addAttribute("pattern2", 1);
+		model.addAttribute("highLow", itemForm.getHighLow());
 		return "item_list_pizza";
 	}
 	
