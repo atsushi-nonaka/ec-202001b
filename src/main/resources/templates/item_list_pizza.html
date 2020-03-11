@@ -22,7 +22,7 @@ $( function() {
 </head>
 <body>
 	<div class="container">
-		<nav class="navbar navbar-default">
+		<nav class="navbar navbar-default cream-color">
 			<div class="container-fluid">
 				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
@@ -63,7 +63,7 @@ $( function() {
 					<div class="panel-heading">
 						<div class="panel-title center">商品を検索する</div>
 					</div>
-					<div class="panel-body">
+					<div class="panel-body cream-color">
 						<form method="post" th:action="@{/search}" class="form-horizontal" th:object="${itemForm}">
 							<div class="form-group">
 								<div th:if="${message}" th:text="${message}" style="color :green" class="text-center"></div>
@@ -74,7 +74,7 @@ $( function() {
 								</div>
 							</div>
 							<div class="text-center">
-								<button type="submit" value="検索" class="btn btn-primary">検索</button>
+								<button type="submit" value="検索" class="btn btn-warning">検索</button>
 								<button type="reset" name="resetbtn" value="クリア" class="btn btn-default">クリア</button>
 								<select name="highLow">
 								<option th:value="1">安い順</option>
@@ -92,7 +92,7 @@ $( function() {
 		<div class="row">
 			<div
 				class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
-				<table class="table table-striped">
+				<table class="table">
 					<tbody>
 						<tr th:each="itemList:${itemListList}">
 							<th th:each="item :${itemList}" class="showlist">
