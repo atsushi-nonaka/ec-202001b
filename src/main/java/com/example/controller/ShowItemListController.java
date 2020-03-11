@@ -64,6 +64,7 @@ public class ShowItemListController {
 		//従来のItemオブジェクトを３つずつ格納したリスト
 		//model.addAttribute("itemListList", itemListList);
 		model.addAttribute("bigThreeList", superItemList.get(index));
+		model.addAttribute("pattern1", 1);
 		return "item_list_pizza";
 	}
 
