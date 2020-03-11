@@ -117,8 +117,8 @@ $( function() {
 					</tbody>
 				</table>
 				<span th:each="bigThreeList,status:${superItemList}">
-					<a th:if="${pattern1 == 1}" th:text="${status.count}"  th:href="@{'?page='+${status.count}}"></a> 
-					<!-- <a th:href="@{/search(page=+${status.count}}" th:text="${status.count}" ></a> -->
+					<a th:if="${pattern1 == 1}" th:text="${status.count}"  th:href="@{'?page='+${status.count}}" style="color :red"></a> 
+					<a th:if="${pattern2 == 1}" th:href="@{/search(page=${status.count},name=${name}, highLow=${highLow})}" th:text="${status.count}" ></a>
 				</span>
 			</div>
 		</div>
