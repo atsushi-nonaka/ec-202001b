@@ -116,10 +116,14 @@ $( function() {
 						
 					</tbody>
 				</table>
-				<span th:each="bigThreeList,status:${superItemList}">
-					<a th:href="@{'?page='+${status.count}}" th:text="${status.count}" ></a> 
+				<div class="pager">
+				<div  style="display: inline" th:each="bigThreeList,status:${superItemList}">
+					<ul class="pagination">
+					<li class="pre" style="color:#808080;font-size: 26px"><a th:href="@{'?page='+${status.count}}" th:text="${status.count}" ></a></li> 
 					<!-- <a th:href="@{/search(page=+${status.count}}" th:text="${status.count}" ></a> -->
-				</span>
+					</ul>
+				</div>
+				</div>
 			</div>
 		</div>
 	</div>
