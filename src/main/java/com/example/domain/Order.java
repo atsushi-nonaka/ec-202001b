@@ -159,19 +159,20 @@ public class Order {
 		return tax;
 	}
 
-	/**
-	 * 合計金額を計算します.(税抜)
-	 * 
-	 * @return 合計金額
-	 */
-	public int CalcTotalPrice() {
-		int totalPrice = 0;
-		List<OrderItem> orderItemList = getOrderItemList();
-		for (OrderItem orderItem : orderItemList) {
-			totalPrice += orderItem.getSubTotal();
-		}
-		
-		return totalPrice;
+	/**						
+	 * 合計金額を計算します.(税抜)						
+	 * 						
+	 * @return 合計金額						
+	 */						
+	public int CalcTotalPrice() {						
+		int totalPrice = 0;					
+		List<OrderItem> orderItemList = getOrderItemList();					
+		for (OrderItem orderItem : orderItemList) {					
+			totalPrice += orderItem.getSubTotal();				
+		}					
+							
+		return totalPrice;					
+							
+	}						
 
-	}
 }

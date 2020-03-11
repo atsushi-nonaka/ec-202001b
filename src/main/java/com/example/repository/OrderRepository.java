@@ -64,7 +64,7 @@ public class OrderRepository {
 		int beforeOrderItemId = 0;
 		while (rs.next()) {
 			int nowOrderId = rs.getInt("o_id");
-			int nowOrderItemId = rs.getInt("oi_item_id");
+			int nowOrderItemId = rs.getInt("oi_id");
 			if (nowOrderId != beforeOrderId) {
 				Order order = new Order();
 				order.setId(rs.getInt("o_id"));
