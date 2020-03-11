@@ -18,7 +18,7 @@
 </head>
 <body>
 	<div class="container">
-		<nav class="navbar navbar-default">
+		<nav class="navbar navbar-default cream-color">
 			<div class="container-fluid">
 				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
@@ -56,20 +56,23 @@
 			<div class="row">
 				<div class="col-xs-offset-2 col-xs-8">
 				 <div class="body-color">
-					<h3 class="text-center">商品詳細</h3>
+					<h3 class="text-center" id="border">商品詳細</h3>
 					<div class="row">
 						<div class="col-xs-5">
 							<img th:src="${'/img_pizza/' + item.imagePath}"
 								src="../static/img_pizza/1.jpg"
-								class="img-responsive img-rounded">
+								class="disp-block img-detail">
 						</div>
 
-						<div class="col-xs-5">
-							<div class="bs-component">
-								<h4 th:text="${item.name}">じゃがバターベーコン</h4>
-								<br> <br>
-								<p th:text="${item.description}">マイルドな味付けのカレーに大きくカットしたポテトをのせた、バターとチーズの風味が食欲をそそるお子様でも楽しめる商品です。</p>
-							</div>
+						<div class="text-center">
+							<br>
+								<div th:text="${item.name}" class="font-size-name">
+									<div id="border">
+									じゃがバターベーコン
+									</div>
+								</div>
+								<br>
+								<h5 th:text="${item.description}" class="col-xs-5" id="comment">マイルドな味付けのカレーに大きくカットしたポテトをのせた、バターとチーズの風味が食欲をそそるお子様でも楽しめる商品です。</h5>
 						</div>
 					</div>
 					<br>
@@ -148,23 +151,19 @@
 						<div class="row">
 							<div class="col-xs-offset-2 col-xs-10">
 								<div class="form-group">
-									<span id="total-price">この商品金額：<span id="totalprice"></span>
+									<span id="total-price-border" >この商品金額：<span id="totalprice"></span>
 										円(税抜)
 									</span>
 								</div>
 							</div>
 						</div>
-						<div class="row">
-							<div class="col-xs-offset-2 col-xs-3">
-								<div class="form-group">
+							<div class="text-center">
 									<p>
-										<input class="form-control btn btn-warning btn-block"
+										<input class="btn btn-warning"
 											type="submit" value="カートに入れる">
 									</p>
 									<input type="hidden" th:value="${item.id}" name="itemId">
-								</div>
 							</div>
-						</div>
 					  </div>
 					</div>
 				</div>

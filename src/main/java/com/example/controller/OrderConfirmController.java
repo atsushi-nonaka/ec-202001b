@@ -112,6 +112,7 @@ public class OrderConfirmController {
 	 */
 	@RequestMapping("/finish")
 	public String finish() {
+
 		return "order_finished";
 	}
 
