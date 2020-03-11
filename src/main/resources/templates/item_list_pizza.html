@@ -116,10 +116,27 @@ $( function() {
 						
 					</tbody>
 				</table>
-				<span th:each="bigThreeList,status:${superItemList}">
-					<a th:href="@{'?page='+${status.count}}" th:text="${status.count}" ></a> 
-					<!-- <a th:href="@{/search(page=+${status.count}}" th:text="${status.count}" ></a> -->
-				</span>
+<!-- <<<<<<< HEAD -->
+<!-- 並び替え -->
+				<div class="pager">
+				<div style="display: inline" th:each="bigThreeList,status:${superItemList}">
+					<ul class="pagination">
+					<li class="pre" style="color:#808080;font-size: 26px"><a th:if="${pattern1 == 1}" th:text="${status.count}"  th:href="@{'?page='+${status.count}}"></a></li> 
+					<li class="pre" style="color:#808080;font-size: 26px"><a th:if="${pattern2 == 1}" th:href="@{/search(page=${status.count},name=${name}, highLow=${highLow})}" th:text="${status.count}" ></a></li>
+					</ul>
+				</div>
+				</div>
+ 
+ <!-- 標準 -->
+				<!-- <div class="pager">
+				<div  style="display: inline" th:each="bigThreeList,status:${superItemList}">
+					<ul class="pagination">
+					<li class="pre" style="color:#808080;font-size: 26px"><a th:href="@{'?page='+${status.count}}" th:text="${status.count}" ></a></li> 
+					<a th:href="@{/search(page=+${status.count}}" th:text="${status.count}" ></a>
+					</ul>
+				</div>
+				</div> -->
+<!-- =======>>>>>>> feature/page -->
 			</div>
 		</div>
 	</div>
