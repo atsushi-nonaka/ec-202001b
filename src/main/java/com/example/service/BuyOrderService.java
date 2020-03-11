@@ -88,6 +88,10 @@ public class BuyOrderService {
 	 * @param form BuyOrderForm
 	 * @return 配達日時(LocalDateTime型)
 	 */
+	/**
+	 * @param form
+	 * @return
+	 */
 	public LocalDateTime toLocalDateTime(BuyOrderForm form) {
 		// Integer型の配達時間を取得
 		Integer shippingHour = Integer.parseInt(form.getDeliveryTime());
@@ -122,16 +126,22 @@ public class BuyOrderService {
 	public String mailText(BuyOrderForm form) {
 		StringBuilder mailText = new StringBuilder();
 		Order order = (Order)session.getAttribute("order");
+		
+		mailText.append("※このメールはシステムからの自動返信です。" + "\r\n" + "\r\n");
 		mailText.append(order.getDestinationName() + "　様" + "\r\n" + "\r\n");
-		mailText.append("郵便番号：" + order.getDestinationZipcode() + "\r\n");
-		mailText.append("住所：" + order.getDestinationAddress() + "\r\n");
-		mailText.append("電話番号：" + order.getDestinationTel() + "\r\n");
-		mailText.append("配達日時：" + order.getDeliveryTime() + "\r\n");
+		mailText.append("ラクラクピザへのご注文ありがとうございました。" + "\r\n");
+		mailText.append("以下のご注文内容でお間違いないでしょうか。ご不明点、お間違い等がございましたら、本メールにご返信くださいませ。" + "\r\n" + "\r\n");
+		
+		mailText.append("【お届け先】" + "\r\n");
+		mailText.append("　郵便番号：" + order.getDestinationZipcode() + "\r\n");
+		mailText.append("　住所：" + order.getDestinationAddress() + "\r\n");
+		mailText.append("　電話番号：" + order.getDestinationTel() + "\r\n");
+		mailText.append("　配達日時：" + order.getDeliveryTime() + "\r\n" + "\r\n");
 
+		mailText.append("【ご注文内容】" + "\r\n");
 		for(OrderItem orderItem : order.getOrderItemList()) {
-			mailText.append("\r\n");
 			mailText.append("ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー\r\n");
-			mailText.append("商品名：" + orderItem.getItem().getName() + "\r\n個数：" + orderItem.getQuantity() + "\r\nサイズ：" + orderItem.getSize());	
+			mailText.append("　商品名：" + orderItem.getItem().getName() + "\r\n　個数：" + orderItem.getQuantity() + "\r\n　サイズ：" + orderItem.getSize());	
 			mailText.append("\r\n");
 			if(orderItem.getOrderToppingList().size() != 0) {
 				mailText.append("トッピング名：");

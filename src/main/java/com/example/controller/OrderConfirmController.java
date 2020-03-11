@@ -87,10 +87,9 @@ public class OrderConfirmController {
 	public String orderFinish(@Validated BuyOrderForm form, BindingResult result, Model model,
 			@AuthenticationPrincipal LoginUser loginUser, CreditCardForm creditCardForm) {
 
-		System.out.println(form);
 		if (form.getDeliveryDate().matches("[0-9]{4}-[0-9]{2}-[0-9]{2}")
 				&& LocalDateTime.now().isAfter(buyOrderService.toLocalDateTime(form))) {
-			result.rejectValue("deliveryDate", null, "配達時間が過去に設定されています");
+			result.rejectValue("deliveryDate", null, "配達日時が過去に設定されています");
 		}
 		
 		if (form.getDeliveryDate().matches("[0-9]{4}-[0-9]{2}-[0-9]{2}")
