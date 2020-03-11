@@ -74,6 +74,14 @@ public class BuyOrderService {
 		sendMail(form);
 	}
 	
+	public LocalDate toLocalDate(BuyOrderForm form) {
+		// String型の配達日付を取得
+		String shippingDate = form.getDeliveryDate();
+		// 配達日付をLocalDate型に変更
+		LocalDate localDate = LocalDate.parse(shippingDate);
+		return localDate;
+	}
+	
      /**
 	 * 配達日時をLocalDateTime型に変換する.
 	 * 
@@ -81,14 +89,12 @@ public class BuyOrderService {
 	 * @return 配達日時(LocalDateTime型)
 	 */
 	public LocalDateTime toLocalDateTime(BuyOrderForm form) {
-		// String型の配達日付を取得
-		String shippingDate = form.getDeliveryDate();
 		// Integer型の配達時間を取得
 		Integer shippingHour = Integer.parseInt(form.getDeliveryTime());
-		// 配達日付をLocalDate型に変更
-		LocalDate localDate = LocalDate.parse(shippingDate);
 		// 配達時間をLocalTime型に変更（分,秒は0とする）
 		LocalTime localTime = LocalTime.of(shippingHour, 0, 0);
+		
+		LocalDate localDate = toLocalDate(form);
 		// 配達日付と時間を結合
 		LocalDateTime localDateTime = LocalDateTime.of(localDate, localTime);
 		return localDateTime ;

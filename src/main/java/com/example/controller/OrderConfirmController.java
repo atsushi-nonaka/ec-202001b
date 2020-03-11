@@ -1,6 +1,8 @@
 package com.example.controller;
 
 import javax.servlet.http.HttpSession;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -89,6 +91,11 @@ public class OrderConfirmController {
 		if (form.getDeliveryDate().matches("[0-9]{4}-[0-9]{2}-[0-9]{2}")
 				&& LocalDateTime.now().isAfter(buyOrderService.toLocalDateTime(form))) {
 			result.rejectValue("deliveryDate", null, "配達時間が過去に設定されています");
+		}
+		
+		if (form.getDeliveryDate().matches("[0-9]{4}-[0-9]{2}-[0-9]{2}")
+				&& LocalDate.now().plusDays(5).isBefore(buyOrderService.toLocalDate(form))) {
+			result.rejectValue("deliveryDate", null, "配達日は5営業日以内にしてください");
 		}
 		
 		if(result.hasErrors()) {

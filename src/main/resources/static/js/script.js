@@ -18,7 +18,7 @@ $(function(){
 		$("#deliveryDate").datepicker({
 			dateFormat: 'yy-mm-dd',
 			minDate: new Date(),
-			maxDate: '+6M'
+			maxDate: '+5d'
 		});
 	});
 	
