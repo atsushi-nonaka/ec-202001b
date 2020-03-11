@@ -93,9 +93,15 @@ $( function() {
 			<div
 				class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
 				<table class="table">
-					<tbody>
-						<tr th:each="itemList:${itemListList}">
+					<!-- <tbody> -->
+<!-- 						<tr th:each="itemList:${itemListList}">
 							<th th:each="item :${itemList}" class="showlist">
+=======
+				<table class="table table-striped"> -->
+					<tbody th:each="itemListList:${bigThreeList}">
+						<tr >
+							<th th:each="itemList:${itemListList}" class="showlist">
+							<span th:each="item :${itemList}">
 							 <a href="item_detail.html" th:href="@{'/show_item_detail?id=' + ${item.id}}">
 								<img th:src="${'/img_pizza/' + item.imagePath}"
 										class="disp-block blockcenter" width="200" height="600">
@@ -103,13 +109,17 @@ $( function() {
 								<a href="item_detail.html" th:href="@{'/show_item_detail?id=' + ${item.id}}"><span  th:text="${item.name}"></span></a><br>
 								<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;<span th:text="${#numbers.formatInteger(item.priceM,2,'COMMA')}"></span>円(税抜)<br>
 								<span class="price">&nbsp;L &nbsp;</span>&nbsp;&nbsp;<span th:text="${#numbers.formatInteger(item.priceL,2,'COMMA')}"></span>円(税抜)<br>
+							</span>
 							</th>
 
 						</tr>
 						
 					</tbody>
 				</table>
-
+				<span th:each="bigThreeList,status:${superItemList}">
+					<a th:href="@{'?page='+${status.count}}" th:text="${status.count}" ></a> 
+					<!-- <a th:href="@{/search(page=+${status.count}}" th:text="${status.count}" ></a> -->
+				</span>
 			</div>
 		</div>
 	</div>

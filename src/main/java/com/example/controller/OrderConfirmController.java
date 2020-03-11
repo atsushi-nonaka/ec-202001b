@@ -97,10 +97,12 @@ public class OrderConfirmController {
 		}
 
 		CreditCard creditCard = null;
+		System.out.println(creditCardForm);
 		if ("credit".equals(form.getPaymentMethod())) {
 			creditCard = creditCardService.getCreditCard(creditCardForm);
 			if ("error".equals(creditCard.getStatus())) {
 				model.addAttribute("error", "入力されたカード情報は不正です。");
+				System.out.println(creditCard);
 				return toOrderConfirm(model, loginUser);
 			}
 		}
