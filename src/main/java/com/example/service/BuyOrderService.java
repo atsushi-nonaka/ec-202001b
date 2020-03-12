@@ -138,9 +138,9 @@ public class BuyOrderService {
 		mailText.append("　電話番号：" + order.getDestinationTel() + "\r\n");
 		mailText.append("　配達日時：" + order.getDeliveryTime() + "\r\n" + "\r\n");
 
-		mailText.append("【ご注文内容】" + "\r\n");
+		mailText.append("【ご注文内容】");
 		for(OrderItem orderItem : order.getOrderItemList()) {
-			mailText.append("ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー\r\n");
+			mailText.append("\r\nーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー\r\n");
 			mailText.append("　商品名：" + orderItem.getItem().getName() + "\r\n　個数：" + orderItem.getQuantity() + "\r\n　サイズ：" + orderItem.getSize());	
 			mailText.append("\r\n");
 			if(orderItem.getOrderToppingList().size() != 0) {
