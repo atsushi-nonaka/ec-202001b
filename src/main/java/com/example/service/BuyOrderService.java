@@ -144,7 +144,7 @@ public class BuyOrderService {
 			mailText.append("　商品名：" + orderItem.getItem().getName() + "\r\n　個数：" + orderItem.getQuantity() + "\r\n　サイズ：" + orderItem.getSize());	
 			mailText.append("\r\n");
 			if(orderItem.getOrderToppingList().size() != 0) {
-				mailText.append("トッピング名：");
+				mailText.append("　トッピング名：");
 				for(OrderTopping orderTopping : orderItem.getOrderToppingList()) {
 					mailText.append(orderTopping.getTopping().getName() + " ");								
 				}
