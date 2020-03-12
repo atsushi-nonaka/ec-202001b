@@ -1,6 +1,7 @@
 package com.example.service;
 
 import java.sql.Timestamp;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -125,6 +126,8 @@ public class BuyOrderService {
 	 */
 	public String mailText(BuyOrderForm form) {
 		StringBuilder mailText = new StringBuilder();
+		NumberFormat nfCur = NumberFormat.getNumberInstance();
+		
 		Order order = (Order)session.getAttribute("order");
 		
 		mailText.append("※このメールはシステムからの自動返信です。" + "\r\n" + "\r\n");
@@ -151,7 +154,7 @@ public class BuyOrderService {
 			}
 		}
 		mailText.append("\r\nーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー");
-		mailText.append("\r\n合計金額：" + order.getTotalPrice() + "円");
+		mailText.append("\r\n合計金額：" +nfCur.format(order.getTotalPrice()) + "円");
 		return mailText.toString();
 	}
 
