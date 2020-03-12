@@ -75,6 +75,12 @@ public class BuyOrderService {
 		sendMail(form);
 	}
 	
+	/**
+	 * 配達日をLocalDate型に変換する.
+	 * 
+	 * @param form BuyOrderForm
+	 * @return 配達日(LocalDate型)
+	 */
 	public LocalDate toLocalDate(BuyOrderForm form) {
 		// String型の配達日付を取得
 		String shippingDate = form.getDeliveryDate();
@@ -88,10 +94,6 @@ public class BuyOrderService {
 	 * 
 	 * @param form BuyOrderForm
 	 * @return 配達日時(LocalDateTime型)
-	 */
-	/**
-	 * @param form
-	 * @return
 	 */
 	public LocalDateTime toLocalDateTime(BuyOrderForm form) {
 		// Integer型の配達時間を取得
